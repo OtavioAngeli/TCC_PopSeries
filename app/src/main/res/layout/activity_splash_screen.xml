@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroud_app"
-    tools:context="uniandrade.br.edu.com.popseries.SplashScreen"
-    tools:layout_editor_absoluteY="25dp">
+    tools:context="uniandrade.br.edu.com.popseries.Views.SplashScreen"
+    tools:layout_editor_absoluteY="25dp"
+    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
 
     <ImageView
         android:id="@+id/imageView2"

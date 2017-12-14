@@ -6,4 +6,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="300"
+        android:title="Pesquisa"
+        android:icon="@drawable/ic_pesquisa"
+        app:showAsAction="ifRoom" />
 </menu>
