@@ -7,7 +7,7 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_setting"
+        android:id="@+id/menu_pesquisa"
         android:orderInCategory="300"
         android:title="Pesquisa"
         android:icon="@drawable/ic_pesquisa"

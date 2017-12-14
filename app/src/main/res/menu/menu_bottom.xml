@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_bottom_series"
+        android:icon="@drawable/ic_menu_series"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_bottom_favoritos"
+        android:icon="@drawable/ic_menu_amigos"
+        android:title="Favoritos" />
+
+    <item
+        android:id="@+id/nav_bottom_assistidos"
+        android:icon="@drawable/ic_menu_perfil"
+        android:title="Assistidos" />
+
+    <item
+        android:id="@+id/nav_bottom_favorito4"
+        android:icon="@drawable/ic_menu_sobre"
+        android:title="Futuro" />
+
+</menu>
