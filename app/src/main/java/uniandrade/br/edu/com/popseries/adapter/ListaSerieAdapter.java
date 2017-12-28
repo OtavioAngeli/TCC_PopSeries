@@ -16,7 +16,7 @@ import uniandrade.br.edu.com.popseries.R;
  * Classe adapter para disponibilizar as séries em lista
  */
 
-public class ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.ViewHolder> {
+public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.ViewHolder> {
 
 //    private List<SeriesResults.ItemsBean> mSerieList;
     private Context mContext;
