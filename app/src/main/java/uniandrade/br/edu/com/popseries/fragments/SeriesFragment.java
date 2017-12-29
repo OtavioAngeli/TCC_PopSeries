@@ -32,7 +32,7 @@ public class SeriesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_series, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerViewSeries);
         listaSerieAdapter = new ListaSerieAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
