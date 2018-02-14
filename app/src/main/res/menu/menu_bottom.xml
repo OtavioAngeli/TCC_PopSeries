@@ -8,17 +8,17 @@
 
     <item
         android:id="@+id/nav_bottom_favoritos"
-        android:icon="@drawable/ic_menu_amigos"
+        android:icon="@drawable/ic_favoritos"
         android:title="Favoritos" />
 
     <item
         android:id="@+id/nav_bottom_assistidos"
-        android:icon="@drawable/ic_menu_perfil"
+        android:icon="@drawable/ic_assistidos"
         android:title="Assistidos" />
 
     <item
         android:id="@+id/nav_bottom_favorito4"
-        android:icon="@drawable/ic_menu_sobre"
+        android:icon="@drawable/ic_assistir_mais_tarde"
         android:title="Futuro" />
 
 </menu>

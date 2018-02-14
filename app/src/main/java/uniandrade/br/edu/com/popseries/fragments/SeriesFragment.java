@@ -72,6 +72,9 @@ public class SeriesFragment extends Fragment {
                        List<SeriesResults.ResultsBean> listSeries = results.getResults();
                        listaSerieAdapter.adicionarListaSeries(listSeries);
                    }
+                   else {
+                       Toast.makeText(getContext(), "Erro ao obter dados", Toast.LENGTH_SHORT).show();
+                   }
                }
 
                @Override
