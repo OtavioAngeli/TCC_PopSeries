@@ -16,7 +16,7 @@
         >
 
         <ImageView
-            android:id="@+id/imgCapaSerie"
+            android:id="@+id/imgThumbnail"
             android:layout_width="90dp"
             android:layout_height="100dp"
             android:adjustViewBounds="true"

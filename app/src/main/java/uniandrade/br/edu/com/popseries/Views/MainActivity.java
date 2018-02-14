@@ -1,5 +1,6 @@
 package uniandrade.br.edu.com.popseries.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -123,8 +124,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_serie) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_main, new SeriesFragment()).commit();
             Toast.makeText(getApplicationContext(),"Menu Séries", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_amigos) {
+            Intent intent = new Intent(getApplicationContext(), AmigosActivity.class);
+            startActivity(intent);
             Toast.makeText(getApplicationContext(),"Menu Amigos", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_perfil) {
             Toast.makeText(getApplicationContext(),"Menu Perfil", Toast.LENGTH_SHORT).show();
