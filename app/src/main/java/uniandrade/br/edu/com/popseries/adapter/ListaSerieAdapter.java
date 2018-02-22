@@ -54,7 +54,7 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
         }
 
         // NOME
-        holder.txtNomeSerie.setText(seriesResults.getOriginal_name());
+        holder.txtNomeSerie.setText(seriesResults.getName());
 
         //DATA LANÇAMENTO
         if (seriesResults.getFirst_air_date().equals("")){
@@ -82,27 +82,35 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
         private TextView txtNomeSerie;
         private TextView txtReleaseDate;
 
-        public ViewHolder(View ItemView){
+        private ViewHolder(View ItemView){
             super(ItemView);
 
             imgThumbnail = itemView.findViewById(R.id.imgThumbnail);
             txtNomeSerie = itemView.findViewById(R.id.txtNomeSerie);
             txtReleaseDate = itemView.findViewById(R.id.txtReleaseDate);
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int pos = getAdapterPosition();
+                    if ( pos != RecyclerView.NO_POSITION ){
+                        SeriesResults.ResultsBean clickedDataItem = mSerieList.get(pos);
+                        Toast.makeText(view.getContext(), clickedDataItem.getOriginal_name(), Toast.LENGTH_SHORT).show();
+
+                    }
+                    return true;
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
-
                     if ( pos != RecyclerView.NO_POSITION ){
-                        SeriesResults.ResultsBean clickedDataItem = mSerieList.get(pos);
 //                        Intent intent = new Intent(mContext, DetalhesActivity.class);
 //                        intent.putExtra("original_title", mSerieList.get(pos).getName());
 //                        mContext.startActivity(intent);
-                        Toast.makeText(view.getContext(), clickedDataItem.getOriginal_name(), Toast.LENGTH_SHORT).show();
-
                     }
-
                 }
             });
 
