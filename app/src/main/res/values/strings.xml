@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">POP Séries</string>
 
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_series">Séries</string>
+    <string name="navigation_drawer_amigos">Amigos</string>
+    <string name="navigation_drawer_perfil">Perfil</string>
+    <string name="navigation_drawer_opcoes">Opções</string>
+    <string name="navigation_drawer_ajuda">Ajuda</string>
+    <string name="navigation_drawer_sobre">Sobre</string>
 
     <string name="action_menu_login">Entrar</string>
     <string name="action_menu_pesquisa">Pesquisar</string>
