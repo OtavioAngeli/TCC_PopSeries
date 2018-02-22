@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_login"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_menu_login"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_pesquisa"
         android:orderInCategory="300"
-        android:title="Pesquisa"
+        android:title="@string/action_menu_pesquisa"
         android:icon="@drawable/ic_pesquisa"
         app:showAsAction="ifRoom" />
 </menu>
