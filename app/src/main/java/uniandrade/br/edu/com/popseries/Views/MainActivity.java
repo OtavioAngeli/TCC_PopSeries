@@ -108,8 +108,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_login) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }else if (id == R.id.menu_pesquisa){
            Toast.makeText(getApplicationContext(),"Menu Pesquisa", Toast.LENGTH_SHORT).show();
         }
