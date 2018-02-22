@@ -37,7 +37,7 @@
                 android:drawableLeft="@drawable/ic_avaliacao"
                 android:drawablePadding="5dp"
                 android:paddingTop="3dp"
-                android:text="5.0"
+                android:text=""
                 android:textColor="@color/txtAvaliacao"
                 android:textSize="12dp" />
 
@@ -45,7 +45,7 @@
                 android:id="@+id/txtNomeSerie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text=""
                 android:textColor="@android:color/background_light"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -55,8 +55,19 @@
                 android:id="@+id/txtReleaseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text=""
                 android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/txtOverview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@android:color/darker_gray"
+                android:ellipsize="end"
+                android:scrollHorizontally="true"
+                android:lines="2"/>
 
         </LinearLayout>
 

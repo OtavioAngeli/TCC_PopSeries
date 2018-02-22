@@ -44,6 +44,10 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
     @Override
     public void onBindViewHolder(ListaSerieAdapter.ViewHolder holder, int position) {
         SeriesResults.ResultsBean seriesResults = mSerieList.get(position);
+        //AVALIAÇÃO
+        String avaliacao = Double.toString(seriesResults.getVote_average());
+        holder.txtAvaliacao.setText(avaliacao);
+
         //THUMBNAIL
         if (seriesResults.getPoster_path().isEmpty()){
             //holder.imgCapaSerie.setImageResource();
@@ -62,6 +66,10 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
         }else{
             holder.txtReleaseDate.setText(seriesResults.getFirst_air_date());
         }
+
+        //OVERVIEW
+        holder.txtOverview.setText(seriesResults.getOverview());
+
     }
 
     @Override
@@ -78,16 +86,20 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView txtAvaliacao;
         private ImageView imgThumbnail;
         private TextView txtNomeSerie;
         private TextView txtReleaseDate;
+        private TextView txtOverview;
 
         private ViewHolder(View ItemView){
             super(ItemView);
 
+            txtAvaliacao = itemView.findViewById(R.id.txtAvaliacao);
             imgThumbnail = itemView.findViewById(R.id.imgThumbnail);
             txtNomeSerie = itemView.findViewById(R.id.txtNomeSerie);
             txtReleaseDate = itemView.findViewById(R.id.txtReleaseDate);
+            txtOverview = itemView.findViewById(R.id.txtOverview);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
