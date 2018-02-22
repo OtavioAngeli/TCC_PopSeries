@@ -4,9 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:padding="4dp"
     android:baselineAligned="false"
-    android:background="@color/fundoApp2">
+    android:background="@color/fundoApp2"
+    android:layout_marginBottom="0.5dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,15 +21,25 @@
             android:layout_width="107dp"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:padding="6dp"
-
+            android:padding="4dp"
             app:srcCompat="@drawable/no_image" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="4dp">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtAvaliacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_avaliacao"
+                android:drawablePadding="5dp"
+                android:paddingTop="3dp"
+                android:text="5.0"
+                android:textColor="@color/txtAvaliacao"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/txtNomeSerie"
@@ -45,19 +57,6 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Avaliação"
-                android:textColor="@android:color/darker_gray" />
-
-            <RatingBar
-                android:id="@+id/starAvaliacaoId"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

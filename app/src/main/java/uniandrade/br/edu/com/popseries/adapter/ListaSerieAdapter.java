@@ -60,7 +60,7 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
         if (seriesResults.getFirst_air_date().equals("")){
             holder.txtReleaseDate.setText("Lançamento: Desconhecido" );
         }else{
-            holder.txtReleaseDate.setText("Lançamento: " + seriesResults.getFirst_air_date());
+            holder.txtReleaseDate.setText(seriesResults.getFirst_air_date());
         }
     }
 
