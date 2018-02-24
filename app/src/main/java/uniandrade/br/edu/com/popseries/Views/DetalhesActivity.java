@@ -5,9 +5,12 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,6 +20,8 @@ public class DetalhesActivity extends AppCompatActivity {
 
     TextView nameOfSerie, txtSinopse, userRating, releaseDate, txtApiRate;
     ImageView imgThumbnail;
+
+    LinearLayoutCompat linLayComent;
 
     Bundle bundle;
 //    int movie_id;
@@ -35,6 +40,7 @@ public class DetalhesActivity extends AppCompatActivity {
 
         initCollapsingToolbar();
 
+        linLayComent        = findViewById(R.id.linLayComent);
         imgThumbnail        = findViewById(R.id.thumbnailImageHeader);
         nameOfSerie         = findViewById(R.id.txtTitle);
         txtSinopse          = findViewById(R.id.txtSinopse);
@@ -58,19 +64,12 @@ public class DetalhesActivity extends AppCompatActivity {
             }
         }
 
-//            thumbnail = serie.getPoster_path();
-//            movieName = serie.getName();
-//            synopsis = serie.getOverview();
-//            rating = Double.toString(serie.getVote_average());
-//            dateOfRelease = serie.getFirst_air_date();
-//            movie_id = serie.getId();
-//
-//
-//            nameOfSerie.setText(movieName);
-//            plotSynopsis.setText(synopsis);
-//            userRating.setText(rating);
-//            releaseDate.setText(dateOfRelease);
-
+        linLayComent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Comentários", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

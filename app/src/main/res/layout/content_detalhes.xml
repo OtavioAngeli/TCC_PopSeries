@@ -123,29 +123,29 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/liLay4"
+            android:id="@+id/linLayComent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="6dp">
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
                 android:text="Comentários"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold"
                 android:textSize="24sp"
-                android:layout_marginEnd="6dp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/numTotalComent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_flecha_white"
                 android:text="(000)"
-                android:textSize="18sp"
                 android:textColor="@android:color/darker_gray"
-                android:drawableEnd="@drawable/ic_flecha_white"/>
+                android:textSize="18sp" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 
