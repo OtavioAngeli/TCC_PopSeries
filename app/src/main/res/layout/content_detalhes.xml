@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/fundoApp2"
+    android:padding="8dp">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtSinopse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="inherit"
+            android:textColor="@android:color/darker_gray" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/liLay3"
+            app:layout_constraintTop_toBottomOf="@+id/liLay3">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/liLay2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avaliação API"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/apiRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:drawableStart="@drawable/ic_avaliacao"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avaliação APP"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/userRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:drawableStart="@drawable/ic_avaliacao"
+                    android:text="0.0"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sua avaliação"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_avaliacao"
+                    android:text="0.0"
+                    android:textColor="@android:color/darker_gray" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/liLay3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.951"
+                app:layout_constraintStart_toEndOf="@+id/liLay2"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adicionar à:"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/liLay4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comentários"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_marginEnd="6dp"/>
+
+            <TextView
+                android:id="@+id/numTotalComent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(000)"
+                android:textSize="18sp"
+                android:textColor="@android:color/darker_gray"
+                android:drawableEnd="@drawable/ic_flecha_white"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Séries Relacionadas"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <ImageView
+                android:layout_marginEnd="6dp"
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                android:src="@drawable/no_image" />
+
+            <ImageView
+                android:layout_marginEnd="6dp"
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                android:src="@drawable/no_image" />
+            <ImageView
+                android:layout_marginEnd="6dp"
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                android:src="@drawable/no_image" />
+            <ImageView
+                android:layout_marginEnd="6dp"
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                android:src="@drawable/no_image" />
+            <ImageView
+                android:layout_marginEnd="6dp"
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                android:src="@drawable/no_image" />
+            <ImageView
+                android:layout_marginEnd="6dp"
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                android:src="@drawable/no_image" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.constraint.ConstraintLayout>

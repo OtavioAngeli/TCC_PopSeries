@@ -2,6 +2,7 @@ package uniandrade.br.edu.com.popseries.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.Views.DetalhesActivity;
 import uniandrade.br.edu.com.popseries.api.SeriesResults;
 
 /**
@@ -101,6 +103,8 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
             txtReleaseDate = itemView.findViewById(R.id.txtReleaseDate);
             txtOverview = itemView.findViewById(R.id.txtOverview);
 
+            final Bundle bundle = new Bundle();
+
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -119,9 +123,14 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
                     if ( pos != RecyclerView.NO_POSITION ){
-//                        Intent intent = new Intent(mContext, DetalhesActivity.class);
-//                        intent.putExtra("original_title", mSerieList.get(pos).getName());
-//                        mContext.startActivity(intent);
+                        SeriesResults.ResultsBean seriesResults = mSerieList.get(pos);
+                        Intent intent = new Intent(mContext, DetalhesActivity.class);
+                        bundle.putString("poster", seriesResults.getBackdrop_path());
+                        bundle.putString("original_title", seriesResults.getName());
+                        bundle.putString("overview", seriesResults.getOverview());
+                        bundle.putString("apiRate", Double.toString(seriesResults.getVote_average()));
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
                     }
                 }
             });

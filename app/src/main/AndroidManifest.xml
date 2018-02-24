@@ -28,7 +28,8 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Views.AmigosActivity" />
-        <activity android:name=".Views.LoginActivity"></activity>
+        <activity android:name=".Views.LoginActivity" />
+        <activity android:name=".Views.DetalhesActivity"></activity>
     </application>
 
 </manifest>
