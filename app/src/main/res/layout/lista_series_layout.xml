@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_avaliacao"
+                android:drawableLeft="@drawable/ic_avaliacao_lista_series"
                 android:drawablePadding="5dp"
                 android:paddingTop="3dp"
                 android:text=""
