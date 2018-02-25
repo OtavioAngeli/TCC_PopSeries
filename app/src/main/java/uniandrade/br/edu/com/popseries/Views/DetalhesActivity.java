@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,8 +19,9 @@ import uniandrade.br.edu.com.popseries.R;
 
 public class DetalhesActivity extends AppCompatActivity {
 
-    TextView nameOfSerie, txtSinopse, userRating, releaseDate, txtApiRate;
+    TextView nameOfSerie, txtSinopse, userRating, releaseDate, txtApiRate, txtUserRate, txtAppRate;
     ImageView imgThumbnail;
+    Button btnAvaliar, btnAdicionar;
 
     LinearLayoutCompat linLayComent;
 
@@ -40,11 +42,13 @@ public class DetalhesActivity extends AppCompatActivity {
 
         initCollapsingToolbar();
 
-        linLayComent        = findViewById(R.id.linLayComent);
-        imgThumbnail        = findViewById(R.id.thumbnailImageHeader);
-        nameOfSerie         = findViewById(R.id.txtTitle);
-        txtSinopse          = findViewById(R.id.txtSinopse);
-        txtApiRate          = findViewById(R.id.apiRate);
+        linLayComent    = findViewById(R.id.linLayComent);
+        imgThumbnail    = findViewById(R.id.thumbnailImageHeader);
+        nameOfSerie     = findViewById(R.id.txtTitle);
+        txtSinopse      = findViewById(R.id.txtSinopse);
+        txtApiRate      = findViewById(R.id.apiRate);
+        btnAvaliar      = findViewById(R.id.btnAvaliar);
+        btnAdicionar    = findViewById(R.id.btnAdicionar);
 //        userRating          = findViewById(R.id.userrating);
 //        releaseDate         = findViewById(R.id.releasedate);
 
@@ -64,6 +68,23 @@ public class DetalhesActivity extends AppCompatActivity {
             }
         }
 
+        // BOTÃO AVALIAR
+        btnAvaliar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Avaliar", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // BOTÃO ADICIONAR
+        btnAdicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Adicionar", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // EVENTO DE CLICK NO LAYOUT DE COMENTÁRIOS
         linLayComent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
