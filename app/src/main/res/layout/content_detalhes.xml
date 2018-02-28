@@ -9,12 +9,17 @@
     tools:layout_editor_absoluteY="25dp">
 
     <android.support.v7.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
         android:padding="4dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <!-- TÍTULO -->
         <TextView
@@ -22,12 +27,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="monospace"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="monospace"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold" />
 
         <!-- SINOPSE -->
         <TextView
@@ -35,14 +40,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="inherit"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray" />
+
+        <!-- LINHA -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorWhite"
+            android:layout_marginTop="12dp"/>
 
         <!-- AVALIAÇÃO E ADICIONAR À -->
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
             android:padding="8dp">
 
             <!-- AVALIAÇÃO -->
@@ -66,8 +76,8 @@
                     android:layout_height="wrap_content"
                     android:text="Avaliação API"
                     android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <!-- API RATE -->
                 <TextView
@@ -75,10 +85,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:drawableStart="@drawable/ic_avaliacao"
                     android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/ic_avaliacao"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <!-- AVALIAÇÃO DO APP -->
                 <TextView
@@ -86,8 +96,8 @@
                     android:layout_height="wrap_content"
                     android:text="Avaliação APP"
                     android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <!-- APP RATE -->
                 <TextView
@@ -95,11 +105,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:drawableStart="@drawable/ic_avaliacao"
                     android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/ic_avaliacao"
                     android:text="0.0"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <!-- USER AVALIAÇÃO -->
                 <TextView
@@ -107,21 +117,36 @@
                     android:layout_height="wrap_content"
                     android:text="Sua avaliação"
                     android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <!-- USER RATE -->
                 <TextView
                     android:id="@+id/txtUserRate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_avaliacao"
                     android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/ic_avaliacao"
                     android:text="0.0"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </android.support.v7.widget.LinearLayoutCompat>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0.5dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorWhite"
+                android:foregroundGravity="center_horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/liLay3"
+                app:layout_constraintStart_toEndOf="@+id/liLay2"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- AVALIAR E ADICIONAR À -->
             <android.support.v7.widget.LinearLayoutCompat
@@ -129,43 +154,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <!-- AVALIAR -->
                 <Button
                     android:id="@+id/btnAvaliar"
-                    android:background="@drawable/btn_background_series"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Avaliar"
-                    android:textColor="@color/colorWhite"
-                    android:textAllCaps="false"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/btn_background_series"
                     android:drawableEnd="@drawable/ic_avaliacao_white"
                     android:drawablePadding="16dp"
-                    android:layout_marginBottom="16dp"/>
+                    android:padding="16dp"
+                    android:text="Avaliar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite" />
 
                 <!-- ADICIONAR -->
                 <Button
                     android:id="@+id/btnAdicionar"
-                    android:background="@drawable/btn_background_series"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/btn_background_series"
+                    android:drawableEnd="@drawable/ic_add_white"
+                    android:drawablePadding="16dp"
                     android:padding="16dp"
                     android:text="Adicionar"
-                    android:textColor="@color/colorWhite"
                     android:textAllCaps="false"
-                    android:drawableEnd="@drawable/ic_add_white"
-                    android:drawablePadding="16dp"/>
+                    android:textColor="@color/colorWhite" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
         </android.support.constraint.ConstraintLayout>
+
+        <!-- LINHA -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/colorWhite" />
 
         <!-- COMENTÁRIOS -->
         <android.support.v7.widget.LinearLayoutCompat
@@ -195,6 +229,13 @@
                 android:textSize="18sp" />
 
         </android.support.v7.widget.LinearLayoutCompat>
+
+        <!-- LINHA -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/colorWhite" />
 
         <!-- SÉRIES RELACIONADAS -->
         <TextView
