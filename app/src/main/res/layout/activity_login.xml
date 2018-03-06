@@ -32,6 +32,7 @@
             android:inputType="textEmailAddress"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="12dp"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -93,7 +94,7 @@
                 android:background="@color/colorWhite"/>
 
         </LinearLayout>
-        
+
         <Button
             android:id="@+id/btnLoginGoogle"
             android:layout_marginTop="16dp"

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "59703858331",
+    "firebase_url": "https://tccpopseries.firebaseio.com",
+    "project_id": "tccpopseries",
+    "storage_bucket": "tccpopseries.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59703858331:android:a1b2050e1d67d0b8",
+        "android_client_info": {
+          "package_name": "uniandrade.br.edu.com.popseries"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59703858331-rennhk50g8fstds5nhu1ihhfnaqv754g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uniandrade.br.edu.com.popseries",
+            "certificate_hash": "588a3b4194f50347e6af9c93f5717a2c0977b611"
+          }
+        },
+        {
+          "client_id": "59703858331-md23p10mtnf36qb33h0lobemvdagqv91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6pJoSYSstufTRMfDeOGFTyWLX87rantg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59703858331-md23p10mtnf36qb33h0lobemvdagqv91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
