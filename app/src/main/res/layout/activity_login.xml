@@ -4,6 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uniandrade.br.edu.com.popseries.Views.LoginActivity">
+    tools:context="uniandrade.br.edu.com.popseries.Views.LoginActivity"
+    android:background="@drawable/backgroud_app">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="221dp"
+            android:layout_height="186dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo" />
+
+        <EditText
+            android:id="@+id/txtUserEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:textColorHint="@color/colorWhite"
+            android:padding="8dp"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="12dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorWhite"/>
+
+        <EditText
+            android:id="@+id/txtUserPasswordLogin"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:textColorHint="@color/colorWhite"
+            android:ems="10"
+            android:padding="8dp"
+            android:inputType="textPassword"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_key"
+            android:drawablePadding="12dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Entrar"
+            android:textColor="#64b3f4"
+            android:background="@drawable/btn_background_login"/>
+
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:layout_width="140dp"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:text="OU"
+                android:layout_gravity="center_horizontal"/>
+
+            <View
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:layout_width="150dp"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btnLoginGoogle"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log in with Google"
+            android:textAllCaps="false"
+            android:textColor="#64b3f4"
+            android:background="@drawable/btn_background_login"/>
+
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Não possui uma conta?"
+                android:textAlignment="center"
+                android:textColor="#414141"/>
+
+            <TextView
+                android:id="@+id/txtCadastrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cadastre-se"
+                android:textAlignment="center"
+                android:padding="8dp"
+                android:textColor="#414141"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

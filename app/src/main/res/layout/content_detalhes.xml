@@ -247,50 +247,12 @@
             android:textStyle="bold" />
 
         <!-- THUMBNAILS SÉRIES RELACIONADAS -->
-        <android.support.v7.widget.LinearLayoutCompat
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/similarSerieLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="4dp">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="6dp"
-                android:src="@drawable/no_image" />
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="6dp"
-                android:src="@drawable/no_image" />
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="6dp"
-                android:src="@drawable/no_image" />
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="6dp"
-                android:src="@drawable/no_image" />
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="6dp"
-                android:src="@drawable/no_image" />
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="6dp"
-                android:src="@drawable/no_image" />
-
-        </android.support.v7.widget.LinearLayoutCompat>
-
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.v7.widget.LinearLayoutCompat>
 
