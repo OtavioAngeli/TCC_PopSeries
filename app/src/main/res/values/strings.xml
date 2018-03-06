@@ -15,5 +15,10 @@
     <string name="action_menu_pesquisa">Pesquisar</string>
 
     <string name="detalhes_serie">Detalhes Série</string>
+    <string name="btnLoginGoogle">Continue com o Google</string>
+    <string name="btnLogin">Entrar</string>
+    <string name="txtHintEmail">E-mail</string>
+    <string name="txtHintSenha">Senha</string>
+    <string name="imgDescriptionLogo">Logo APP</string>
 
 </resources>
