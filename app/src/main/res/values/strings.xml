@@ -12,6 +12,7 @@
     <string name="navigation_drawer_sobre">Sobre</string>
 
     <string name="action_menu_login">Entrar</string>
+    <string name="action_menu_logout">Sair</string>
     <string name="action_menu_pesquisa">Pesquisar</string>
 
     <string name="detalhes_serie">Detalhes Série</string>
