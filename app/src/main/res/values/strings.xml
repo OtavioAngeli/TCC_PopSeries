@@ -22,5 +22,6 @@
     <string name="txtHintEmail">E-mail</string>
     <string name="txtHintSenha">Senha</string>
     <string name="imgDescriptionLogo">Logo APP</string>
+    <string name="not_close_session">Erro ao encerrar sessão</string>
 
 </resources>

@@ -14,6 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 
 import uniandrade.br.edu.com.popseries.R;
@@ -22,9 +28,11 @@ import uniandrade.br.edu.com.popseries.fragments.AssistirMaisTardeFragment;
 import uniandrade.br.edu.com.popseries.fragments.FavoritosFragment;
 import uniandrade.br.edu.com.popseries.fragments.SeriesFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     private int i;
+
+    private GoogleApiClient googleApiClient;
 
     private FirebaseAuth firebaseAuth;
 
@@ -36,6 +44,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -146,16 +163,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void signOut() {
         firebaseAuth.signOut();
-        Toast.makeText(getApplicationContext(), "Logout realizado com sucesso !", Toast.LENGTH_SHORT).show();
-        verificarUsuarioLogado();
-        goLoginScreen();
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                if (status.isSuccess()) {
+                    Toast.makeText(getApplicationContext(), "Log Out realizado com sucesso !", Toast.LENGTH_SHORT).show();
+                    goLogInScreen();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.not_close_session, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    private void goLoginScreen() {
+    private void goLogInScreen() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -184,5 +208,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
