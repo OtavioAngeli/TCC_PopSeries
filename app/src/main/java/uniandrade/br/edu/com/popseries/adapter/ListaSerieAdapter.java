@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
-import uniandrade.br.edu.com.popseries.Views.DetalhesActivity;
+import uniandrade.br.edu.com.popseries.model.Date;
+import uniandrade.br.edu.com.popseries.views.DetalhesActivity;
 import uniandrade.br.edu.com.popseries.api.SeriesResults;
 
 /**
@@ -45,6 +46,7 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
 
     @Override
     public void onBindViewHolder(ListaSerieAdapter.ViewHolder holder, int position) {
+        Date date = new Date();
         SeriesResults.ResultsBean seriesResults = mSerieList.get(position);
         //AVALIAÇÃO
         String avaliacao = Double.toString(seriesResults.getVote_average());
@@ -64,9 +66,10 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
 
         //DATA LANÇAMENTO
         if (seriesResults.getFirst_air_date().equals("")){
-            holder.txtReleaseDate.setText("Lançamento: Desconhecido" );
+            holder.txtReleaseDate.setText(R.string.date_realesed_unknow);
         }else{
-            holder.txtReleaseDate.setText(seriesResults.getFirst_air_date());
+            date.setData(seriesResults.getFirst_air_date());
+            holder.txtReleaseDate.setText(date.getYear());
         }
 
         //OVERVIEW
@@ -77,7 +80,6 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
     @Override
     public int getItemCount() {
         return (mSerieList == null) ? 0 : mSerieList.size();
-//        return 5;
     }
 
     public void adicionarListaSeries(List<SeriesResults.ResultsBean> listSeries) {
@@ -86,7 +88,7 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView txtAvaliacao;
         private ImageView imgThumbnail;
@@ -125,6 +127,7 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
                     if ( pos != RecyclerView.NO_POSITION ){
                         SeriesResults.ResultsBean seriesResults = mSerieList.get(pos);
                         Intent intent = new Intent(mContext, DetalhesActivity.class);
+                        bundle.putInt("serie_id", seriesResults.getId());
                         bundle.putString("poster", seriesResults.getBackdrop_path());
                         bundle.putString("original_title", seriesResults.getName());
                         bundle.putString("overview", seriesResults.getOverview());
