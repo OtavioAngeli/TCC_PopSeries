@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uniandrade.br.edu.com.popseries.Views.LoginActivity"
+    tools:context="uniandrade.br.edu.com.popseries.views.LoginActivity"
     android:background="@drawable/backgroud_app">
 
     <LinearLayout

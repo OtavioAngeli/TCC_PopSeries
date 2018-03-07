@@ -1,4 +1,4 @@
-package uniandrade.br.edu.com.popseries.Views;
+package uniandrade.br.edu.com.popseries.views;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -25,11 +25,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     Button btnLoginGoogle;
     GoogleApiClient mGoogleApiClient;
+
+    private Usuario usuario;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mFirebaseAuthListener;
@@ -112,7 +115,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount signInAccount) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount signInAccount) {
+        usuario = new Usuario();
         progressBar.setVisibility(View.VISIBLE);
         btnLoginGoogle.setVisibility(View.GONE);
 
@@ -120,6 +124,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+
+                FirebaseUser usuarioFirebase = task.getResult().getUser();
+                usuario.setId( usuarioFirebase.getUid() );
+                usuario.setEmail(signInAccount.getEmail());
+                usuario.setNome(signInAccount.getDisplayName());
+                usuario.salvar();
 
                 progressBar.setVisibility(View.GONE);
                 btnLoginGoogle.setVisibility(View.VISIBLE);

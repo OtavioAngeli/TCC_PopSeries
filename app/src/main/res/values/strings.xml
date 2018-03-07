@@ -16,6 +16,7 @@
     <string name="action_menu_pesquisa">Pesquisar</string>
 
     <string name="detalhes_serie">Detalhes Série</string>
+    <string name="date_realesed_unknow">Lançamento Desconhecido</string>
     <string name="btnLoginGoogle">Continue com o Google</string>
     <string name="btnLogin">Entrar</string>
     <string name="txtHintEmail">E-mail</string>

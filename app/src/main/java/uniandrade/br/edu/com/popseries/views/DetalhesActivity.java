@@ -6,7 +6,10 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,9 +18,21 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.adapter.SimilarSerieAdapter;
+import uniandrade.br.edu.com.popseries.api.Client;
+import uniandrade.br.edu.com.popseries.api.Service;
+import uniandrade.br.edu.com.popseries.api.SimilarSeriesResults;
 
 public class DetalhesActivity extends AppCompatActivity {
+
+    public static String API_KEY = "042df6719b1c27335641d1d7a9e2e66e";
+    public static String LANGUAGE = "pt-BR";
 
     TextView nameOfSerie, txtSinopse, userRating, releaseDate, txtApiRate, txtUserRate, txtAppRate;
     ImageView imgThumbnail;
@@ -26,7 +41,10 @@ public class DetalhesActivity extends AppCompatActivity {
     LinearLayoutCompat linLayComent;
 
     Bundle bundle;
-//    int movie_id;
+    int serie_id;
+
+    private RecyclerView recyclerView;
+    private SimilarSerieAdapter similarSerieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +75,8 @@ public class DetalhesActivity extends AppCompatActivity {
         if (intent != null){
             bundle = intent.getExtras();
             if (bundle != null){
+
+                serie_id = bundle.getInt("serie_id");
 
                 Picasso.with(this)
                         .load(bundle.getString("poster"))
@@ -91,7 +111,50 @@ public class DetalhesActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Comentários", Toast.LENGTH_SHORT).show();
             }
         });
+        
+//        initView();
 
+    }
+
+    private void initView() {
+        recyclerView = findViewById(R.id.similarSerieLayout);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(similarSerieAdapter);
+
+        loadJSON();
+    }
+
+    private void loadJSON() {
+        try {
+            Client Client = new Client();
+            Service apiService = Client.getClient().create(Service.class);
+
+            Call<SimilarSeriesResults> call = apiService.getSimilarSeries(serie_id, LANGUAGE, API_KEY);
+            call.enqueue(new Callback<SimilarSeriesResults>() {
+                @Override
+                public void onResponse(Call<SimilarSeriesResults> call, Response<SimilarSeriesResults> response) {
+                    if (response.isSuccessful()){
+                        SimilarSeriesResults results = response.body();
+                        List<SimilarSeriesResults.ResultsBean> listSeries = results.getResults();
+                        similarSerieAdapter.adicionarListaSeries(listSeries);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Erro ao obter dados", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SimilarSeriesResults> call, Throwable t) {
+                    Log.d("ERROR", t.getMessage());
+                    Toast.makeText(getApplicationContext(), "Erro ao obter dados", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }catch (Exception e){
+            Log.d("ERROR", e.getMessage());
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initCollapsingToolbar(){

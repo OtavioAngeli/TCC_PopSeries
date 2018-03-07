@@ -1,4 +1,4 @@
-package uniandrade.br.edu.com.popseries.Views;
+package uniandrade.br.edu.com.popseries.views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

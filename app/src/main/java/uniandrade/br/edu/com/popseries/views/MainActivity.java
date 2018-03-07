@@ -1,4 +1,4 @@
-package uniandrade.br.edu.com.popseries.Views;
+package uniandrade.br.edu.com.popseries.views;
 
 import android.content.Intent;
 import android.os.Bundle;

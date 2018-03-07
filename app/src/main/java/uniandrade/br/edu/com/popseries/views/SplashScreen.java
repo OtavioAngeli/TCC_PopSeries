@@ -1,4 +1,4 @@
-package uniandrade.br.edu.com.popseries.Views;
+package uniandrade.br.edu.com.popseries.views;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import uniandrade.br.edu.com.popseries.R;
-import uniandrade.br.edu.com.popseries.Views.MainActivity;
 
 public class SplashScreen extends AppCompatActivity implements Runnable {
 
