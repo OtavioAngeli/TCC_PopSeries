@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uniandrade.br.edu.com.popseries.Views.DetalhesActivity"
+    tools:context="uniandrade.br.edu.com.popseries.views.DetalhesActivity"
     android:background="@color/fundoApp2">
 
     <android.support.design.widget.AppBarLayout
