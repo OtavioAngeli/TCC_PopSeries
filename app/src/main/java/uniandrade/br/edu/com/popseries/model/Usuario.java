@@ -12,6 +12,7 @@ import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 public class Usuario {
 
     private String id;
+    private String photo;
     private String nome;
     private String email;
     private String senha;
@@ -33,6 +34,14 @@ public class Usuario {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getNome() {

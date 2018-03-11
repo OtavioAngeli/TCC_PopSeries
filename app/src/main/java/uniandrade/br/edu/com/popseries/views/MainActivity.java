@@ -10,8 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -21,20 +24,35 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.fragments.AssistidosFragment;
 import uniandrade.br.edu.com.popseries.fragments.AssistirMaisTardeFragment;
 import uniandrade.br.edu.com.popseries.fragments.FavoritosFragment;
 import uniandrade.br.edu.com.popseries.fragments.SeriesFragment;
+import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     private int i;
+    private TextView txtUserNameMenu, txtUserEmailMenu;
+    private ImageView imgUserPhotoMenu;
 
     private GoogleApiClient googleApiClient;
 
-    private FirebaseAuth firebaseAuth;
+    //*****   FIREBASE   *****
+    private DatabaseReference databaseReference = ConfigFirebase.getFirebase();
+    private FirebaseAuth firebaseAuth = ConfigFirebase.getFirebaseAutenticacao();
+    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+    private Usuario usuario = new Usuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        firebaseAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -67,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_serie);
+
+        txtUserNameMenu = navigationView.getHeaderView(0).findViewById(R.id.txtUserNameMenu);
+        txtUserEmailMenu = navigationView.getHeaderView(0).findViewById(R.id.txtUserEmailMenu);
+        imgUserPhotoMenu = navigationView.getHeaderView(0).findViewById(R.id.imgUserPhotoMenu);
+
 
         final BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bottom);
 
@@ -109,10 +130,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private Usuario setUserData() {
+        DatabaseReference userReference = databaseReference.child("usuarios").child(firebaseUser.getUid());
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    usuario = dataSnapshot.getValue(Usuario.class);
+//                    Log.i("FIREBASE-USER", usuario.getNome());
+//                    Log.i("FIREBASE-USER", usuario.getEmail());
+                    String userName = usuario.getNome();
+                    String userEmail = usuario.getEmail();
+                    txtUserNameMenu.setText(userName);
+                    txtUserEmailMenu.setText(userEmail);
+                    Picasso.with(MainActivity.this)
+                            .load(usuario.getPhoto()).noFade()
+                            .into(imgUserPhotoMenu);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return usuario;
+    }
+
     private boolean verificarUsuarioLogado() {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null){
 //            Toast.makeText(getApplicationContext(), "USUARIO LOGADO", Toast.LENGTH_SHORT).show();
+            setUserData();
             return true;
         }else {
 //            Toast.makeText(getApplicationContext(), "USUARIO NÃO LOGADO", Toast.LENGTH_SHORT).show();
