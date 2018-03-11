@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = ConfigFirebase.getFirebaseAutenticacao();
 
         mFirebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -126,9 +127,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 FirebaseUser usuarioFirebase = task.getResult().getUser();
+                String photo;
                 usuario.setId( usuarioFirebase.getUid() );
                 usuario.setEmail(signInAccount.getEmail());
                 usuario.setNome(signInAccount.getDisplayName());
+                if (signInAccount.getPhotoUrl() != null){
+                    photo = signInAccount.getPhotoUrl().toString();
+                    usuario.setPhoto(photo);
+                }
                 usuario.salvar();
 
                 progressBar.setVisibility(View.GONE);
