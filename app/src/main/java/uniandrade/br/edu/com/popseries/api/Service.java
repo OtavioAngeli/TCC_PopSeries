@@ -25,7 +25,7 @@ public interface Service {
     );
 
     @GET("tv/{tv_id}/similar")
-    Call<SimilarSeriesResults> getSimilarSeries(
+    Call<SeriesResults> getSimilarSeries(
             @Path("tv_id") int tv_id,
             @Query("language") String language,
             @Query("api_key") String api_key

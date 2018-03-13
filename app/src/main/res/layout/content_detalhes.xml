@@ -246,8 +246,16 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <ProgressBar
+            android:id="@+id/progressBarSeriesRelacionadas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
         <!-- THUMBNAILS SÉRIES RELACIONADAS -->
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="8dp"
             android:id="@+id/similarSerieLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
