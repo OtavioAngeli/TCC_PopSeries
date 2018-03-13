@@ -29,7 +29,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".views.AmigosActivity" />
         <activity android:name=".views.LoginActivity" />
-        <activity android:name=".views.DetalhesActivity"></activity>
+        <activity android:name=".views.DetalhesActivity" />
+        <activity android:name=".CadastroActivity"></activity>
     </application>
 
 </manifest>
