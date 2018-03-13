@@ -1,11 +1,14 @@
 package uniandrade.br.edu.com.popseries.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -14,6 +17,7 @@ import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.api.SeriesResults;
+import uniandrade.br.edu.com.popseries.views.DetalhesActivity;
 
 /**
  * Created by pnda on 01/03/18.
@@ -70,6 +74,39 @@ public class SimilarSerieAdapter extends RecyclerView.Adapter<SimilarSerieAdapte
 
             imgThumbnailSimilarSeries = itemView.findViewById(R.id.imgThumbnailSimilarSeries);
 
+            final Bundle bundle = new Bundle();
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int pos = getAdapterPosition();
+                    if ( pos != RecyclerView.NO_POSITION ){
+                        SeriesResults.ResultsBean clickedDataItem = mSerieList.get(pos);
+                        Toast.makeText(view.getContext(), clickedDataItem.getOriginal_name(), Toast.LENGTH_SHORT).show();
+
+                    }
+                    return true;
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if ( pos != RecyclerView.NO_POSITION ){
+                        SeriesResults.ResultsBean seriesResults = mSerieList.get(pos);
+                        Intent intent = new Intent(mContext, DetalhesActivity.class);
+                        bundle.putInt("serie_id", seriesResults.getId());
+                        bundle.putString("poster", seriesResults.getBackdrop_path());
+                        bundle.putString("original_title", seriesResults.getName());
+                        bundle.putString("overview", seriesResults.getOverview());
+                        bundle.putString("apiRate", Double.toString(seriesResults.getVote_average()));
+                        intent.putExtras(bundle);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                    }
+                }
+            });
         }
     }
 }
