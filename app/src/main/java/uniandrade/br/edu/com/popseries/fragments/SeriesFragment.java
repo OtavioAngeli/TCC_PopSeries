@@ -2,6 +2,7 @@ package uniandrade.br.edu.com.popseries.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,10 +67,13 @@ public class SeriesFragment extends Fragment {
            Call<SeriesResults> call = apiService.getPopularSeries(LANGUAGE, API_KEY);
            call.enqueue(new Callback<SeriesResults>() {
                @Override
-               public void onResponse(Call<SeriesResults> call, Response<SeriesResults> response) {
+               public void onResponse(@NonNull Call<SeriesResults> call, @NonNull Response<SeriesResults> response) {
                    if (response.isSuccessful()){
                        SeriesResults results = response.body();
-                       List<SeriesResults.ResultsBean> listSeries = results.getResults();
+                       List<SeriesResults.ResultsBean> listSeries = null;
+                       if (results != null) {
+                           listSeries = results.getResults();
+                       }
                        listaSerieAdapter.adicionarListaSeries(listSeries);
                    }
                    else {
@@ -78,7 +82,7 @@ public class SeriesFragment extends Fragment {
                }
 
                @Override
-               public void onFailure(Call<SeriesResults> call, Throwable t) {
+               public void onFailure(@NonNull Call<SeriesResults> call, @NonNull Throwable t) {
                    Log.d("ERROR", t.getMessage());
                    Toast.makeText(getContext(), "Erro ao obter dados", Toast.LENGTH_SHORT).show();
                }
