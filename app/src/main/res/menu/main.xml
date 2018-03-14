@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_login"
-        android:orderInCategory="100"
-        android:title="@string/action_menu_login"
-        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_pesquisa"
-        android:orderInCategory="200"
+        android:orderInCategory="100"
         android:title="@string/action_menu_pesquisa"
         android:icon="@drawable/ic_pesquisa"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_filtro"
-        android:orderInCategory="300"
+        android:orderInCategory="200"
         android:title="Filtrar"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_filtro"/>
 
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="300"
+        android:title="@string/action_menu_login"
+        app:showAsAction="never" />
 
 </menu>

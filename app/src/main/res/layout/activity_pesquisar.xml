@@ -24,40 +24,42 @@
 
     <EditText
         android:id="@+id/txtPesquisar"
-        android:layout_width="271dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Digite o nome da Série"
-        android:inputType="textPersonName"
-        android:padding="12dp"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="#bebebe"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <ImageButton
-        android:id="@+id/imgBtnPesquisar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/fundo_edit_text"
+        android:background="@drawable/btn_pesquisar"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/ic_pesquisa"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:hint="Digite o nome da Série"
+        android:inputType="none"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="#9e9d9d"
+        app:layout_constraintEnd_toStartOf="@+id/btnPesquisar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <TextView
+        android:id="@+id/btnPesquisar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_pesquisar"
+        android:drawableStart="@drawable/ic_pesquisa"
         android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.804"
-        app:layout_constraintStart_toEndOf="@+id/txtPesquisar"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_pesquisa"
-        android:tint="#000"/>
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
 
     <ProgressBar
-        android:visibility="gone"
         android:id="@+id/progressBarPesquisar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,10 +68,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.61" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

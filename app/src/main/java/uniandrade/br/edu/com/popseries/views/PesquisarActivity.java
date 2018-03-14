@@ -1,16 +1,23 @@
 package uniandrade.br.edu.com.popseries.views;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -28,10 +35,10 @@ public class PesquisarActivity extends AppCompatActivity {
 
     public static String API_KEY = "042df6719b1c27335641d1d7a9e2e66e";
     public static String LANGUAGE = "pt-BR";
-    public static String TESTE = "casa";
 
     private ProgressBar progressBar;
     private EditText editText;
+    private String pesquisa;
 
     private SearchSerieAdapter searchSerieAdapter;
 
@@ -43,7 +50,7 @@ public class PesquisarActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Pesquisar");
 
-        ImageButton imageButton = findViewById(R.id.imgBtnPesquisar);
+        TextView txtPesquisar = findViewById(R.id.btnPesquisar);
         progressBar = findViewById(R.id.progressBarPesquisar);
         editText = findViewById(R.id.txtPesquisar);
 
@@ -55,17 +62,32 @@ public class PesquisarActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        txtPesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pesquisa;
                 pesquisa = editText.getText().toString();
-                progressBar.setVisibility(View.VISIBLE);
-                loadJSON( pesquisa );
+                if (pesquisa.equals("")){
+                    Toast.makeText(getApplicationContext(), "Digite o nome da série", Toast.LENGTH_SHORT).show();
+                } else {
+                    closeKeybord();
+                    progressBar.setVisibility(View.VISIBLE);
+                    loadJSON( pesquisa );
+                }
             }
         });
 
+    }
+
+
+
+    private void closeKeybord() {
+        View view = this.getCurrentFocus();
+        if (view != null){
+            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
 
     }
 
