@@ -1,6 +1,7 @@
 package uniandrade.br.edu.com.popseries.views;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +28,8 @@ import retrofit2.Response;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.adapter.SimilarSerieAdapter;
 import uniandrade.br.edu.com.popseries.api.Client;
+import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.api.Service;
-import uniandrade.br.edu.com.popseries.api.SimilarSeriesResults;
 
 public class DetalhesActivity extends AppCompatActivity {
 
@@ -43,8 +45,8 @@ public class DetalhesActivity extends AppCompatActivity {
     Bundle bundle;
     int serie_id;
 
-    private RecyclerView recyclerView;
     private SimilarSerieAdapter similarSerieAdapter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class DetalhesActivity extends AppCompatActivity {
         }
 
         initCollapsingToolbar();
+
+        progressBar = findViewById(R.id.progressBarSeriesRelacionadas);
 
         linLayComent    = findViewById(R.id.linLayComent);
         imgThumbnail    = findViewById(R.id.thumbnailImageHeader);
@@ -111,17 +115,19 @@ public class DetalhesActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Comentários", Toast.LENGTH_SHORT).show();
             }
         });
-        
-//        initView();
+
+        similarSerieAdapter = new SimilarSerieAdapter(getApplicationContext());
+
+        initView();
 
     }
 
     private void initView() {
-        recyclerView = findViewById(R.id.similarSerieLayout);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView recyclerView = findViewById(R.id.similarSerieLayout);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(similarSerieAdapter);
-
+        progressBar.setVisibility(View.VISIBLE);
         loadJSON();
     }
 
@@ -130,27 +136,31 @@ public class DetalhesActivity extends AppCompatActivity {
             Client Client = new Client();
             Service apiService = Client.getClient().create(Service.class);
 
-            Call<SimilarSeriesResults> call = apiService.getSimilarSeries(serie_id, LANGUAGE, API_KEY);
-            call.enqueue(new Callback<SimilarSeriesResults>() {
+            Call<SeriesResults> call = apiService.getSimilarSeries(serie_id, LANGUAGE, API_KEY);
+            call.enqueue(new Callback<SeriesResults>() {
                 @Override
-                public void onResponse(Call<SimilarSeriesResults> call, Response<SimilarSeriesResults> response) {
+                public void onResponse(@NonNull Call<SeriesResults> call, @NonNull Response<SeriesResults> response) {
                     if (response.isSuccessful()){
-                        SimilarSeriesResults results = response.body();
-                        List<SimilarSeriesResults.ResultsBean> listSeries = results.getResults();
+                        SeriesResults results = response.body();
+                        List<SeriesResults.ResultsBean> listSeries = null;
+                        if (results != null) {
+                            listSeries = results.getResults();
+                        }
+                        progressBar.setVisibility(View.GONE);
                         similarSerieAdapter.adicionarListaSeries(listSeries);
                     }
                     else {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "Erro ao obter dados", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<SimilarSeriesResults> call, Throwable t) {
+                public void onFailure(@NonNull Call<SeriesResults> call, @NonNull Throwable t) {
                     Log.d("ERROR", t.getMessage());
                     Toast.makeText(getApplicationContext(), "Erro ao obter dados", Toast.LENGTH_SHORT).show();
                 }
             });
-
         }catch (Exception e){
             Log.d("ERROR", e.getMessage());
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
