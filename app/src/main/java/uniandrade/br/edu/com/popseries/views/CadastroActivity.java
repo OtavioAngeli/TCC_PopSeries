@@ -1,7 +1,9 @@
-package uniandrade.br.edu.com.popseries;
+package uniandrade.br.edu.com.popseries.views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import uniandrade.br.edu.com.popseries.R;
 
 public class CadastroActivity extends AppCompatActivity {
 

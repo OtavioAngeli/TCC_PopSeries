@@ -14,8 +14,8 @@
     <string name="action_menu_login">Entrar</string>
     <string name="action_menu_logout">Sair</string>
     <string name="action_menu_pesquisa">Pesquisar</string>
-    <string name= "btnCadastrese"> Cadastre-se </string>
-    <string name= "btnCancelar"> Cancelar </string>
+    <string name= "btnCadastrar">Cadastrar</string>
+    <string name= "btnCancelar">Cancelar</string>
 
     <string name="detalhes_serie">Detalhes Série</string>
     <string name="date_realesed_unknow">Lançamento Desconhecido</string>
