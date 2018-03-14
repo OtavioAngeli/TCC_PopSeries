@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -24,12 +25,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import uniandrade.br.edu.com.popseries.CadastroActivity;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-
+    //Abrindo nova tela
+    TextView txtCadastrar;
+    //Abrindo nova tela
     Button btnLoginGoogle;
     GoogleApiClient mGoogleApiClient;
 
@@ -42,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
         progressBar = findViewById(R.id.progressBarLoginGoogle);
+        txtCadastrar = findViewById(R.id.txtCadastrar);
+        // Abrindo nova tela
+        txtCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cadastro = new Intent(LoginActivity.this, CadastroActivity.class);
+                startActivity(cadastro);
+            }
+        });
+        //Abrindo nova tela
 
         btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -30,7 +30,9 @@
         <activity android:name=".views.AmigosActivity" />
         <activity android:name=".views.LoginActivity" />
         <activity android:name=".views.DetalhesActivity" />
+        <activity android:name=".views.CadastroActivity"></activity>
         <activity android:name=".views.PesquisarActivity"></activity>
+
     </application>
 
 </manifest>
