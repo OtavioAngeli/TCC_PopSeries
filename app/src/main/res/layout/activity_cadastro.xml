@@ -35,7 +35,7 @@
                 android:padding="12dp">
 
                 <EditText
-                    android:id="@+id/txtUserNome"
+                    android:id="@+id/editCadastroNome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -54,7 +54,7 @@
                     android:background="@color/colorWhite" />
 
                 <EditText
-                    android:id="@+id/txtUserEmailLogin"
+                    android:id="@+id/editCadastroEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -74,7 +74,7 @@
                     android:background="@color/colorWhite" />
 
                 <EditText
-                    android:id="@+id/txtUserPassword"
+                    android:id="@+id/editCadastroSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -94,7 +94,7 @@
                     android:background="@color/colorWhite" />
 
                 <EditText
-                    android:id="@+id/txtUserConfirmPassword"
+                    android:id="@+id/editCadastroConfirmaSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -113,6 +113,14 @@
                     android:layout_height="1dp"
                     android:background="@color/colorWhite" />
 
+                <ProgressBar
+                    android:visibility="gone"
+                    android:layout_marginTop="22dp"
+                    android:id="@+id/progressBarCadastro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+
                 <Button
                     android:id="@+id/btnCadastrar"
                     android:layout_width="match_parent"
@@ -121,13 +129,6 @@
                     android:background="@drawable/btn_background_login"
                     android:text="@string/btnCadastrar"
                     android:textColor="#64b3f4" />
-
-                <ProgressBar
-                    android:id="@+id/progressBarCadastro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone" />
 
             </LinearLayout>
 
