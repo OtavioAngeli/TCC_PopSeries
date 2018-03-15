@@ -28,4 +28,7 @@
     <string name="imgDescriptionLogo">Logo APP</string>
     <string name="not_close_session">Erro ao encerrar sessão</string>
 
+    <string name="txtLoginRealizado">Login realizado com sucesso!</string>
+    <string name="txtErroLogin">Erro ao realizar login!</string>
+
 </resources>

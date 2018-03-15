@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,22 +31,22 @@ import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    //Abrindo nova tela
-    TextView txtCadastrar;
-    //Abrindo nova tela
-    Button btnLoginGoogle;
-    GoogleApiClient mGoogleApiClient;
+
+    private Button btnLoginGoogle;
+    private Button btnLogin;
+    private EditText txtLoginEmailUsuario;
+    private EditText txtLoginSenhaUsuario;
+    private ProgressBar progressBar;
+
+    private GoogleApiClient mGoogleApiClient;
 
     private Usuario usuario;
-
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener mFirebaseAuthListener;
 
-    private ProgressBar progressBar;
+    private FirebaseAuth.AuthStateListener mFirebaseAuthListener;
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +62,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
+        btnLogin = findViewById(R.id.btnLogin);
+        txtLoginEmailUsuario    = findViewById(R.id.txtUserEmailLogin);
+        txtLoginSenhaUsuario    = findViewById(R.id.txtUserPasswordLogin);
         progressBar = findViewById(R.id.progressBarLoginGoogle);
-        txtCadastrar = findViewById(R.id.txtCadastrar);
+
+        TextView txtCadastrar = findViewById(R.id.txtCadastrar);
+
         // Abrindo nova tela
         txtCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +78,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
         //Abrindo nova tela
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usuario = new Usuario();
+                usuario.setEmail( txtLoginEmailUsuario.getText().toString() );
+                usuario.setSenha( txtLoginSenhaUsuario.getText().toString() );
+                validarLogin();
+            }
+        });
 
         btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +107,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         };
+    }
+
+    private void validarLogin(){
+        btnLogin.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        firebaseAuth = ConfigFirebase.getFirebaseAutenticacao();
+        firebaseAuth.signInWithEmailAndPassword(
+                usuario.getEmail(),
+                usuario.getSenha()
+        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if ( task.isSuccessful() ){
+                    Toast.makeText(getApplicationContext(), R.string.txtLoginRealizado, Toast.LENGTH_SHORT).show();
+                    finish();
+                }else {
+                    Toast.makeText(getApplicationContext(), R.string.txtErroLogin, Toast.LENGTH_SHORT).show();
+                    btnLogin.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
