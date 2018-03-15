@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }else if (id == R.id.menu_pesquisa){
-           Toast.makeText(getApplicationContext(),"Menu Pesquisa", Toast.LENGTH_SHORT).show();
            Intent intent = new Intent(MainActivity.this, PesquisarActivity.class);
             startActivity(intent);
         }else if (id == R.id.action_logout){
