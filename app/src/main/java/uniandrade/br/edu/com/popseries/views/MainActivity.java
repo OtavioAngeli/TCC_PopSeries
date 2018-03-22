@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }else if (id == R.id.menu_pesquisa){
-           Intent intent = new Intent(MainActivity.this, PesquisarActivity.class);
+            Intent intent = new Intent(MainActivity.this, PesquisarActivity.class);
             startActivity(intent);
         }else if (id == R.id.action_logout){
             signOut();
@@ -240,17 +240,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_main, new SeriesFragment()).commit();
-            Toast.makeText(getApplicationContext(),"Menu Séries", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_amigos) {
             Intent intent = new Intent(getApplicationContext(), AmigosActivity.class);
             startActivity(intent);
             Toast.makeText(getApplicationContext(),"Menu Amigos", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_perfil) {
-            Toast.makeText(getApplicationContext(),"Menu Perfil", Toast.LENGTH_SHORT).show();
+            Intent profile = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(profile);
         } else if (id == R.id.nav_ajuda) {
+            Intent ajuda = new Intent(getApplicationContext(), AjudaActivity.class);
+            startActivity(ajuda);
             Toast.makeText(getApplicationContext(),"Menu Ajuda", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_sobre) {
-            Toast.makeText(getApplicationContext(),"Menu Sobre", Toast.LENGTH_SHORT).show();
+            Intent sobre = new Intent(getApplicationContext(), SobreActivity.class);
+            startActivity(sobre);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -16,6 +16,8 @@
     <string name="action_menu_pesquisa">Pesquisar</string>
     <string name="btnCadastrar">Cadastrar</string>
     <string name="btnCancelar">Cancelar</string>
+    <string name="txtNome">Nome:</string>
+    <string name="txtEmail">Email:</string>
 
     <string name="detalhes_serie">Detalhes Série</string>
     <string name="date_realesed_unknow">Lançamento Desconhecido</string>
@@ -27,8 +29,15 @@
     <string name="txtHintNome">Nome</string>
     <string name="imgDescriptionLogo">Logo APP</string>
     <string name="not_close_session">Erro ao encerrar sessão</string>
-
+    <string name="txtSobre">O POP Series é um aplicativo voltado para criação de listas de series, ofereçendo diversas opções de listas para adicionar suas séries em diversas listas, como favoritos, já assistido, para assistir no futuro.Também é possivel dar nota as séries e fazer comentários.</string>
+    <string name="txtCriadores">Davi Santos de Oliveira, Otavio Miguel Angeli.</string>
+    <string name="txtCopyright">Copyright @2018</string>
     <string name="txtLoginRealizado">Login realizado com sucesso!</string>
     <string name="txtErroLogin">Erro ao realizar login!</string>
+    <string name="txtTeladeLogin">A tela de login serve para o usuário fazer a autenticação no sistema para poder salvar suas listas de series favoritas e poder fazer comentários no aplicativo.</string>
+    <string name="txtTeladeSeriesFavoritas">Na lista de séries favoritas irá aparecer as séries que foram adicionadas como favoritas, aqui você poderá fazer comentários e dar nota a série. </string>
+    <string name="txtTeladeSeriesFuturas">Na lista de séries futuras ficará os seriados em que você quer assistir.</string>
+    <string name="txtTeladePefil">Na tela de perfil você poderá alterar a imagem do perfil e os dados pessoais como o nome e E-mail.</string>
+    <string name="txtTeladeCadastro">Na tela de cadastro é necessário que digite o usuário e a senha para a realização do cadastro, também se pode optar por conectar com uma conta do Google já existente.</string>
 
 </resources>

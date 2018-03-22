@@ -3,7 +3,7 @@
     <color name="colorPrimary">#64b3f4</color>
     <color name="colorPrimaryDark">#2196f3</color>
     <color name="colorAccent">#c2e59c</color>
-
+    <color name="colorCinza">#696969</color>
     <color name="fundoApp">#ffffff</color>
     <color name="fundoApp2">#262626</color>
     <color name="fundoApp3">#303030</color>
