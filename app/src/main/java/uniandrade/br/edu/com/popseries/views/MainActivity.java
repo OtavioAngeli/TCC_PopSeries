@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -137,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     usuario = dataSnapshot.getValue(Usuario.class);
-//                    Log.i("FIREBASE-USER", usuario.getNome());
-//                    Log.i("FIREBASE-USER", usuario.getEmail());
                     String userName = usuario.getNome();
                     String userEmail = usuario.getEmail();
                     txtUserNameMenu.setText(userName);
@@ -241,16 +238,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .beginTransaction()
                     .replace(R.id.content_main, new SeriesFragment()).commit();
         } else if (id == R.id.nav_amigos) {
-            Intent intent = new Intent(getApplicationContext(), AmigosActivity.class);
-            startActivity(intent);
-            Toast.makeText(getApplicationContext(),"Menu Amigos", Toast.LENGTH_SHORT).show();
+            if (verificarUsuarioLogado()){
+                Intent intent = new Intent(getApplicationContext(), AmigosActivity.class);
+                startActivity(intent);
+            }else {
+                Toast.makeText(getApplicationContext(), "Area destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
+            }
         } else if (id == R.id.nav_perfil) {
-            Intent profile = new Intent(getApplicationContext(), ProfileActivity.class);
-            startActivity(profile);
+            if (verificarUsuarioLogado()){
+                Intent profile = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(profile);
+            }else {
+                Toast.makeText(getApplicationContext(), "Área destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
+            }
+
         } else if (id == R.id.nav_ajuda) {
             Intent ajuda = new Intent(getApplicationContext(), AjudaActivity.class);
             startActivity(ajuda);
-            Toast.makeText(getApplicationContext(),"Menu Ajuda", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_sobre) {
             Intent sobre = new Intent(getApplicationContext(), SobreActivity.class);
             startActivity(sobre);

@@ -19,10 +19,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imgIcEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_editar"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCapaPerfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgCapaPerfil"
+        app:layout_constraintVertical_bias="1.0" />
+
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imgUserPhotoPerfil"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -38,7 +54,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="262dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -57,20 +73,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
             android:text="@string/txtNome"
             android:textColor="@color/colorWhite"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textNomePerfil"
+            android:id="@+id/txtNomePerfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:paddingStart="12dp"
-            android:text="Davi Santos de Oliveira"
+            android:layout_marginStart="12dp"
             android:textColor="@color/colorWhite" />
 
         <View
@@ -86,16 +100,15 @@
             android:layout_marginTop="10dp"
             android:text="@string/txtEmail"
             android:textColor="@color/colorWhite"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textEmailPerfil"
+            android:id="@+id/txtEmailPerfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:paddingStart="12dp"
-            android:text="davi.santosw@gmail.com"
+            android:layout_marginStart="12dp"
             android:textColor="@color/colorWhite" />
 
 
@@ -107,18 +120,17 @@
 
         <Button
             android:id="@+id/btnEditarPerfil"
-            android:layout_width="193dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/btn_background_login"
-            android:backgroundTint="#D3D3D3"
             android:text="Editar" />
 
         <Button
             android:id="@+id/btnExcluirConta"
-            android:layout_width="193dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/btn_laranja"
             android:text="Excluir Conta"
             android:textColor="@color/colorWhite" />
