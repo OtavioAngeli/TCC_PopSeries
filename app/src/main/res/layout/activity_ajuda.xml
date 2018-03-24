@@ -7,6 +7,24 @@
     android:background="@color/fundoApp2"
     tools:context="uniandrade.br.edu.com.popseries.views.AjudaActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarAjuda"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -33,6 +51,7 @@
                 android:layout_width="122dp"
                 android:layout_height="97dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="50dp"
                 app:srcCompat="@drawable/ic_ajuda"
                 tools:ignore="VectorDrawableCompat"/>
 

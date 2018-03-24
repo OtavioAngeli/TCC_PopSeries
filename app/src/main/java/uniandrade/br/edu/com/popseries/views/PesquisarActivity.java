@@ -49,6 +49,9 @@ public class PesquisarActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Pesquisar");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         TextView txtPesquisar = findViewById(R.id.btnPesquisar);
         progressBar = findViewById(R.id.progressBarPesquisar);

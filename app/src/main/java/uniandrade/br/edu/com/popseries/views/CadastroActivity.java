@@ -3,6 +3,7 @@ package uniandrade.br.edu.com.popseries.views;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,8 @@ import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
 
+    private static final String userDefaultPhoto = "https://firebasestorage.googleapis.com/v0/b/tccpopseries.appspot.com/o/defaultPhoto%2FImagemPerfil.jpg?alt=media&token=770c73ba-d1b8-47e8-8d54-c33aa98dbecd";
+
     private EditText nome;
     private EditText email;
     private EditText senha;
@@ -38,6 +41,14 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+        Toolbar toolbar = findViewById(R.id.toolbarCadastro);
+        toolbar.setTitle("Cadastrar-se");
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+
         nome = findViewById(R.id.editCadastroNome);
         email = findViewById(R.id.editCadastroEmail);
         senha = findViewById(R.id.editCadastroSenha);
@@ -52,6 +63,7 @@ public class CadastroActivity extends AppCompatActivity {
                 usuario.setNome(nome.getText().toString());
                 usuario.setEmail(email.getText().toString());
                 usuario.setSenha(senha.getText().toString());
+                usuario.setPhoto(userDefaultPhoto);
                 if ( usuario.getNome().equals("") ||
                         usuario.getEmail().equals("") || usuario.getSenha().equals("")
                         || confirmaSennha.getText().toString().equals("")) {

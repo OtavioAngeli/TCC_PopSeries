@@ -8,6 +8,7 @@
     tools:context="uniandrade.br.edu.com.popseries.views.CadastroActivity"
     tools:layout_editor_absoluteY="25dp">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -22,8 +23,8 @@
                 android:id="@+id/LogoView"
                 android:layout_width="168dp"
                 android:layout_height="135dp"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="35dp"
                 android:contentDescription="@string/imgDescriptionLogo"
                 app:srcCompat="@drawable/logo" />
 
@@ -32,7 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="12dp"
+                android:layout_marginTop="12dp">
 
                 <EditText
                     android:id="@+id/editCadastroNome"
@@ -111,21 +113,22 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@color/colorWhite" />
 
                 <ProgressBar
-                    android:visibility="gone"
-                    android:layout_marginTop="22dp"
                     android:id="@+id/progressBarCadastro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="22dp"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btnCadastrar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/btn_background_login"
                     android:text="@string/btnCadastrar"
                     android:textColor="#64b3f4" />
