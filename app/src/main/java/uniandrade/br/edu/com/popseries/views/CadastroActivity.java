@@ -41,14 +41,6 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        Toolbar toolbar = findViewById(R.id.toolbarCadastro);
-        toolbar.setTitle("Cadastrar-se");
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-
         nome = findViewById(R.id.editCadastroNome);
         email = findViewById(R.id.editCadastroEmail);
         senha = findViewById(R.id.editCadastroSenha);
