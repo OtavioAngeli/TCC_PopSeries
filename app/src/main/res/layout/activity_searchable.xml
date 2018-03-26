@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fundoApp2"
-    tools:context="uniandrade.br.edu.com.popseries.views.AmigosActivity">
+    tools:context="uniandrade.br.edu.com.popseries.views.SearchableActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarAmigos"
+            android:id="@+id/toolbarSearchable"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewAmigos"
+            android:id="@+id/recyclerSearchable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

@@ -28,8 +28,9 @@ import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.adapter.AmigosAdapter;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
-public class AmigosActivity extends AppCompatActivity {
+public class SearchableActivity extends AppCompatActivity {
 
+    private Toolbar mToolbar;
     private DatabaseReference mUserDatabase;
     private List<Usuario> usuarioList;
 
@@ -38,17 +39,16 @@ public class AmigosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amigos);
-        Toolbar toolbar = findViewById(R.id.toolbarAmigos);
-        setSupportActionBar(toolbar);
-        setTitle("Amigos");
+        setContentView(R.layout.activity_searchable);
+        mToolbar = findViewById(R.id.toolbarSearchable);
+        setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewAmigos);
+        RecyclerView recyclerView = findViewById(R.id.recyclerSearchable);
         amigosAdapter = new AmigosAdapter(getApplicationContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
@@ -57,26 +57,29 @@ public class AmigosActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         usuarioList = new ArrayList<>();
-        listarUsuarios();
 
+        handleSearch( getIntent() );
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent( intent );
+        handleSearch( intent );
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.searchAmigos);
-        SearchView searchView = (SearchView) item.getActionView();
+        final SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Intent intent = new Intent(AmigosActivity.this, SearchableActivity.class);
                 usuarioList.clear();
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("query", s);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                filterUsers( s );
                 return false;
             }
             @Override
@@ -84,14 +87,24 @@ public class AmigosActivity extends AppCompatActivity {
                 return false;
             }
         });
-        searchView.clearFocus();
 
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void listarUsuarios() {
-        Toast.makeText(getApplicationContext(),"LISTANDO TODOS OS USUÁRIOS", Toast.LENGTH_LONG).show();
-        mUserDatabase.addChildEventListener(new ChildEventListener() {
+    public void handleSearch(Intent intent){
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            String query = bundle.getString("query");
+            filterUsers( query );
+        }
+    }
+
+    private void filterUsers(String search) {
+        setTitle( search );
+        usuarioList.clear();
+        Query firebaseSearchQuery = mUserDatabase.orderByChild("nome").startAt( search ).endAt( search + "\uf8ff");
+
+        firebaseSearchQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Usuario usuario = new Usuario();
@@ -120,5 +133,7 @@ public class AmigosActivity extends AppCompatActivity {
 
             }
         });
+
     }
+
 }
