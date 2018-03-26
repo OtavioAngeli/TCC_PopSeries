@@ -49,7 +49,7 @@ public class AmigosActivity extends AppCompatActivity {
         mUserDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAmigos);
-        amigosAdapter = new AmigosAdapter(getApplicationContext());
+        amigosAdapter = new AmigosAdapter(AmigosActivity.this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
         recyclerView.setAdapter(amigosAdapter);
@@ -57,7 +57,6 @@ public class AmigosActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         usuarioList = new ArrayList<>();
-        listarUsuarios();
 
     }
 
@@ -72,7 +71,6 @@ public class AmigosActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String s) {
                 Intent intent = new Intent(AmigosActivity.this, SearchableActivity.class);
                 usuarioList.clear();
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("query", s);
                 intent.putExtras(bundle);
@@ -87,38 +85,5 @@ public class AmigosActivity extends AppCompatActivity {
         searchView.clearFocus();
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private void listarUsuarios() {
-        Toast.makeText(getApplicationContext(),"LISTANDO TODOS OS USUÁRIOS", Toast.LENGTH_LONG).show();
-        mUserDatabase.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Usuario usuario = new Usuario();
-                usuario = dataSnapshot.getValue(Usuario.class);
-                usuarioList.add(usuario);
-                amigosAdapter.adicionarListaUsuarios(usuarioList);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 }

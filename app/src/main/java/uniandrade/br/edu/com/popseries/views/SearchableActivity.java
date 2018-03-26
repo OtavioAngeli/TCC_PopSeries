@@ -49,7 +49,7 @@ public class SearchableActivity extends AppCompatActivity {
         mUserDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
 
         RecyclerView recyclerView = findViewById(R.id.recyclerSearchable);
-        amigosAdapter = new AmigosAdapter(getApplicationContext());
+        amigosAdapter = new AmigosAdapter(SearchableActivity.this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
         recyclerView.setAdapter(amigosAdapter);
