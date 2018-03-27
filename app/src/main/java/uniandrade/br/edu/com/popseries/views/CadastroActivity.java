@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
+import uniandrade.br.edu.com.popseries.helper.Base64Custom;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
@@ -83,7 +84,8 @@ public class CadastroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if( task.isSuccessful() ){
                     Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso !", Toast.LENGTH_LONG ).show();
-                    usuario.setId( task.getResult().getUser().getUid() );
+                    String identificadorUsuario = Base64Custom.encodeBase64( usuario.getEmail() );
+                    usuario.setId( identificadorUsuario );
                     usuario.salvar();
                     finish();
                 }else{

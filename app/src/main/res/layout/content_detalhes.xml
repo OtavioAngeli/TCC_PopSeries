@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/fundoApp2"
-    android:padding="8dp"
-    tools:layout_editor_absoluteY="25dp">
+    android:padding="8dp">
 
     <android.support.v7.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat"
@@ -169,7 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/btn_background_series"
+                    android:background="@drawable/btn_circle"
                     android:drawableEnd="@drawable/ic_avaliacao_white"
                     android:drawablePadding="16dp"
                     android:padding="16dp"
@@ -182,7 +181,7 @@
                     android:id="@+id/btnAdicionar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/btn_background_series"
+                    android:background="@drawable/btn_circle"
                     android:drawableEnd="@drawable/ic_add_white"
                     android:drawablePadding="16dp"
                     android:padding="16dp"

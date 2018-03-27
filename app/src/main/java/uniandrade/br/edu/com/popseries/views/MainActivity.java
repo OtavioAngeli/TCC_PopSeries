@@ -36,6 +36,7 @@ import uniandrade.br.edu.com.popseries.fragments.AssistidosFragment;
 import uniandrade.br.edu.com.popseries.fragments.AssistirMaisTardeFragment;
 import uniandrade.br.edu.com.popseries.fragments.FavoritosFragment;
 import uniandrade.br.edu.com.popseries.fragments.SeriesFragment;
+import uniandrade.br.edu.com.popseries.helper.Base64Custom;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
@@ -130,7 +131,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private Usuario setUserData() {
-        DatabaseReference userReference = databaseReference.child("usuarios").child(firebaseUser.getUid());
+        String identificadorUsuario = Base64Custom.encodeBase64( firebaseUser.getEmail() );
+        DatabaseReference userReference = databaseReference.child("usuarios").child( identificadorUsuario );
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

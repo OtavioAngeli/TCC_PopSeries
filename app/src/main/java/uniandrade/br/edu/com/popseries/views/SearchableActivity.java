@@ -87,7 +87,6 @@ public class SearchableActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 usuarioList.clear();
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 filterUsers( s );
                 return false;
             }

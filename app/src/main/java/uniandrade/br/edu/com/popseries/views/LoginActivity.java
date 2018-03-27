@@ -28,6 +28,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
+import uniandrade.br.edu.com.popseries.helper.Base64Custom;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -180,7 +181,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 FirebaseUser usuarioFirebase = task.getResult().getUser();
                 String photo;
-                usuario.setId( usuarioFirebase.getUid() );
+                String identificadorUsuario = Base64Custom.encodeBase64( signInAccount.getEmail() );
+                usuario.setId( identificadorUsuario );
                 usuario.setEmail(signInAccount.getEmail());
                 usuario.setNome(signInAccount.getDisplayName());
                 if (signInAccount.getPhotoUrl() != null){
