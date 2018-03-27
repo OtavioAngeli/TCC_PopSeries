@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,20 +22,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.adapter.AmigosAdapter;
+import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
+import uniandrade.br.edu.com.popseries.model.Amigo;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class AmigosActivity extends AppCompatActivity {
 
-    private DatabaseReference mUserDatabase;
+    private DatabaseReference databaseReference;
+    private ValueEventListener valueEventListenerContatos;
+
     private List<Usuario> usuarioList;
 
     private AmigosAdapter amigosAdapter;
+
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +64,6 @@ public class AmigosActivity extends AppCompatActivity {
             }
         });
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
-
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAmigos);
         amigosAdapter = new AmigosAdapter(AmigosActivity.this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -65,8 +72,25 @@ public class AmigosActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
+        usuario = new Usuario();
         usuarioList = new ArrayList<>();
 
+        listarAmigos();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        databaseReference.addValueEventListener( valueEventListenerContatos );
+        Log.i("ValueEventListener", "onStart");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        databaseReference.removeEventListener( valueEventListenerContatos );
+        Log.i("ValueEventListener", "onStop");
     }
 
     @Override
@@ -95,4 +119,32 @@ public class AmigosActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    private void listarAmigos() {
+        Preferencias preferencias = new Preferencias(AmigosActivity.this);
+        String identificadorUsuarioLogado = preferencias.getIdentificador();
+        databaseReference = ConfigFirebase.getFirebase().child("amigos").child(identificadorUsuarioLogado);
+
+        valueEventListenerContatos = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Limpar lista
+                usuarioList.clear();
+                //Listar contatos
+                for (DataSnapshot dados: dataSnapshot.getChildren() ){
+                    Usuario amigo = dados.getValue( Usuario.class );
+                    usuarioList.add( amigo );
+                    amigosAdapter.adicionarListaUsuarios(usuarioList);
+                }
+                amigosAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+    }
+
 }

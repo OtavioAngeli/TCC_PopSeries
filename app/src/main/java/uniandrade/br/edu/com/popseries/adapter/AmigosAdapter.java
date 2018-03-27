@@ -8,17 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
+import uniandrade.br.edu.com.popseries.helper.Base64Custom;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
+import uniandrade.br.edu.com.popseries.model.Amigo;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 /**
@@ -30,6 +38,10 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
 
     private List<Usuario> mUserList;
     private Context mContext;
+
+    private DatabaseReference firebase;
+    private String identificadorAmigo;
+    private Dialog myDialog;
 
     public AmigosAdapter(Context mContext) {
         this.mContext = mContext;
@@ -53,7 +65,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
                 .load(usuario.getPhoto()).noFade()
                 .into(holder.imgUserPhoto);
 
-
     }
 
     @Override
@@ -74,10 +85,10 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
         private TextView txtUserEmail;
 
         //DIALOG
-        private Dialog myDialog;
         private TextView txtClosePopup;
         private ImageView imgPopup;
         private TextView txtNomePopup, txtEmailPopup;
+        private Button btnAdicionarPopup;
 
         private ViewHolder(final View itemView) {
             super(itemView);
@@ -95,6 +106,7 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
             imgPopup = myDialog.findViewById(R.id.imgCustomPopup);
             txtNomePopup = myDialog.findViewById(R.id.txtNameCustomPopup);
             txtEmailPopup = myDialog.findViewById(R.id.txtEmailCustomPopup);
+            btnAdicionarPopup = myDialog.findViewById(R.id.btnAdicionarAmigo);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,11 +126,62 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
                                 myDialog.dismiss();
                             }
                         });
+
+                        btnAdicionarPopup.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                adionarAmigo(txtEmailPopup.getText().toString());
+                            }
+                        });
+
                         myDialog.show();
                     }
                 }
             });
 
         }
+    }
+
+    private void adionarAmigo(String email) {
+        //Codificar identificador amigo (base64)
+        identificadorAmigo = Base64Custom.encodeBase64( email );
+
+        firebase = ConfigFirebase.getFirebase().child("usuarios").child(identificadorAmigo);
+
+        firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if( dataSnapshot.getValue() != null ){
+                    //Recuperar dados do amigo a ser adicionado
+                    Usuario usuario = dataSnapshot.getValue( Usuario.class );
+
+                    //Recuperar identificador usuario logado (base64)
+                    Preferencias preferencias = new Preferencias(mContext);
+                    String identificadorUsuarioLogado = preferencias.getIdentificador();
+
+                    firebase = ConfigFirebase.getFirebase();
+                    firebase = firebase.child("amigos")
+                            .child( identificadorUsuarioLogado )
+                            .child( identificadorAmigo );
+
+                    Amigo amigo = new Amigo();
+                    amigo.setId( identificadorAmigo );
+                    amigo.setPhoto( usuario.getPhoto() );
+                    amigo.setNome( usuario.getNome() );
+                    amigo.setEmail( usuario.getEmail() );
+
+                    firebase.setValue( amigo );
+                    myDialog.dismiss();
+                }else {
+                    Toast.makeText(mContext, "Usuário não possui cadastro.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

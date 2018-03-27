@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
@@ -87,6 +88,8 @@ public class CadastroActivity extends AppCompatActivity {
                     String identificadorUsuario = Base64Custom.encodeBase64( usuario.getEmail() );
                     usuario.setId( identificadorUsuario );
                     usuario.salvar();
+                    Preferencias preferencias = new Preferencias(CadastroActivity.this);
+                    preferencias.salvarDados( identificadorUsuario );
                     finish();
                 }else{
                     String erro = "";

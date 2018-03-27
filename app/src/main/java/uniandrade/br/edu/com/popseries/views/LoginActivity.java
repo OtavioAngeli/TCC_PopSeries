@@ -29,6 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -49,10 +50,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
+
+    private Preferencias preferencias;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        preferencias = new Preferencias(LoginActivity.this);
 
         final GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -121,10 +126,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if ( task.isSuccessful() ){
-                    Toast.makeText(getApplicationContext(), R.string.txtLoginRealizado, Toast.LENGTH_SHORT).show();
+                    String identificadorUsuarioLogado = Base64Custom.encodeBase64(usuario.getEmail());
+                    preferencias.salvarDados( identificadorUsuarioLogado );
+                    Toast.makeText(LoginActivity.this, R.string.txtLoginRealizado, Toast.LENGTH_SHORT).show();
                     finish();
                 }else {
-                    Toast.makeText(getApplicationContext(), R.string.txtErroLogin, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.txtErroLogin, Toast.LENGTH_SHORT).show();
                     btnLogin.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }
@@ -182,6 +189,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 FirebaseUser usuarioFirebase = task.getResult().getUser();
                 String photo;
                 String identificadorUsuario = Base64Custom.encodeBase64( signInAccount.getEmail() );
+                preferencias.salvarDados( identificadorUsuario );
                 usuario.setId( identificadorUsuario );
                 usuario.setEmail(signInAccount.getEmail());
                 usuario.setNome(signInAccount.getDisplayName());
