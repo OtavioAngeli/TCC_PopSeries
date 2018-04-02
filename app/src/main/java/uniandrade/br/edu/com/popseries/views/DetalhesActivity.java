@@ -1,9 +1,13 @@
 package uniandrade.br.edu.com.popseries.views;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -47,6 +51,7 @@ public class DetalhesActivity extends AppCompatActivity {
 
     private SimilarSerieAdapter similarSerieAdapter;
     private ProgressBar progressBar;
+    private Dialog myDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +116,7 @@ public class DetalhesActivity extends AppCompatActivity {
         btnAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Adicionar", Toast.LENGTH_SHORT).show();
+                abrirDialog();
             }
         });
 
@@ -127,6 +132,47 @@ public class DetalhesActivity extends AppCompatActivity {
 
         initView();
 
+    }
+
+    private void abrirDialog() {
+        // DIALOG
+        myDialog = new Dialog(DetalhesActivity.this);
+        myDialog.setContentView(R.layout.custom_popup_add);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // VARIAVEIS
+        TextView txtClosePopup = myDialog.findViewById(R.id.txtClosePopup);
+        Button btnAdicionarFavoritos = myDialog.findViewById(R.id.btnAdicionarFavoritos);
+        Button btnAdicionarAssistidos = myDialog.findViewById(R.id.btnAdicionarAssistidos);
+        Button btnAdicionarQueroAssistir = myDialog.findViewById(R.id.btnAdicionarQueroAssistir);
+        // AÇÔES DE CLICK
+        txtClosePopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });
+        btnAdicionarFavoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Adicionado aos Favoritos", Snackbar.LENGTH_SHORT).show();
+                myDialog.dismiss();
+            }
+        });
+        btnAdicionarAssistidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Já Assisti", Snackbar.LENGTH_SHORT).show();
+                myDialog.dismiss();
+            }
+        });
+        btnAdicionarQueroAssistir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Quero Assistir", Snackbar.LENGTH_SHORT).show();
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
     }
 
     private void initView() {

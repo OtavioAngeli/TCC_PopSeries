@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@color/fundoApp3"
+    android:padding="12dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/txtClosePopup"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/colorWhite"
+        android:text="X"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="end"
+        android:background="@drawable/btn_circle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="6dp">
+
+        <Button
+            android:id="@+id/btnAdicionarFavoritos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            android:text="Adicionar Favoritos"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_circle"
+            android:drawableEnd="@drawable/ic_favorite_border_red"
+            android:drawablePadding="12dp"/>
+
+        <Button
+            android:id="@+id/btnAdicionarAssistidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="22dp"
+            android:padding="15dp"
+            android:text="Adicionar Assistidos"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_circle"
+            android:drawableEnd="@drawable/ic_assistidos"
+            android:drawablePadding="12dp"/>
+
+        <Button
+            android:id="@+id/btnAdicionarQueroAssistir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="22dp"
+            android:padding="15dp"
+            android:text="Quero Assistir"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_circle"
+            android:drawableEnd="@drawable/ic_assistir_mais_tarde"
+            android:drawablePadding="12dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
