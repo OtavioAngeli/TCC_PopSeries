@@ -13,6 +13,7 @@ public class Serie {
     private String original_Title;
     private String overview;
     private String apiRate;
+    private String dataLancamento;
 
     /*** CONSTRUCTOR INSTANCE***/
     public Serie() {
@@ -20,22 +21,24 @@ public class Serie {
     }
 
     /*** CONSTRUCTOR UPDATE ***/
-    public Serie(int ID, int serie_ID, String poster, String original_Title, String overview, String apiRate) {
+    public Serie(int ID, int serie_ID, String poster, String original_Title, String overview, String apiRate, String dataLancamento) {
         this.ID = ID;
         this.serie_ID = serie_ID;
         this.poster = poster;
         this.original_Title = original_Title;
         this.overview = overview;
         this.apiRate = apiRate;
+        this.dataLancamento = dataLancamento;
     }
 
     /*** CONSTRUCTOR INSERT ***/
-    public Serie(int serie_ID, String poster, String original_Title, String overview, String apiRate) {
+    public Serie(int serie_ID, String poster, String original_Title, String overview, String apiRate, String dataLancamento) {
         this.serie_ID = serie_ID;
         this.poster = poster;
         this.original_Title = original_Title;
         this.overview = overview;
         this.apiRate = apiRate;
+        this.dataLancamento = dataLancamento;
     }
 
     /*** GETTER AND SETTER ***/
@@ -87,4 +90,11 @@ public class Serie {
         this.apiRate = apiRate;
     }
 
+    public String getDataLancamento() {
+        return dataLancamento;
+    }
+
+    public void setDataLancamento(String dataLancamento) {
+        this.dataLancamento = dataLancamento;
+    }
 }

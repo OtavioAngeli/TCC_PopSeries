@@ -37,6 +37,7 @@ import uniandrade.br.edu.com.popseries.fragments.AssistirMaisTardeFragment;
 import uniandrade.br.edu.com.popseries.fragments.FavoritosFragment;
 import uniandrade.br.edu.com.popseries.fragments.SeriesFragment;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
+                    Preferencias preferencias = new Preferencias(MainActivity.this);
                     usuario = dataSnapshot.getValue(Usuario.class);
                     String userName = usuario.getNome();
                     String userEmail = usuario.getEmail();
@@ -145,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Picasso.with(MainActivity.this)
                             .load(usuario.getPhoto()).noFade()
                             .into(imgUserPhotoMenu);
+
+                    preferencias.salvarNomeEmail( userName, userEmail );
                 }
             }
             @Override

@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.model.Serie;
 
 /**
@@ -22,6 +25,7 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
 
     private Context mContext;
     private long userID, serieID, usuarioSerieID;
+    private List<SeriesResults.ResultsBean> listSeries;
 
     private static int FAVORITA = 0;
     private static int ASSISTIDA = 0;
@@ -42,6 +46,7 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME_TITLE = "original_Title";
     private static final String COLUMN_NAME_OVERVIEW = "overview";
     private static final String COLUMN_NAME_API_RATE = "apiRate";
+    private static final String COLUMN_NAME_DATE = "data_lancamento";
 
     private static final String COLUMN_NAME_USER_UID = "uid";
     private static final String COLUMN_NAME_USER_NAME = "name";
@@ -58,7 +63,8 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
                         + COLUMN_SERIE_ID + " TEXT,"
                         + COLUMN_NAME_TITLE + " TEXT,"
                         + COLUMN_NAME_OVERVIEW + " TEXT,"
-                        + COLUMN_NAME_API_RATE + " TEXT"
+                        + COLUMN_NAME_API_RATE + " TEXT,"
+                        + COLUMN_NAME_DATE + " TEXT"
                     + ");";
 
     private static final String SQL_CREATE_TABLE_USUARIO =
@@ -213,6 +219,7 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         values.put( COLUMN_NAME_TITLE, serie.getOriginal_Title() );
         values.put( COLUMN_NAME_OVERVIEW, serie.getOverview() );
         values.put( COLUMN_NAME_API_RATE, serie.getApiRate() );
+        values.put( COLUMN_NAME_DATE, serie.getDataLancamento() );
 
         long newRowSerieId = db.insert(TABLE_SERIE, null, values);
         db.close();
@@ -366,37 +373,120 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void retornaFavoritos(){
+    public List<SeriesResults.ResultsBean> retornaFavoritos(){
         try {
-            Preferencias preferencias = new Preferencias( mContext );
-            SQLiteDatabase db = this.getWritableDatabase();
-            String identificadorUsuario = preferencias.getIdentificador();
+            listSeries = new ArrayList<>();
+            userID = verificarUsuarioBanco();
+            final String QUERY =
+                    "SELECT s.serie_id, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
+                    "FROM usuario_serie us " +
+                    "INNER JOIN usuario u ON u._ID_USUARIO = us._ID_USUARIO " +
+                    "INNER JOIN series s ON s._ID_SERIE = us._ID_SERIE " +
+                    "WHERE us.favorita = 1 AND us._ID_USUARIO = " + userID +
+                    " ORDER BY s.original_Title ASC;";
 
-            String QUERY =
-                    "SELECT *  " +
-                    "FROM " + TABLE_USUARIO_SERIE;
+            SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery( QUERY, null );
 
-            int indiceID = cursor.getColumnIndex(COLUMN_ID_USUARIO_SERIE);
-            int indiceIDUsuario = cursor.getColumnIndex(COLUMN_ID_USUARIO);
-            int indiceIDSerie = cursor.getColumnIndex(COLUMN_ID_SERIE);
-            int indiceFavorita = cursor.getColumnIndex(COLUMN_NAME_FAVORITA);
-            int indiceAssistida = cursor.getColumnIndex(COLUMN_NAME_ASSISTIDA);
-            int indiceQueroAssistir = cursor.getColumnIndex(COLUMN_NAME_QUERO_ASSISTIR);
+            int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
+            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_NAME_TITLE);
+            int indiceOverview = cursor.getColumnIndex(COLUMN_NAME_OVERVIEW);
+            int indiceApiRate = cursor.getColumnIndex(COLUMN_NAME_API_RATE);
+            int indiceDate = cursor.getColumnIndex(COLUMN_NAME_DATE);
 
             cursor.moveToFirst();
-            while (cursor != null){
-                Log.i("RESULT ID_USUARIO: ", cursor.getString(indiceIDUsuario) );
-                Log.i("RESULT ID_SERIE: ", cursor.getString(indiceIDSerie) );
-                Log.i("RESULT FAVORITA: ", cursor.getString(indiceFavorita) );
-                Log.i("RESULT ASSISTIDA: ", cursor.getString(indiceAssistida) );
-                Log.i("RESULT QUERO_ASSISTIR: ", cursor.getString(indiceQueroAssistir) );
-                cursor.moveToNext();
-            }
+            do {
+                SeriesResults.ResultsBean serie = new SeriesResults.ResultsBean();
+                serie.setId( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
+                serie.setName( cursor.getString( indiceTitleSerie ) );
+                serie.setOverview( cursor.getString( indiceOverview ) );
+                serie.setVote_average( Double.parseDouble( cursor.getString( indiceApiRate ) ) );
+                serie.setFirst_air_date( cursor.getString( indiceDate ) );
+                listSeries.add( serie );
+            } while ( cursor.moveToNext() );
             cursor.close();
+            return listSeries;
         }catch (Exception e){
             e.printStackTrace();
         }
+        return null;
+    }
 
+    public List<SeriesResults.ResultsBean> retornaAssistidos(){
+        try {
+            listSeries = new ArrayList<>();
+            userID = verificarUsuarioBanco();
+            final String QUERY =
+                    "SELECT s.serie_id, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
+                    "FROM usuario_serie us " +
+                    "INNER JOIN usuario u ON u._ID_USUARIO = us._ID_USUARIO " +
+                    "INNER JOIN series s ON s._ID_SERIE = us._ID_SERIE " +
+                    "WHERE us.assistida = 1 AND us._ID_USUARIO = " + userID +
+                    " ORDER BY s.original_Title ASC;";
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery( QUERY, null );
+
+            int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
+            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_NAME_TITLE);
+            int indiceOverview = cursor.getColumnIndex(COLUMN_NAME_OVERVIEW);
+            int indiceApiRate = cursor.getColumnIndex(COLUMN_NAME_API_RATE);
+            int indiceDate = cursor.getColumnIndex(COLUMN_NAME_DATE);
+            cursor.moveToFirst();
+
+            do {
+                SeriesResults.ResultsBean serie = new SeriesResults.ResultsBean();
+                serie.setId( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
+                serie.setName( cursor.getString( indiceTitleSerie ) );
+                serie.setOverview( cursor.getString( indiceOverview ) );
+                serie.setVote_average( Double.parseDouble( cursor.getString( indiceApiRate ) ) );
+                serie.setFirst_air_date( cursor.getString( indiceDate ) );
+                listSeries.add( serie );
+            } while ( cursor.moveToNext() );
+            cursor.close();
+            return listSeries;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<SeriesResults.ResultsBean> retornaQueroAssistir(){
+        try {
+            listSeries = new ArrayList<>();
+            userID = verificarUsuarioBanco();
+            final String QUERY =
+                    "SELECT s.serie_id, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
+                    "FROM usuario_serie us " +
+                    "INNER JOIN usuario u ON u._ID_USUARIO = us._ID_USUARIO " +
+                    "INNER JOIN series s ON s._ID_SERIE = us._ID_SERIE " +
+                    "WHERE us.quero_assistir = 1 AND us._ID_USUARIO = " + userID +
+                    " ORDER BY s.original_Title ASC;";
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery( QUERY, null );
+
+            int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
+            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_NAME_TITLE);
+            int indiceOverview = cursor.getColumnIndex(COLUMN_NAME_OVERVIEW);
+            int indiceApiRate = cursor.getColumnIndex(COLUMN_NAME_API_RATE);
+            int indiceDate = cursor.getColumnIndex(COLUMN_NAME_DATE);
+            cursor.moveToFirst();
+
+            do {
+                SeriesResults.ResultsBean serie = new SeriesResults.ResultsBean();
+                serie.setId( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
+                serie.setName( cursor.getString( indiceTitleSerie ) );
+                serie.setOverview( cursor.getString( indiceOverview ) );
+                serie.setVote_average( Double.parseDouble( cursor.getString( indiceApiRate ) ) );
+                serie.setFirst_air_date( cursor.getString( indiceDate ) );
+                listSeries.add( serie );
+            } while ( cursor.moveToNext() );
+            cursor.close();
+            return listSeries;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

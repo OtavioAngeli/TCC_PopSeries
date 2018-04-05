@@ -55,7 +55,8 @@ public class DetalhesActivity extends AppCompatActivity {
     LinearLayoutCompat linLayComent;
 
     Bundle bundle;
-    int serie_id;
+    private int serie_id;
+    private String dataLancamento;
 
     private SimilarSerieAdapter similarSerieAdapter;
     private ProgressBar progressBar;
@@ -113,6 +114,7 @@ public class DetalhesActivity extends AppCompatActivity {
             if (bundle != null){
 
                 serie_id = bundle.getInt("serie_id");
+                dataLancamento = bundle.getString("data_lancamento");
 
                 Picasso.with(this)
                         .load(bundle.getString("poster"))
@@ -270,30 +272,23 @@ public class DetalhesActivity extends AppCompatActivity {
     private void saveOnDatabase(int i) {
         switch (i){
             case 1:
-                db.addFavorito( new Serie(
-                        serie_id, bundle.getString("poster"),
-                        nameOfSerie.getText().toString(),
-                        txtSinopse.getText().toString(),
-                        txtApiRate.getText().toString()) );
-
+                db.addFavorito( new Serie(serie_id,bundle.getString("poster"),
+                        nameOfSerie.getText().toString(),txtSinopse.getText().toString(),
+                        txtApiRate.getText().toString(),dataLancamento) );
                 myDialog.dismiss();
                 Snackbar.make(findViewById(R.id.activity_detalhes), "Adicionado aos Favoritos", Snackbar.LENGTH_SHORT).show();
                 break;
             case 2:
-                db.addAssistida( new Serie(
-                        serie_id, bundle.getString("poster"),
-                        nameOfSerie.getText().toString(),
-                        txtSinopse.getText().toString(),
-                        txtApiRate.getText().toString()) );
+                db.addAssistida( new Serie(serie_id, bundle.getString("poster"),
+                        nameOfSerie.getText().toString(), txtSinopse.getText().toString(),
+                        txtApiRate.getText().toString(), dataLancamento) );
                 Snackbar.make(findViewById(R.id.activity_detalhes), "Já Assisti", Snackbar.LENGTH_SHORT).show();
                 myDialog.dismiss();
                 break;
             case 3:
-                db.addQueroAssistir( new Serie(
-                        serie_id, bundle.getString("poster"),
-                        nameOfSerie.getText().toString(),
-                        txtSinopse.getText().toString(),
-                        txtApiRate.getText().toString()) );
+                db.addQueroAssistir( new Serie(serie_id, bundle.getString("poster"),
+                        nameOfSerie.getText().toString(), txtSinopse.getText().toString(),
+                        txtApiRate.getText().toString(), dataLancamento) );
                 Snackbar.make(findViewById(R.id.activity_detalhes), "Quero Assistir", Snackbar.LENGTH_SHORT).show();
                 myDialog.dismiss();
                 break;

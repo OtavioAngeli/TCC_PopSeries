@@ -65,10 +65,11 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
         holder.txtNomeSerie.setText(seriesResults.getName());
 
         //DATA LANÇAMENTO
-        if (seriesResults.getFirst_air_date().equals("")){
+        String data = seriesResults.getFirst_air_date();
+        if (data == null || data.isEmpty()){
             holder.txtReleaseDate.setText(R.string.date_realesed_unknow);
         }else{
-            date.setData(seriesResults.getFirst_air_date());
+            date.setData(data);
             holder.txtReleaseDate.setText(date.getYear());
         }
 
@@ -132,6 +133,7 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
                         bundle.putString("original_title", seriesResults.getName());
                         bundle.putString("overview", seriesResults.getOverview());
                         bundle.putString("apiRate", Double.toString(seriesResults.getVote_average()));
+                        bundle.putString("data_lancamento", seriesResults.getFirst_air_date());
                         intent.putExtras(bundle);
                         mContext.startActivity(intent);
                     }
