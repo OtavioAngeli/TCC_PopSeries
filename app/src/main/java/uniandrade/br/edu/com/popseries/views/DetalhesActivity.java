@@ -34,6 +34,8 @@ import uniandrade.br.edu.com.popseries.adapter.SimilarSerieAdapter;
 import uniandrade.br.edu.com.popseries.api.Client;
 import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.api.Service;
+import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
+import uniandrade.br.edu.com.popseries.model.Serie;
 
 public class DetalhesActivity extends AppCompatActivity {
 
@@ -51,7 +53,14 @@ public class DetalhesActivity extends AppCompatActivity {
 
     private SimilarSerieAdapter similarSerieAdapter;
     private ProgressBar progressBar;
+
+    // DIALOG VARIAVEIS
+    private ProgressBar progressBarAdd;
     private Dialog myDialog;
+    private TextView txtClosePopup;
+    private Button btnAdicionarFavoritos, btnAdicionarAssistidos, btnAdicionarQueroAssistir;
+
+    private SeriesDbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,8 @@ public class DetalhesActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        db = new SeriesDbHelper(DetalhesActivity.this);
 
         initCollapsingToolbar();
 
@@ -140,10 +151,11 @@ public class DetalhesActivity extends AppCompatActivity {
         myDialog.setContentView(R.layout.custom_popup_add);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // VARIAVEIS
-        TextView txtClosePopup = myDialog.findViewById(R.id.txtClosePopup);
-        Button btnAdicionarFavoritos = myDialog.findViewById(R.id.btnAdicionarFavoritos);
-        Button btnAdicionarAssistidos = myDialog.findViewById(R.id.btnAdicionarAssistidos);
-        Button btnAdicionarQueroAssistir = myDialog.findViewById(R.id.btnAdicionarQueroAssistir);
+        txtClosePopup = myDialog.findViewById(R.id.txtClosePopup);
+        btnAdicionarFavoritos = myDialog.findViewById(R.id.btnAdicionarFavoritos);
+        btnAdicionarAssistidos = myDialog.findViewById(R.id.btnAdicionarAssistidos);
+        btnAdicionarQueroAssistir = myDialog.findViewById(R.id.btnAdicionarQueroAssistir);
+        progressBarAdd = myDialog.findViewById(R.id.progressBarAdd);
         // AÇÔES DE CLICK
         txtClosePopup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,25 +166,62 @@ public class DetalhesActivity extends AppCompatActivity {
         btnAdicionarFavoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(findViewById(R.id.activity_detalhes), "Adicionado aos Favoritos", Snackbar.LENGTH_SHORT).show();
-                myDialog.dismiss();
+                txtClosePopup.setEnabled(false);
+                myDialog.setCancelable(false);
+                btnAdicionarAssistidos.setVisibility(View.GONE);
+                btnAdicionarQueroAssistir.setVisibility(View.GONE);
+                btnAdicionarFavoritos.setVisibility(View.GONE);
+                progressBarAdd.setVisibility(View.VISIBLE);
+                saveOnDatabase(1);
             }
         });
         btnAdicionarAssistidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(findViewById(R.id.activity_detalhes), "Já Assisti", Snackbar.LENGTH_SHORT).show();
-                myDialog.dismiss();
+                saveOnDatabase(2);
             }
         });
         btnAdicionarQueroAssistir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(findViewById(R.id.activity_detalhes), "Quero Assistir", Snackbar.LENGTH_SHORT).show();
-                myDialog.dismiss();
+                saveOnDatabase(3);
             }
         });
+
         myDialog.show();
+    }
+
+    private void saveOnDatabase(int i) {
+        switch (i){
+            case 1:
+                db.addFavorito( new Serie(
+                        serie_id, bundle.getString("poster"),
+                        nameOfSerie.getText().toString(),
+                        txtSinopse.getText().toString(),
+                        txtApiRate.getText().toString()) );
+
+                myDialog.dismiss();
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Adicionado aos Favoritos", Snackbar.LENGTH_SHORT).show();
+                break;
+            case 2:
+                db.addAssistida( new Serie(
+                        serie_id, bundle.getString("poster"),
+                        nameOfSerie.getText().toString(),
+                        txtSinopse.getText().toString(),
+                        txtApiRate.getText().toString()) );
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Já Assisti", Snackbar.LENGTH_SHORT).show();
+                myDialog.dismiss();
+                break;
+            case 3:
+                db.addQueroAssistir( new Serie(
+                        serie_id, bundle.getString("poster"),
+                        nameOfSerie.getText().toString(),
+                        txtSinopse.getText().toString(),
+                        txtApiRate.getText().toString()) );
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Quero Assistir", Snackbar.LENGTH_SHORT).show();
+                myDialog.dismiss();
+                break;
+        }
     }
 
     private void initView() {
