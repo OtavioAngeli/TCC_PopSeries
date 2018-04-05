@@ -34,10 +34,16 @@ import uniandrade.br.edu.com.popseries.adapter.SimilarSerieAdapter;
 import uniandrade.br.edu.com.popseries.api.Client;
 import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.api.Service;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
 import uniandrade.br.edu.com.popseries.model.Serie;
 
 public class DetalhesActivity extends AppCompatActivity {
+
+    /*===============
+        DEBUG
+     ================*/
+    private static final String TAG = "DetalhesActivity";
 
     public static String API_KEY = "042df6719b1c27335641d1d7a9e2e66e";
     public static String LANGUAGE = "pt-BR";
@@ -58,9 +64,10 @@ public class DetalhesActivity extends AppCompatActivity {
     private ProgressBar progressBarAdd;
     private Dialog myDialog;
     private TextView txtClosePopup;
-    private Button btnAdicionarFavoritos, btnAdicionarAssistidos, btnAdicionarQueroAssistir;
+    private Button btnFavoritos, btnAssistidos, btnQueroAssistir;
 
     private SeriesDbHelper db;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,8 @@ public class DetalhesActivity extends AppCompatActivity {
         });
 
         db = new SeriesDbHelper(DetalhesActivity.this);
+        Preferencias preferencias = new Preferencias(DetalhesActivity.this);
+        userID = preferencias.getIdentificador();
 
         initCollapsingToolbar();
 
@@ -152,9 +161,9 @@ public class DetalhesActivity extends AppCompatActivity {
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // VARIAVEIS
         txtClosePopup = myDialog.findViewById(R.id.txtClosePopup);
-        btnAdicionarFavoritos = myDialog.findViewById(R.id.btnAdicionarFavoritos);
-        btnAdicionarAssistidos = myDialog.findViewById(R.id.btnAdicionarAssistidos);
-        btnAdicionarQueroAssistir = myDialog.findViewById(R.id.btnAdicionarQueroAssistir);
+        btnFavoritos = myDialog.findViewById(R.id.btnAdicionarFavoritos);
+        btnAssistidos = myDialog.findViewById(R.id.btnAdicionarAssistidos);
+        btnQueroAssistir = myDialog.findViewById(R.id.btnAdicionarQueroAssistir);
         progressBarAdd = myDialog.findViewById(R.id.progressBarAdd);
         // AÇÔES DE CLICK
         txtClosePopup.setOnClickListener(new View.OnClickListener() {
@@ -163,32 +172,99 @@ public class DetalhesActivity extends AppCompatActivity {
                 myDialog.dismiss();
             }
         });
-        btnAdicionarFavoritos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                txtClosePopup.setEnabled(false);
-                myDialog.setCancelable(false);
-                btnAdicionarAssistidos.setVisibility(View.GONE);
-                btnAdicionarQueroAssistir.setVisibility(View.GONE);
-                btnAdicionarFavoritos.setVisibility(View.GONE);
-                progressBarAdd.setVisibility(View.VISIBLE);
-                saveOnDatabase(1);
-            }
-        });
-        btnAdicionarAssistidos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveOnDatabase(2);
-            }
-        });
-        btnAdicionarQueroAssistir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveOnDatabase(3);
-            }
-        });
+
+        boolean favorita = verificarFavorito();
+        boolean assistida = verificarAssistido();
+        boolean quero_assistir = verificarQueroAssistir();
+
+        if ( !favorita ){
+            btnFavoritos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    saveOnDatabase(1);
+                }
+            });
+        }else {
+            btnFavoritos.setText( "Remover Favoritos" );
+            btnFavoritos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    removeSerieOnDatabase(1);
+                }
+            });
+        }
+        if ( !assistida ){
+            btnAssistidos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    saveOnDatabase(2);
+                }
+            });
+        }else {
+            btnAssistidos.setText( "Remover Assistidos" );
+            btnAssistidos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    removeSerieOnDatabase(2);
+                }
+            });
+        }
+        if ( !quero_assistir ){
+            btnQueroAssistir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    saveOnDatabase(3);
+                }
+            });
+        }else {
+            btnQueroAssistir.setText( "Remover Quero Assistir" );
+            btnQueroAssistir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    removeSerieOnDatabase(3);
+                }
+            });
+        }
+
+
 
         myDialog.show();
+    }
+
+    private boolean verificarFavorito() {
+        return db.verificaFavorito( serie_id );
+    }
+
+    private boolean verificarAssistido() {
+        return db.verificaAssistido( serie_id );
+    }
+
+    private boolean verificarQueroAssistir() {
+        return db.verificaQueroAssistir( serie_id );
+    }
+
+    private void removeSerieOnDatabase(int i) {
+        String column;
+        switch (i) {
+            case 1:
+                column = "favorita";
+                db.removerFavorito( column, serie_id );
+                myDialog.dismiss();
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Removido dos Favoritos", Snackbar.LENGTH_SHORT).show();
+                break;
+            case 2:
+                column = "assistida";
+                db.removerAssistido( column, serie_id );
+                myDialog.dismiss();
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Removido dos Assistidos", Snackbar.LENGTH_SHORT).show();
+                break;
+            case 3:
+                column = "quero_assistir";
+                db.removerQueroAssistir( column, serie_id );
+                myDialog.dismiss();
+                Snackbar.make(findViewById(R.id.activity_detalhes), "Removido dos Quero Assistir", Snackbar.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     private void saveOnDatabase(int i) {

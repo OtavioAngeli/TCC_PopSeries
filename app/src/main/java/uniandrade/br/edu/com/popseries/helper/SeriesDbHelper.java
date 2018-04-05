@@ -15,6 +15,11 @@ import uniandrade.br.edu.com.popseries.model.Serie;
  */
 
 public class SeriesDbHelper extends SQLiteOpenHelper {
+    /*===============
+        DEBUG
+     ================*/
+    private static final String TAG = "SeriesDbHelper";
+
     private Context mContext;
     private long userID, serieID, usuarioSerieID;
 
@@ -227,7 +232,6 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         if ( serieID == 0 ){
             serieID = addSerieBanco( serie );
         }
-        Log.i("addFavorito: USID - ", String.valueOf(usuarioSerieID));
         if (usuarioSerieID == 0) {
             addUsuarioSerie( userID, serieID );
         }else {
@@ -249,8 +253,6 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         if ( serieID == 0 ){
             serieID = addSerieBanco(serie);
         }
-
-        Log.i("addFavorito: USID - ", String.valueOf(usuarioSerieID));
         if (usuarioSerieID == 0) {
             addUsuarioSerie( userID, serieID );
         }else {
@@ -272,13 +274,96 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         if ( serieID == 0 ){
             serieID = addSerieBanco(serie);
         }
-        Log.i("addFavorito: USID - ", String.valueOf(usuarioSerieID));
         if (usuarioSerieID == 0) {
             addUsuarioSerie( userID, serieID );
         }else {
             updateUsuarioSerie( usuarioSerieID, column );
         }
         QUERO_ASSISTIR = 0;
+    }
+
+    public void removerFavorito(String column, int serie_id) {
+        userID = verificarUsuarioBanco();
+        serieID = verificarSerieBanco( serie_id );
+        usuarioSerieID = verificarUsuarioSerie( userID, serieID );
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String QUERY_UPDATE = "UPDATE usuario_serie SET " + column + " = 0 WHERE _ID_USUARIO_SERIE = " + usuarioSerieID;
+        db.execSQL(QUERY_UPDATE);
+        db.close();
+    }
+
+    public void removerAssistido(String column, int serie_id) {
+        userID = verificarUsuarioBanco();
+        serieID = verificarSerieBanco( serie_id );
+        usuarioSerieID = verificarUsuarioSerie( userID, serieID );
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String QUERY_UPDATE = "UPDATE usuario_serie SET " + column + " = 0 WHERE _ID_USUARIO_SERIE = " + usuarioSerieID;
+        db.execSQL(QUERY_UPDATE);
+        db.close();
+    }
+
+    public void removerQueroAssistir(String column, int serie_id) {
+        userID = verificarUsuarioBanco();
+        serieID = verificarSerieBanco( serie_id );
+        usuarioSerieID = verificarUsuarioSerie( userID, serieID );
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String QUERY_UPDATE = "UPDATE usuario_serie SET " + column + " = 0 WHERE _ID_USUARIO_SERIE = " + usuarioSerieID;
+        db.execSQL(QUERY_UPDATE);
+        db.close();
+    }
+
+    public boolean verificaFavorito(int serie_id ){
+        long user_ID = verificarUsuarioBanco();
+        long serie_ID = verificarSerieBanco( serie_id );
+        String QUERY = "SELECT favorita FROM usuario_serie WHERE _ID_USUARIO = " + user_ID + " AND _ID_SERIE = " + serie_ID + " AND favorita = 1 ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( QUERY, null );
+        cursor.moveToFirst();
+        if ( cursor.getCount() == 0 ) {
+            db.close();
+            return false;
+        }else {
+            cursor.close();
+            db.close();
+            return true;
+        }
+    }
+
+    public boolean verificaAssistido(int serie_id ){
+        long user_ID = verificarUsuarioBanco();
+        long serie_ID = verificarSerieBanco( serie_id );
+        String QUERY = "SELECT assistida FROM usuario_serie WHERE _ID_USUARIO = " + user_ID + " AND _ID_SERIE = " + serie_ID + " AND assistida = 1 ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( QUERY, null );
+        cursor.moveToFirst();
+        if ( cursor.getCount() == 0 ) {
+            db.close();
+            return false;
+        }else {
+            cursor.close();
+            db.close();
+            return true;
+        }
+    }
+
+    public boolean verificaQueroAssistir(int serie_id ){
+        long user_ID = verificarUsuarioBanco();
+        long serie_ID = verificarSerieBanco( serie_id );
+        String QUERY = "SELECT quero_assistir FROM usuario_serie WHERE _ID_USUARIO = " + user_ID + " AND _ID_SERIE = " + serie_ID + " AND quero_assistir = 1 ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( QUERY, null );
+        cursor.moveToFirst();
+        if ( cursor.getCount() == 0 ) {
+            db.close();
+            return false;
+        }else {
+            cursor.close();
+            db.close();
+            return true;
+        }
     }
 
     public void retornaFavoritos(){
