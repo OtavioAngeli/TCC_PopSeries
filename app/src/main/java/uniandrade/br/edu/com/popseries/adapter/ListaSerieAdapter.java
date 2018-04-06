@@ -115,7 +115,6 @@ public class  ListaSerieAdapter extends RecyclerView.Adapter<ListaSerieAdapter.V
                     if ( pos != RecyclerView.NO_POSITION ){
                         SeriesResults.ResultsBean clickedDataItem = mSerieList.get(pos);
                         Toast.makeText(view.getContext(), clickedDataItem.getOriginal_name(), Toast.LENGTH_SHORT).show();
-
                     }
                     return true;
                 }

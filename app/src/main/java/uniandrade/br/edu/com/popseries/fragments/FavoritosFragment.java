@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.adapter.ListaSerieAdapter;
+import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
 
 /**
@@ -17,8 +20,7 @@ import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
  */
 public class FavoritosFragment extends Fragment {
 
-    private ListaSerieAdapter listaSerieAdapter;
-
+    private RecyclerView recyclerView;
 
     public FavoritosFragment() {
         // Required empty public constructor
@@ -36,11 +38,9 @@ public class FavoritosFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favoritos, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewFavoritos);
-        listaSerieAdapter = new ListaSerieAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        recyclerView.setAdapter(listaSerieAdapter);
+        recyclerView = view.findViewById(R.id.recyclerViewFavoritos);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -52,7 +52,12 @@ public class FavoritosFragment extends Fragment {
 
     private void retornaFavoritos() {
         SeriesDbHelper db = new SeriesDbHelper( getContext() );
-        listaSerieAdapter.adicionarListaSeries( db.retornaFavoritos() );
+        ListaSerieAdapter listaSerieAdapter = new ListaSerieAdapter(getContext());
+        recyclerView.setAdapter(listaSerieAdapter);
+        List<SeriesResults.ResultsBean> list = db.retornaFavoritos();
+        if ( list != null ){
+            listaSerieAdapter.adicionarListaSeries( list );
+        }
         db.close();
     }
 

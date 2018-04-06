@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.adapter.ListaSerieAdapter;
+import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
 
 /**
@@ -18,7 +21,7 @@ import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
  */
 public class AssistirMaisTardeFragment extends Fragment {
 
-    private ListaSerieAdapter listaSerieAdapter;
+    private RecyclerView recyclerView;
 
     public AssistirMaisTardeFragment() {
         // Required empty public constructor
@@ -36,11 +39,9 @@ public class AssistirMaisTardeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_assistir_mais_tarde, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewQueroAssistir);
-        listaSerieAdapter = new ListaSerieAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-        recyclerView.setAdapter(listaSerieAdapter);
+        recyclerView = view.findViewById(R.id.recyclerViewQueroAssistir);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -51,7 +52,12 @@ public class AssistirMaisTardeFragment extends Fragment {
 
     private void retornaQueroAssistir() {
         SeriesDbHelper db = new SeriesDbHelper( getContext() );
-        listaSerieAdapter.adicionarListaSeries( db.retornaQueroAssistir() );
+        ListaSerieAdapter listaSerieAdapter = new ListaSerieAdapter(getContext());
+        recyclerView.setAdapter(listaSerieAdapter);
+        List<SeriesResults.ResultsBean> list = db.retornaQueroAssistir();
+        if ( list != null ){
+            listaSerieAdapter.adicionarListaSeries( list );
+        }
         db.close();
     }
 

@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
+import uniandrade.br.edu.com.popseries.helper.Base64Custom;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -45,7 +46,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private Usuario setUserData() {
-        DatabaseReference userReference = databaseReference.child("usuarios").child(firebaseUser.getUid());
+        String identificadorUsuario = Base64Custom.encodeBase64( firebaseUser.getEmail() );
+        DatabaseReference userReference = databaseReference.child("usuarios").child( identificadorUsuario );
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -18,10 +18,6 @@ import uniandrade.br.edu.com.popseries.model.Serie;
  */
 
 public class SeriesDbHelper extends SQLiteOpenHelper {
-    /*===============
-        DEBUG
-     ================*/
-    private static final String TAG = "SeriesDbHelper";
 
     private Context mContext;
     private long userID, serieID, usuarioSerieID;
