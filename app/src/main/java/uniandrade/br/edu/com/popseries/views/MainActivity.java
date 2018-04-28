@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             .load(usuario.getPhoto()).noFade()
                             .into(imgUserPhotoMenu);
 
-                    preferencias.salvarNomeEmail( userName, userEmail );
+                    preferencias.salvarNomeEmail( userName, userEmail, usuario.getPhoto() );
                 }
             }
             @Override

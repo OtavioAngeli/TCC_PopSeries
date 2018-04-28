@@ -9,7 +9,7 @@ public class Serie {
 
     private int ID;
     private int serie_ID;
-    private String poster;
+    private String urlCapa;
     private String original_Title;
     private String overview;
     private String apiRate;
@@ -21,10 +21,10 @@ public class Serie {
     }
 
     /*** CONSTRUCTOR UPDATE ***/
-    public Serie(int ID, int serie_ID, String poster, String original_Title, String overview, String apiRate, String dataLancamento) {
+    public Serie(int ID, int serie_ID, String urlCapa, String original_Title, String overview, String apiRate, String dataLancamento) {
         this.ID = ID;
         this.serie_ID = serie_ID;
-        this.poster = poster;
+        this.urlCapa = urlCapa;
         this.original_Title = original_Title;
         this.overview = overview;
         this.apiRate = apiRate;
@@ -32,9 +32,9 @@ public class Serie {
     }
 
     /*** CONSTRUCTOR INSERT ***/
-    public Serie(int serie_ID, String poster, String original_Title, String overview, String apiRate, String dataLancamento) {
+    public Serie(int serie_ID, String urlCapa, String original_Title, String overview, String apiRate, String dataLancamento) {
         this.serie_ID = serie_ID;
-        this.poster = poster;
+        this.urlCapa = urlCapa;
         this.original_Title = original_Title;
         this.overview = overview;
         this.apiRate = apiRate;
@@ -58,12 +58,12 @@ public class Serie {
         this.serie_ID = serie_ID;
     }
 
-    public String getPoster() {
-        return poster;
+    public String getUrlCapa() {
+        return urlCapa;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setUrlCapa(String urlCapa) {
+        this.urlCapa = urlCapa;
     }
 
     public String getOriginal_Title() {

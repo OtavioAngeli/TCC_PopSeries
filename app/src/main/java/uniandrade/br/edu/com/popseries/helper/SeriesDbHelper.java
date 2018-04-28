@@ -39,37 +39,39 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ID_USUARIO_SERIE = "_ID_USUARIO_SERIE";
 
     private static final String COLUMN_SERIE_ID = "serie_id";
-    private static final String COLUMN_NAME_TITLE = "original_Title";
-    private static final String COLUMN_NAME_OVERVIEW = "overview";
-    private static final String COLUMN_NAME_API_RATE = "apiRate";
-    private static final String COLUMN_NAME_DATE = "data_lancamento";
+    private static final String COLUMN_URL_CAPA = "url_capa";
+    private static final String COLUMN_TITLE = "original_Title";
+    private static final String COLUMN_OVERVIEW = "overview";
+    private static final String COLUMN_API_RATE = "apiRate";
+    private static final String COLUMN_DATE = "data_lancamento";
 
-    private static final String COLUMN_NAME_USER_UID = "uid";
-    private static final String COLUMN_NAME_USER_NAME = "name";
-    private static final String COLUMN_NAME_USER_EMAIL = "email";
+    private static final String COLUMN_USER_UID = "uid";
+    private static final String COLUMN_USER_NAME = "name";
+    private static final String COLUMN_USER_EMAIL = "email";
 
-    private static final String COLUMN_NAME_FAVORITA = "favorita";
-    private static final String COLUMN_NAME_ASSISTIDA = "assistida";
-    private static final String COLUMN_NAME_QUERO_ASSISTIR = "quero_assistir";
+    private static final String COLUMN_FAVORITA = "favorita";
+    private static final String COLUMN_ASSISTIDA = "assistida";
+    private static final String COLUMN_QUERO_ASSISTIR = "quero_assistir";
 
     private static final String SQL_CREATE_TABLE_SERIE =
             "CREATE TABLE " + TABLE_SERIE
                     + " ("
                         + COLUMN_ID_SERIE + " INTEGER PRIMARY KEY,"
                         + COLUMN_SERIE_ID + " TEXT,"
-                        + COLUMN_NAME_TITLE + " TEXT,"
-                        + COLUMN_NAME_OVERVIEW + " TEXT,"
-                        + COLUMN_NAME_API_RATE + " TEXT,"
-                        + COLUMN_NAME_DATE + " TEXT"
+                        + COLUMN_URL_CAPA + " TEXT,"
+                        + COLUMN_TITLE + " TEXT,"
+                        + COLUMN_OVERVIEW + " TEXT,"
+                        + COLUMN_API_RATE + " TEXT,"
+                        + COLUMN_DATE + " TEXT"
                     + ");";
 
     private static final String SQL_CREATE_TABLE_USUARIO =
             "CREATE TABLE "+ TABLE_USUARIO
                     + " ("
                         + COLUMN_ID_USUARIO + " INTEGER PRIMARY KEY,"
-                        + COLUMN_NAME_USER_UID + " TEXT,"
-                        + COLUMN_NAME_USER_NAME + " TEXT,"
-                        + COLUMN_NAME_USER_EMAIL + " TEXT"
+                        + COLUMN_USER_UID + " TEXT,"
+                        + COLUMN_USER_NAME + " TEXT,"
+                        + COLUMN_USER_EMAIL + " TEXT"
                     + ");";
 
     private static final String SQL_CREATE_TABLE_USUARIO_SERIE  =
@@ -78,9 +80,9 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
                         + COLUMN_ID_USUARIO_SERIE + " INTEGER PRIMARY KEY,"
                         + COLUMN_ID_USUARIO + " TEXT REFERENCES " + TABLE_USUARIO + " (" + COLUMN_ID_USUARIO + "),"
                         + COLUMN_ID_SERIE + " TEXT REFERENCES " + TABLE_SERIE + " (" + COLUMN_ID_SERIE + "),"
-                        + COLUMN_NAME_FAVORITA + " BOOLEAN,"
-                        + COLUMN_NAME_ASSISTIDA + " BOOLEAN,"
-                        + COLUMN_NAME_QUERO_ASSISTIR + " BOOLEAN"
+                        + COLUMN_FAVORITA + " BOOLEAN,"
+                        + COLUMN_ASSISTIDA + " BOOLEAN,"
+                        + COLUMN_QUERO_ASSISTIR + " BOOLEAN"
                     + ");";
 
     public SeriesDbHelper(Context context) {
@@ -130,9 +132,9 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
 
         values.put(COLUMN_ID_USUARIO, userID);
         values.put(COLUMN_ID_SERIE, newRowSerieId);
-        values.put(COLUMN_NAME_FAVORITA, FAVORITA);
-        values.put(COLUMN_NAME_ASSISTIDA, ASSISTIDA);
-        values.put(COLUMN_NAME_QUERO_ASSISTIR, QUERO_ASSISTIR);
+        values.put(COLUMN_FAVORITA, FAVORITA);
+        values.put(COLUMN_ASSISTIDA, ASSISTIDA);
+        values.put(COLUMN_QUERO_ASSISTIR, QUERO_ASSISTIR);
 
         db.insert(TABLE_USUARIO_SERIE, null, values);
         db.close();
@@ -177,9 +179,9 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put( COLUMN_NAME_USER_UID, identificadorUsuario );
-        values.put( COLUMN_NAME_USER_NAME, userName );
-        values.put( COLUMN_NAME_USER_EMAIL, userEmail );
+        values.put(COLUMN_USER_UID, identificadorUsuario );
+        values.put(COLUMN_USER_NAME, userName );
+        values.put(COLUMN_USER_EMAIL, userEmail );
 
         long newRowUSerId = db.insert(TABLE_USUARIO, null, values);
         db.close();
@@ -212,15 +214,17 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put( COLUMN_SERIE_ID, serie.getSerie_ID() );
-        values.put( COLUMN_NAME_TITLE, serie.getOriginal_Title() );
-        values.put( COLUMN_NAME_OVERVIEW, serie.getOverview() );
-        values.put( COLUMN_NAME_API_RATE, serie.getApiRate() );
-        values.put( COLUMN_NAME_DATE, serie.getDataLancamento() );
+        values.put( COLUMN_URL_CAPA, serie.getUrlCapa() );
+        values.put( COLUMN_TITLE, serie.getOriginal_Title() );
+        values.put( COLUMN_OVERVIEW, serie.getOverview() );
+        values.put( COLUMN_API_RATE, serie.getApiRate() );
+        values.put( COLUMN_DATE, serie.getDataLancamento() );
 
         long newRowSerieId = db.insert(TABLE_SERIE, null, values);
         db.close();
         return newRowSerieId;
     }
+
 
     public void addFavorito(Serie serie){
         FAVORITA = 1;
@@ -385,10 +389,10 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery( QUERY, null );
 
             int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
-            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_NAME_TITLE);
-            int indiceOverview = cursor.getColumnIndex(COLUMN_NAME_OVERVIEW);
-            int indiceApiRate = cursor.getColumnIndex(COLUMN_NAME_API_RATE);
-            int indiceDate = cursor.getColumnIndex(COLUMN_NAME_DATE);
+            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_TITLE);
+            int indiceOverview = cursor.getColumnIndex(COLUMN_OVERVIEW);
+            int indiceApiRate = cursor.getColumnIndex(COLUMN_API_RATE);
+            int indiceDate = cursor.getColumnIndex(COLUMN_DATE);
 
             cursor.moveToFirst();
             do {
@@ -424,10 +428,10 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery( QUERY, null );
 
             int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
-            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_NAME_TITLE);
-            int indiceOverview = cursor.getColumnIndex(COLUMN_NAME_OVERVIEW);
-            int indiceApiRate = cursor.getColumnIndex(COLUMN_NAME_API_RATE);
-            int indiceDate = cursor.getColumnIndex(COLUMN_NAME_DATE);
+            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_TITLE);
+            int indiceOverview = cursor.getColumnIndex(COLUMN_OVERVIEW);
+            int indiceApiRate = cursor.getColumnIndex(COLUMN_API_RATE);
+            int indiceDate = cursor.getColumnIndex(COLUMN_DATE);
             cursor.moveToFirst();
 
             do {
@@ -463,10 +467,10 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery( QUERY, null );
 
             int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
-            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_NAME_TITLE);
-            int indiceOverview = cursor.getColumnIndex(COLUMN_NAME_OVERVIEW);
-            int indiceApiRate = cursor.getColumnIndex(COLUMN_NAME_API_RATE);
-            int indiceDate = cursor.getColumnIndex(COLUMN_NAME_DATE);
+            int indiceTitleSerie = cursor.getColumnIndex(COLUMN_TITLE);
+            int indiceOverview = cursor.getColumnIndex(COLUMN_OVERVIEW);
+            int indiceApiRate = cursor.getColumnIndex(COLUMN_API_RATE);
+            int indiceDate = cursor.getColumnIndex(COLUMN_DATE);
             cursor.moveToFirst();
 
             do {

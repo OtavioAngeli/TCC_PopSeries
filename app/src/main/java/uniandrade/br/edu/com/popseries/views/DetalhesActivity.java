@@ -2,6 +2,8 @@ package uniandrade.br.edu.com.popseries.views;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -24,6 +26,9 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import retrofit2.Call;
@@ -146,7 +151,9 @@ public class DetalhesActivity extends AppCompatActivity {
         linLayComent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Comentários", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DetalhesActivity.this, ComentariosActivity.class);
+                intent.putExtras( bundle );
+                startActivity(intent);
             }
         });
 
@@ -332,6 +339,7 @@ public class DetalhesActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Call<SeriesResults> call, @NonNull Throwable t) {
                     Log.d("ERROR", t.getMessage());
                     Toast.makeText(getApplicationContext(), "Erro ao obter dados", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         }catch (Exception e){

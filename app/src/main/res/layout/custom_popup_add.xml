@@ -40,7 +40,7 @@
             android:text="Adicionar Favoritos"
             android:textColor="@color/colorWhite"
             android:background="@drawable/btn_circle"
-            android:drawableEnd="@drawable/ic_favorite_border_red"
+            android:drawableEnd="@drawable/ic_favorite_border"
             android:drawablePadding="12dp"/>
 
         <Button
