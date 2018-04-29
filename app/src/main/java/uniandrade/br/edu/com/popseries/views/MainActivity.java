@@ -245,24 +245,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .replace(R.id.content_main, new SeriesFragment()).commit();
         } else if (id == R.id.nav_amigos) {
             if (verificarUsuarioLogado()){
-                Intent intent = new Intent(getApplicationContext(), AmigosActivity.class);
+                Intent intent = new Intent(MainActivity.this, AmigosActivity.class);
                 startActivity(intent);
             }else {
-                Toast.makeText(getApplicationContext(), "Area destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Area destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
             }
         } else if (id == R.id.nav_perfil) {
             if (verificarUsuarioLogado()){
-                Intent profile = new Intent(getApplicationContext(), ProfileActivity.class);
+                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(profile);
             }else {
-                Toast.makeText(getApplicationContext(), "Área destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Área destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
+            }
+
+        } else if (id == R.id.nav_comentario) {
+            if (verificarUsuarioLogado()){
+                Intent comentario = new Intent(MainActivity.this, MeusComentariosActivity.class);
+                startActivity(comentario);
+            }else {
+                Toast.makeText(MainActivity.this, "Área destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
+            }
+
+        } else if (id == R.id.nav_avaliacao) {
+            if (verificarUsuarioLogado()){
+                Intent avaliacao = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(avaliacao);
+            }else {
+                Toast.makeText(MainActivity.this, "Área destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();
             }
 
         } else if (id == R.id.nav_ajuda) {
-            Intent ajuda = new Intent(getApplicationContext(), AjudaActivity.class);
+            Intent ajuda = new Intent(MainActivity.this, AjudaActivity.class);
             startActivity(ajuda);
         } else if (id == R.id.nav_sobre) {
-            Intent sobre = new Intent(getApplicationContext(), SobreActivity.class);
+            Intent sobre = new Intent(MainActivity.this, SobreActivity.class);
             startActivity(sobre);
         }
 

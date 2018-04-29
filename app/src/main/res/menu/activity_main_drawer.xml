@@ -19,6 +19,14 @@
         android:id="@+id/nav_perfil"
         android:icon="@drawable/ic_menu_perfil"
         android:title="@string/navigation_drawer_perfil" />
+    <item
+        android:id="@+id/nav_comentario"
+        android:icon="@drawable/ic_menu_perfil"
+        android:title="Meus Comentários" />
+    <item
+        android:id="@+id/nav_avaliacao"
+        android:icon="@drawable/ic_menu_perfil"
+        android:title="Minhas Avaliações" />
 
 
 

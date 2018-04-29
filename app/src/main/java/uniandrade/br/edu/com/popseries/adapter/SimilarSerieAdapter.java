@@ -98,6 +98,7 @@ public class SimilarSerieAdapter extends RecyclerView.Adapter<SimilarSerieAdapte
                         Intent intent = new Intent(mContext, DetalhesActivity.class);
                         bundle.putInt("serie_id", seriesResults.getId());
                         bundle.putString("poster", seriesResults.getBackdrop_path());
+                        bundle.putString("thumbnail", seriesResults.getPoster_path());
                         bundle.putString("original_title", seriesResults.getName());
                         bundle.putString("overview", seriesResults.getOverview());
                         bundle.putString("apiRate", Double.toString(seriesResults.getVote_average()));

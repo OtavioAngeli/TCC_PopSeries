@@ -51,6 +51,7 @@ public class ComentariosActivity extends AppCompatActivity {
     private ComentariosAdapter comentariosAdapter;
     private Comentario comentario;
     private List<Comentario> comentarioList;
+    private String serie_poster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class ComentariosActivity extends AppCompatActivity {
             if (bundle != null){
                 serie_name = bundle.getString("original_title");
                 serie_id = bundle.getInt("serie_id");
+                serie_poster = bundle.getString("thumbnail");
                 setTitle( serie_name );
             }
         }
@@ -201,6 +203,7 @@ public class ComentariosActivity extends AppCompatActivity {
         comentario.setComentario( txtUserNewComent );
         comentario.setSerie_name( serie_name );
         comentario.setUser_photo( preferencias.getUrlPhoto() );
+        comentario.setSerie_porter( serie_poster );
         comentarioUsuario.setValue( comentario );
         comentarioSerie.setValue( comentario );
 
