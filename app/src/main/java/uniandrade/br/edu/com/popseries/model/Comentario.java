@@ -7,7 +7,7 @@ package uniandrade.br.edu.com.popseries.model;
 
 public class Comentario {
 
-    private String serie_id, user_id, user_photo, serie_porter, user_name, serie_name, comentario;
+    private String serie_id, user_id, user_photo, serie_poster, user_name, serie_name, comentario;
 
     public Comentario() {
     }
@@ -36,12 +36,12 @@ public class Comentario {
         this.user_photo = user_photo;
     }
 
-    public String getSerie_porter() {
-        return serie_porter;
+    public String getSerie_poster() {
+        return serie_poster;
     }
 
-    public void setSerie_porter(String serie_porter) {
-        this.serie_porter = serie_porter;
+    public void setSerie_poster(String serie_porter) {
+        this.serie_poster = serie_porter;
     }
 
     public String getUser_name() {

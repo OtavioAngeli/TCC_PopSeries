@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -100,6 +101,7 @@ public class ComentariosActivity extends AppCompatActivity {
         comentarioList = new ArrayList<>();
 
         listarComentarios();
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +205,7 @@ public class ComentariosActivity extends AppCompatActivity {
         comentario.setComentario( txtUserNewComent );
         comentario.setSerie_name( serie_name );
         comentario.setUser_photo( preferencias.getUrlPhoto() );
-        comentario.setSerie_porter( serie_poster );
+        comentario.setSerie_poster( serie_poster );
         comentarioUsuario.setValue( comentario );
         comentarioSerie.setValue( comentario );
 

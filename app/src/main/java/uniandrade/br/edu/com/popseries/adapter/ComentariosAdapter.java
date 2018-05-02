@@ -15,7 +15,6 @@ import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.model.Comentario;
-import uniandrade.br.edu.com.popseries.model.Usuario;
 
 /**
  * Created by pnda on 28/04/18.

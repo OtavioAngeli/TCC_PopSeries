@@ -2,8 +2,6 @@ package uniandrade.br.edu.com.popseries.views;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -24,11 +22,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,16 +38,12 @@ import uniandrade.br.edu.com.popseries.adapter.SimilarSerieAdapter;
 import uniandrade.br.edu.com.popseries.api.Client;
 import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.api.Service;
+import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
 import uniandrade.br.edu.com.popseries.model.Serie;
 
 public class DetalhesActivity extends AppCompatActivity {
-
-    /*===============
-        DEBUG
-     ================*/
-    private static final String TAG = "DetalhesActivity";
 
     public static String API_KEY = "042df6719b1c27335641d1d7a9e2e66e";
     public static String LANGUAGE = "pt-BR";
@@ -74,6 +69,9 @@ public class DetalhesActivity extends AppCompatActivity {
 
     private SeriesDbHelper db;
     private String userID;
+
+    private TextView numTotalComentarios;
+    private long numComentarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +109,7 @@ public class DetalhesActivity extends AppCompatActivity {
         btnAdicionar    = findViewById(R.id.btnAdicionar);
 //        userRating          = findViewById(R.id.userrating);
 //        releaseDate         = findViewById(R.id.releasedate);
+        numTotalComentarios = findViewById(R.id.txtNumTotalComent);
 
         Intent intent = getIntent();
 
@@ -157,7 +156,9 @@ public class DetalhesActivity extends AppCompatActivity {
             }
         });
 
-        similarSerieAdapter = new SimilarSerieAdapter(getApplicationContext());
+        contarComentarios();
+
+        similarSerieAdapter = new SimilarSerieAdapter(DetalhesActivity.this);
 
         initView();
 
@@ -370,6 +371,22 @@ public class DetalhesActivity extends AppCompatActivity {
                     collapsingToolbarLayout.setTitle(" ");
                     isShow = false;
                 }
+            }
+        });
+    }
+
+    private void contarComentarios() {
+        DatabaseReference databaseReference = ConfigFirebase.getFirebase().child("comentarios_series").child(Integer.toString(serie_id));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                numComentarios = dataSnapshot.getChildrenCount();
+                numTotalComentarios.setText( "( "+ numComentarios +" )" );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

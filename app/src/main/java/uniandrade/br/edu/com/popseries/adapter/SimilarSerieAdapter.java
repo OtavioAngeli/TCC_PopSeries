@@ -21,6 +21,7 @@ import uniandrade.br.edu.com.popseries.views.DetalhesActivity;
 
 /**
  * Created by pnda on 01/03/18.
+ *
  */
 
 public class SimilarSerieAdapter extends RecyclerView.Adapter<SimilarSerieAdapter.ViewHolder> {

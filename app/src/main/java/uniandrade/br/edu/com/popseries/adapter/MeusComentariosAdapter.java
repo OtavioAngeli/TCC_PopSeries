@@ -44,7 +44,7 @@ public class MeusComentariosAdapter extends RecyclerView.Adapter<MeusComentarios
         holder.txtComentario.setText(comentario.getComentario());
 
         Picasso.with(mContext)
-                .load( comentario.getSerie_porter() ).noFade()
+                .load( comentario.getSerie_poster() ).noFade()
                 .into(holder.imgUserPhoto);
 
     }
