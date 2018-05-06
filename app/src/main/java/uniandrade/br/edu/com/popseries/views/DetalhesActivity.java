@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import uniandrade.br.edu.com.popseries.api.Service;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
+import uniandrade.br.edu.com.popseries.model.Avaliacao;
 import uniandrade.br.edu.com.popseries.model.Serie;
 
 public class DetalhesActivity extends AppCompatActivity {
@@ -66,6 +68,7 @@ public class DetalhesActivity extends AppCompatActivity {
     private Dialog myDialog;
     private TextView txtClosePopup;
     private Button btnFavoritos, btnAssistidos, btnQueroAssistir;
+    private RatingBar userAvaliacao;
 
     private SeriesDbHelper db;
     private String userID;
@@ -134,6 +137,7 @@ public class DetalhesActivity extends AppCompatActivity {
         btnAvaliar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                abrirDialogAvaliar();
                 Toast.makeText(getApplicationContext(), "Avaliar", Toast.LENGTH_SHORT).show();
             }
         });
@@ -162,6 +166,54 @@ public class DetalhesActivity extends AppCompatActivity {
 
         initView();
 
+    }
+
+    private void abrirDialogAvaliar(){
+        // DIALOG
+        myDialog = new Dialog(DetalhesActivity.this);
+        myDialog.setContentView(R.layout.custom_popup_avaliar);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // VARIAVEIS
+        txtClosePopup = myDialog.findViewById(R.id.txtClosePopupAvaliar);
+        userAvaliacao = myDialog.findViewById(R.id.ratingBarAvaliacao);
+        Button buttonConfirmar = myDialog.findViewById(R.id.btnConfirmarAvaliacao);
+        // AÇÔES DE CLICK
+        txtClosePopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });
+
+        buttonConfirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DetalhesActivity.this,
+                        String.valueOf(userAvaliacao.getRating()), Toast.LENGTH_SHORT).show();
+                salvarAvaliacao( userAvaliacao.getRating() );
+            }
+        });
+
+        myDialog.show();
+    }
+
+    private void salvarAvaliacao(float rating) {
+        //Recuperar identificador usuario logado (base64)
+        Preferencias preferencias = new Preferencias(DetalhesActivity.this);
+        String identificadorUsuarioLogado = preferencias.getIdentificador();
+        DatabaseReference databaseReference = ConfigFirebase.getFirebase();
+
+        DatabaseReference avaliacaoSerie =
+                databaseReference.child("avaliacao_series")
+                        .child( Integer.toString(serie_id) ).child( identificadorUsuarioLogado );
+
+        Avaliacao avaliacao = new Avaliacao();
+        avaliacao.setSerie_name( bundle.getString("original_title") );
+        avaliacao.setSerie_poster( bundle.getString("poster") );
+        avaliacao.setAvaliacao( rating );
+
+        avaliacaoSerie.setValue( avaliacao );
+        myDialog.dismiss();
     }
 
     private void abrirDialog() {
