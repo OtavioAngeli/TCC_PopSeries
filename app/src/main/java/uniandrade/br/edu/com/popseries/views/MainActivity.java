@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_avaliacao) {
             if (verificarUsuarioLogado()){
-                Intent avaliacao = new Intent(MainActivity.this, ProfileActivity.class);
+                Intent avaliacao = new Intent(MainActivity.this, AvaliacaoActivity.class);
                 startActivity(avaliacao);
             }else {
                 Toast.makeText(MainActivity.this, "Área destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();

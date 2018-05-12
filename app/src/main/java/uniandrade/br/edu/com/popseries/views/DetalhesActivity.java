@@ -75,6 +75,9 @@ public class DetalhesActivity extends AppCompatActivity {
 
     private TextView numTotalComentarios;
     private long numComentarios;
+    private long numTotalAvaliacoes = 0;
+    private float avaliacaoFinal = 0;
+    private float somaAvalicao = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +113,7 @@ public class DetalhesActivity extends AppCompatActivity {
         txtApiRate      = findViewById(R.id.apiRate);
         btnAvaliar      = findViewById(R.id.btnAvaliar);
         btnAdicionar    = findViewById(R.id.btnAdicionar);
+        txtAppRate      = findViewById(R.id.appRate);
 //        userRating          = findViewById(R.id.userrating);
 //        releaseDate         = findViewById(R.id.releasedate);
         numTotalComentarios = findViewById(R.id.txtNumTotalComent);
@@ -161,6 +165,7 @@ public class DetalhesActivity extends AppCompatActivity {
         });
 
         contarComentarios();
+        exibirAvaliacao();
 
         similarSerieAdapter = new SimilarSerieAdapter(DetalhesActivity.this);
 
@@ -188,8 +193,7 @@ public class DetalhesActivity extends AppCompatActivity {
         buttonConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DetalhesActivity.this,
-                        String.valueOf(userAvaliacao.getRating()), Toast.LENGTH_SHORT).show();
+                somaAvalicao = 0;
                 salvarAvaliacao( userAvaliacao.getRating() );
             }
         });
@@ -206,14 +210,19 @@ public class DetalhesActivity extends AppCompatActivity {
         DatabaseReference avaliacaoSerie =
                 databaseReference.child("avaliacao_series")
                         .child( Integer.toString(serie_id) ).child( identificadorUsuarioLogado );
+        DatabaseReference avaliacaoUsuario =
+                databaseReference.child("avaliacao_usuarios")
+                        .child( identificadorUsuarioLogado ).child( Integer.toString(serie_id) );
 
         Avaliacao avaliacao = new Avaliacao();
         avaliacao.setSerie_name( bundle.getString("original_title") );
-        avaliacao.setSerie_poster( bundle.getString("poster") );
+        avaliacao.setSerie_poster( bundle.getString("thumbnail") );
         avaliacao.setAvaliacao( rating );
 
         avaliacaoSerie.setValue( avaliacao );
+        avaliacaoUsuario.setValue( avaliacao );
         myDialog.dismiss();
+        Snackbar.make(findViewById(R.id.activity_detalhes), "Avaliação realizada com sucesso", Snackbar.LENGTH_SHORT).show();
     }
 
     private void abrirDialog() {
@@ -434,6 +443,31 @@ public class DetalhesActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 numComentarios = dataSnapshot.getChildrenCount();
                 numTotalComentarios.setText( "( "+ numComentarios +" )" );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void exibirAvaliacao() {
+        DatabaseReference databaseReference = ConfigFirebase.getFirebase().child("avaliacao_series").child(Integer.toString(serie_id));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                numTotalAvaliacoes = dataSnapshot.getChildrenCount();
+                for (DataSnapshot dados: dataSnapshot.getChildren() ){
+                    Avaliacao avaliacao = dados.getValue( Avaliacao.class );
+                    somaAvalicao = somaAvalicao + avaliacao.getAvaliacao();
+                }
+                if ( numTotalAvaliacoes != 0 ) {
+                    avaliacaoFinal = somaAvalicao / numTotalAvaliacoes;
+                    txtAppRate.setText(String.valueOf(avaliacaoFinal));
+                }else {
+                    txtAppRate.setText("0.0");
+                }
             }
 
             @Override

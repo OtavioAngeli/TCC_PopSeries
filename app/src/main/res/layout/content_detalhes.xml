@@ -106,7 +106,6 @@
                     android:layout_marginBottom="4dp"
                     android:drawablePadding="6dp"
                     android:drawableStart="@drawable/ic_avaliacao"
-                    android:text="0.0"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="16sp" />
 

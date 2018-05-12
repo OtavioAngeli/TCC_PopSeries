@@ -40,5 +40,6 @@
     <string name="txtTeladePefil">Na tela de perfil você poderá alterar a imagem do perfil e os dados pessoais como o nome e E-mail.</string>
     <string name="txtTeladeCadastro">Na tela de cadastro é necessário que digite o usuário e a senha para a realização do cadastro, também se pode optar por conectar com uma conta do Google já existente.</string>
     <string name="search_hint">Pesquisar</string>
+    <string name="title_activity_avaliacao">AvaliacaoActivity</string>
 
 </resources>

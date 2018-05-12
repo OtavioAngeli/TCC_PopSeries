@@ -39,7 +39,8 @@
             android:name=".views.SearchableActivity"
             android:launchMode="singleTop" />
         <activity android:name=".views.ComentariosActivity" />
-        <activity android:name=".views.MeusComentariosActivity"></activity>
+        <activity android:name=".views.MeusComentariosActivity" />
+        <activity android:name=".views.AvaliacaoActivity"></activity>
     </application>
 
 </manifest>
