@@ -218,6 +218,7 @@ public class DetalhesActivity extends AppCompatActivity {
         avaliacao.setSerie_name( bundle.getString("original_title") );
         avaliacao.setSerie_poster( bundle.getString("thumbnail") );
         avaliacao.setAvaliacao( rating );
+        avaliacao.setSerie_id( String.valueOf(serie_id) );
 
         avaliacaoSerie.setValue( avaliacao );
         avaliacaoUsuario.setValue( avaliacao );

@@ -8,8 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,23 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
-import uniandrade.br.edu.com.popseries.adapter.MeusComentariosAdapter;
 import uniandrade.br.edu.com.popseries.adapter.MinhasAvaliacoesAdapter;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Avaliacao;
-import uniandrade.br.edu.com.popseries.model.Comentario;
 
 public class AvaliacaoActivity extends AppCompatActivity {
 
     private ValueEventListener valueEventListenerMinhasAvaliacoes;
     //*****   FIREBASE   *****
     private DatabaseReference databaseReference = ConfigFirebase.getFirebase();
-    private FirebaseAuth firebaseAuth = ConfigFirebase.getFirebaseAutenticacao();
 
     private MinhasAvaliacoesAdapter minhasAvaliacoesAdapter;
-    private Comentario comentario;
-    private List<Comentario> comentarioList;
 
     private Avaliacao avaliacao;
     private List<Avaliacao> avaliacaoList;
@@ -66,11 +59,8 @@ public class AvaliacaoActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        comentario = new Comentario();
-        comentarioList = new ArrayList<>();
-
-        avaliacao = new Avaliacao();
         avaliacaoList = new ArrayList<>();
+        avaliacao = new Avaliacao();
 
         listarMinhasAvaliacoes();
 
@@ -99,14 +89,12 @@ public class AvaliacaoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Limpar lista
-                comentarioList.clear();
                 avaliacaoList.clear();
                 //Listar contatos
                 for (DataSnapshot dados: dataSnapshot.getChildren() ){
                     avaliacao = dados.getValue( Avaliacao.class );
                     avaliacaoList.add( avaliacao );
                     minhasAvaliacoesAdapter.adicionarListaAvaliacao( avaliacaoList );
-
                 }
                 minhasAvaliacoesAdapter.notifyDataSetChanged();
             }

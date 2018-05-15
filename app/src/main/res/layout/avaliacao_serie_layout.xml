@@ -34,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
             <RatingBar
                 android:id="@+id/notaAvaliacao"
