@@ -1,19 +1,26 @@
 package uniandrade.br.edu.com.popseries.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
+import uniandrade.br.edu.com.popseries.model.Avaliacao;
 import uniandrade.br.edu.com.popseries.model.Comentario;
 
 /**
@@ -74,22 +81,60 @@ public class MeusComentariosAdapter extends RecyclerView.Adapter<MeusComentarios
             txtUserName = itemView.findViewById(R.id.txtSerieName);
             txtComentario = itemView.findViewById(R.id.txtUserComents);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int pos = getAdapterPosition();
-//                    if ( pos != RecyclerView.NO_POSITION ){
-//
-//                        txtNomePopup.setText(mComentarioList.get(pos).getNome());
-//                        txtEmailPopup.setText(mComentarioList.get(pos).getEmail());
-//                        Picasso.with(mContext)
-//                                .load(mComentarioList.get(pos).getPhoto()).noFade()
-//                                .into(imgPopup);
-//
-//                    }
-//                }
-//            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int position = getAdapterPosition();
+                    abrirAviso( position );
+                    return true;
+                }
+            });
 
         }
+    }
+
+    private void abrirAviso(int position) {
+        final Comentario comentario = mComentarioList.get(position);
+        //atributo da classe.
+        AlertDialog alerta;
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        //define o titulo
+        builder.setTitle("Remover Comentário");
+        builder.setIcon(R.drawable.ic_alert);
+        //define a mensagem
+        builder.setMessage("Deseja realmente excluir este comentário ?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                excluirAvaliacao( comentario.getSerie_id() );
+            }
+        });
+        //define um botão como negativo.
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(mContext, "Não " + arg1, Toast.LENGTH_SHORT).show();
+            }
+        });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
+    }
+
+    private void excluirAvaliacao(String serie_id) {
+        Preferencias preferencias = new Preferencias(mContext);
+        DatabaseReference comentarioUsuario = ConfigFirebase.getFirebase().child("comentarios_usuarios")
+                .child( preferencias.getIdentificador() ).child( serie_id );
+        DatabaseReference comentarioSerie = ConfigFirebase.getFirebase().child("comentarios_series")
+                .child( serie_id ).child( preferencias.getIdentificador() );
+
+        try {
+            comentarioUsuario.removeValue();
+            comentarioSerie.removeValue();
+            Toast.makeText(mContext, "Comentário Excluido com Sucesso! ", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

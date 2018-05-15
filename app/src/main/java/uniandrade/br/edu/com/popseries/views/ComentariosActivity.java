@@ -206,6 +206,7 @@ public class ComentariosActivity extends AppCompatActivity {
         comentario.setSerie_name( serie_name );
         comentario.setUser_photo( preferencias.getUrlPhoto() );
         comentario.setSerie_poster( serie_poster );
+        comentario.setSerie_id( String.valueOf(serie_id) );
         comentarioUsuario.setValue( comentario );
         comentarioSerie.setValue( comentario );
 
