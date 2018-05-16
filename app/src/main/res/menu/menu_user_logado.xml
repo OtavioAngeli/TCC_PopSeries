@@ -9,12 +9,11 @@
         android:icon="@drawable/ic_pesquisa"
         app:showAsAction="ifRoom" />
 
-    <!--<item-->
-        <!--android:id="@+id/menu_filtro"-->
-        <!--android:orderInCategory="200"-->
-        <!--android:title="Filtrar"-->
-        <!--app:showAsAction="ifRoom"-->
-        <!--android:icon="@drawable/ic_filtro"/>-->
+    <item
+        android:id="@+id/action_administrador"
+        android:orderInCategory="200"
+        android:title="Administrador"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_logout"

@@ -202,11 +202,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_login) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
-        }else if (id == R.id.menu_pesquisa){
+        } else if (id == R.id.menu_pesquisa){
             Intent intent = new Intent(MainActivity.this, PesquisarActivity.class);
             startActivity(intent);
-        }else if (id == R.id.action_logout){
+        } else if (id == R.id.action_logout){
             signOut();
+        } else if (id == R.id.action_administrador){
+            Toast.makeText(MainActivity.this, "Administrador", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
