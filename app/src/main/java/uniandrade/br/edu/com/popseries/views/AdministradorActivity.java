@@ -39,7 +39,7 @@ public class AdministradorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(AdministradorActivity.this, "Lista Usuarios", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AdministradorActivity.this, UsuariosActivity.class);
+                Intent intent = new Intent(AdministradorActivity.this, ListaUsuariosActivity.class);
                 startActivity(intent);
             }
         });
@@ -50,7 +50,7 @@ public class AdministradorActivity extends AppCompatActivity {
                 Toast.makeText(AdministradorActivity.this, "Lista Comentários", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
         btnModeradores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

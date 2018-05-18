@@ -7,6 +7,7 @@ import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 
 /**
  * Created by pnda on 06/03/18.
+ *
  */
 
 public class Usuario {

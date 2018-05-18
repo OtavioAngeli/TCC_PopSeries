@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
+import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
@@ -30,25 +31,25 @@ import uniandrade.br.edu.com.popseries.model.Amigo;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 /**
- * Created by pnda on 25/03/18.
+ * Created by pnda on 16/05/18.
  *
  */
 
-public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder> {
+public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ViewHolder> {
 
     private List<Usuario> mUserList;
     private Context mContext;
 
     private DatabaseReference firebase;
-    private String identificadorAmigo;
+    private String identificadorModerador;
     private Dialog myDialog;
 
-    public AmigosAdapter(Context mContext) {
+    public ListUserAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
     @Override
-    public AmigosAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListUserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.amigos_layout, parent, false);
 
         return new ViewHolder( view );
@@ -91,7 +92,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
             txtUserName = itemView.findViewById(R.id.txtUserNameAmg);
             txtUserEmail = itemView.findViewById(R.id.txtUserEmailAmg);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -107,12 +107,10 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
     }
 
     private void abrirDialog(final Usuario usuario) {
-
-        //DIALOG
+        //DIALOG VARIAVEIS
         TextView txtClosePopup, txtNomePopup, txtEmailPopup;
         ImageView imgPopup;
         Button btnAdicionarPopup;
-
         //DIALOG
         myDialog = new Dialog(mContext);
         myDialog.setContentView(R.layout.custom_popup_amigos);
@@ -136,22 +134,23 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
                 myDialog.dismiss();
             }
         });
+        btnAdicionarPopup.setText("Adicionar Moderador");
 
         btnAdicionarPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adionarAmigo(usuario.getEmail());
+                adicionarModerador(usuario.getEmail());
             }
         });
-
         myDialog.show();
+
     }
 
-    private void adionarAmigo(String email) {
+    private void adicionarModerador(String email) {
         //Codificar identificador amigo (base64)
-        identificadorAmigo = Base64Custom.encodeBase64( email );
+        identificadorModerador = Base64Custom.encodeBase64( email );
 
-        firebase = ConfigFirebase.getFirebase().child("usuarios").child(identificadorAmigo);
+        firebase = ConfigFirebase.getFirebase().child("usuarios").child(identificadorModerador);
 
         firebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -160,17 +159,12 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
                     //Recuperar dados do amigo a ser adicionado
                     Usuario usuario = dataSnapshot.getValue( Usuario.class );
 
-                    //Recuperar identificador usuario logado (base64)
-                    Preferencias preferencias = new Preferencias(mContext);
-                    String identificadorUsuarioLogado = preferencias.getIdentificador();
-
                     firebase = ConfigFirebase.getFirebase();
-                    firebase = firebase.child("amigos")
-                            .child( identificadorUsuarioLogado )
-                            .child( identificadorAmigo );
+                    firebase = firebase.child("moderadores")
+                            .child( identificadorModerador );
 
                     Amigo amigo = new Amigo();
-                    amigo.setId( identificadorAmigo );
+                    amigo.setId( identificadorModerador );
                     amigo.setPhoto( usuario.getPhoto() );
                     amigo.setNome( usuario.getNome() );
                     amigo.setEmail( usuario.getEmail() );
@@ -187,6 +181,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
 
             }
         });
-
     }
+
 }

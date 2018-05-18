@@ -25,37 +25,35 @@ import java.util.List;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
-import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Amigo;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 /**
- * Created by pnda on 25/03/18.
+ * Created by pnda on 18/05/18.
  *
  */
 
-public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder> {
-
+public class ListModAdapter extends RecyclerView.Adapter<ListModAdapter.ViewHolder>{
     private List<Usuario> mUserList;
     private Context mContext;
 
     private DatabaseReference firebase;
-    private String identificadorAmigo;
+    private String identificadorModerador;
     private Dialog myDialog;
 
-    public AmigosAdapter(Context mContext) {
+    public ListModAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
     @Override
-    public AmigosAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListModAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.amigos_layout, parent, false);
 
-        return new ViewHolder( view );
+        return new ListModAdapter.ViewHolder( view );
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ListModAdapter.ViewHolder holder, int position) {
         Usuario usuario = mUserList.get(position);
 
         holder.txtUserName.setText(usuario.getNome());
@@ -72,7 +70,7 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
         return (mUserList == null) ? 0 : mUserList.size();
     }
 
-    public void adicionarListaUsuarios(List<Usuario> listUsers) {
+    public void adicionarListaModeradores(List<Usuario> listUsers) {
         mUserList = new ArrayList<>();
         mUserList.addAll(listUsers);
         notifyDataSetChanged();
@@ -91,7 +89,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
             txtUserName = itemView.findViewById(R.id.txtUserNameAmg);
             txtUserEmail = itemView.findViewById(R.id.txtUserEmailAmg);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -107,12 +104,10 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
     }
 
     private void abrirDialog(final Usuario usuario) {
-
-        //DIALOG
+        //DIALOG VARIAVEIS
         TextView txtClosePopup, txtNomePopup, txtEmailPopup;
         ImageView imgPopup;
         Button btnAdicionarPopup;
-
         //DIALOG
         myDialog = new Dialog(mContext);
         myDialog.setContentView(R.layout.custom_popup_amigos);
@@ -136,57 +131,31 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
                 myDialog.dismiss();
             }
         });
+        btnAdicionarPopup.setText(R.string.txtRemoverModerador);
 
         btnAdicionarPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adionarAmigo(usuario.getEmail());
+                removerModerador(usuario.getEmail());
             }
         });
-
         myDialog.show();
+
     }
 
-    private void adionarAmigo(String email) {
-        //Codificar identificador amigo (base64)
-        identificadorAmigo = Base64Custom.encodeBase64( email );
+    private void removerModerador(String email) {
+        //Codificar identificador moderador (base64)
+        identificadorModerador = Base64Custom.encodeBase64( email );
 
-        firebase = ConfigFirebase.getFirebase().child("usuarios").child(identificadorAmigo);
+        DatabaseReference moderador = ConfigFirebase.getFirebase().child("moderadores")
+                .child( identificadorModerador );
 
-        firebase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if( dataSnapshot.getValue() != null ){
-                    //Recuperar dados do amigo a ser adicionado
-                    Usuario usuario = dataSnapshot.getValue( Usuario.class );
-
-                    //Recuperar identificador usuario logado (base64)
-                    Preferencias preferencias = new Preferencias(mContext);
-                    String identificadorUsuarioLogado = preferencias.getIdentificador();
-
-                    firebase = ConfigFirebase.getFirebase();
-                    firebase = firebase.child("amigos")
-                            .child( identificadorUsuarioLogado )
-                            .child( identificadorAmigo );
-
-                    Amigo amigo = new Amigo();
-                    amigo.setId( identificadorAmigo );
-                    amigo.setPhoto( usuario.getPhoto() );
-                    amigo.setNome( usuario.getNome() );
-                    amigo.setEmail( usuario.getEmail() );
-
-                    firebase.setValue( amigo );
-                    myDialog.dismiss();
-                }else {
-                    Toast.makeText(mContext, "Usuário não possui cadastro.", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        try {
+            moderador.removeValue();
+            myDialog.dismiss();
+            Toast.makeText(mContext, "Moderador Excluido com Sucesso! ", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

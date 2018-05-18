@@ -106,7 +106,7 @@ public class MeusComentariosAdapter extends RecyclerView.Adapter<MeusComentarios
         builder.setMessage("Deseja realmente excluir este comentário ?");
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                excluirAvaliacao( comentario.getSerie_id() );
+                excluirComentario( comentario.getSerie_id() );
             }
         });
         //define um botão como negativo.
@@ -121,7 +121,7 @@ public class MeusComentariosAdapter extends RecyclerView.Adapter<MeusComentarios
         alerta.show();
     }
 
-    private void excluirAvaliacao(String serie_id) {
+    private void excluirComentario(String serie_id) {
         Preferencias preferencias = new Preferencias(mContext);
         DatabaseReference comentarioUsuario = ConfigFirebase.getFirebase().child("comentarios_usuarios")
                 .child( preferencias.getIdentificador() ).child( serie_id );
