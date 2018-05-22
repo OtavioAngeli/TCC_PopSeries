@@ -1,6 +1,7 @@
 package uniandrade.br.edu.com.popseries.views;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
     private Usuario usuario = new Usuario();
+
+    private String moderador = "";
+    private String administrador = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private Usuario setUserData() {
-        String identificadorUsuario = Base64Custom.encodeBase64( firebaseUser.getEmail() );
-        DatabaseReference userReference = databaseReference.child("usuarios").child( identificadorUsuario );
+        String idUser = Base64Custom.encodeBase64( firebaseUser.getEmail() );
+        DatabaseReference userReference = databaseReference.child("usuarios").child( idUser );
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -161,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private boolean verificarUsuarioLogado() {
         if (firebaseAuth.getCurrentUser() != null){
-//            Toast.makeText(getApplicationContext(), "USUARIO LOGADO", Toast.LENGTH_SHORT).show();
             setUserData();
             return true;
         }else {
@@ -184,11 +188,64 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         if (verificarUsuarioLogado()){
-            getMenuInflater().inflate(R.menu.menu_user_logado, menu);
+            getMenuInflater().inflate(R.menu.menu, menu);
         }else {
             getMenuInflater().inflate(R.menu.main, menu);
         }
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if ( verificarUsuarioLogado() ){
+            menu.findItem(R.id.action_login).setVisible(false);
+            if ( verificarAdministrador().equals("administrador") ) {
+                menu.setGroupVisible(R.id.groupAuthMod, false);
+            }else if( verificarModerador().equals("moderador") ){
+                menu.setGroupVisible(R.id.groupAuthAdmin, false);
+            }else {
+                menu.setGroupVisible(R.id.groupAuthAdmin, false);
+                menu.setGroupVisible(R.id.groupAuthMod, false);
+            }
+        }
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private String verificarModerador() {
+        String id = Base64Custom.encodeBase64( firebaseUser.getEmail() );
+        databaseReference =  ConfigFirebase.getFirebase().child("moderadores").child( id );
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    moderador = "moderador";
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return moderador;
+    }
+
+    private String verificarAdministrador() {
+        String id = Base64Custom.encodeBase64( firebaseUser.getEmail() );
+        DatabaseReference db = ConfigFirebase.getFirebase().child("administradores").child( id );
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    administrador = "administrador";
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return administrador;
     }
 
     @Override
@@ -208,7 +265,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.action_logout){
             signOut();
         } else if (id == R.id.action_administrador){
-            Toast.makeText(MainActivity.this, "Administrador", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.action_moderador) {
             Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
             startActivity(intent);
         }

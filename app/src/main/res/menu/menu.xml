@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_pesquisa"
+        android:orderInCategory="100"
+        android:title="@string/action_menu_pesquisa"
+        android:icon="@drawable/ic_pesquisa"
+        app:showAsAction="ifRoom" />
+
+    <group android:id="@+id/groupAnonymous">
+        <item
+            android:id="@+id/action_login"
+            android:orderInCategory="200"
+            android:title="@string/action_menu_login"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/groupAuth">
+        <item
+            android:id="@+id/action_logout"
+            android:orderInCategory="500"
+            android:title="@string/action_menu_logout"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/groupAuthAdmin">
+        <item
+            android:id="@+id/action_administrador"
+            android:orderInCategory="300"
+            android:title="@string/action_menu_administrador"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/groupAuthMod">
+        <item
+            android:id="@+id/action_moderador"
+            android:orderInCategory="400"
+            android:title="@string/action_menu_moderador"
+            app:showAsAction="never" />
+    </group>
+
+</menu>

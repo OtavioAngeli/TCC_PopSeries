@@ -42,5 +42,7 @@
     <string name="search_hint">Pesquisar</string>
     <string name="title_activity_avaliacao">AvaliacaoActivity</string>
     <string name="txtRemoverModerador">Remover Moderador</string>
+    <string name="action_menu_administrador">Administrador</string>
+    <string name="action_menu_moderador">Moderador</string>
 
 </resources>
