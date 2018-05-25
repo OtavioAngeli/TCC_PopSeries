@@ -1,18 +1,16 @@
 package uniandrade.br.edu.com.popseries.model;
 
-import java.util.Map;
-
 /**
- * Created by pnda on 28/04/18
+ * Created by pnda on 24/05/18.
  *
  */
 
-public class Comentario {
-
+public class CommentReport {
     private String serie_id, user_id, user_photo, serie_poster, user_name, serie_name, comentario, user_email, date_comment;
-    private Map<String, String> timestamp;
+    private long num_comment_reports;
 
-    public Comentario() {
+    public CommentReport() {
+
     }
 
     public String getSerie_id() {
@@ -43,8 +41,8 @@ public class Comentario {
         return serie_poster;
     }
 
-    public void setSerie_poster(String serie_porter) {
-        this.serie_poster = serie_porter;
+    public void setSerie_poster(String serie_poster) {
+        this.serie_poster = serie_poster;
     }
 
     public String getUser_name() {
@@ -63,20 +61,20 @@ public class Comentario {
         this.serie_name = serie_name;
     }
 
-    public String getUser_email() {
-        return user_email;
-    }
-
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
-    }
-
     public String getComentario() {
         return comentario;
     }
 
     public void setComentario(String comentario) {
         this.comentario = comentario;
+    }
+
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
     }
 
     public String getDate_comment() {
@@ -87,11 +85,11 @@ public class Comentario {
         this.date_comment = date_comment;
     }
 
-    public void setTimestamp(Map<String, String> timestamp) {
-        this.timestamp = timestamp;
+    public long getNum_comment_reports() {
+        return num_comment_reports;
     }
 
-    public Map<String, String> getTimestamp() {
-        return timestamp;
+    public void setNum_comment_reports(long num_comment_reports) {
+        this.num_comment_reports = num_comment_reports;
     }
 }

@@ -38,7 +38,6 @@ public class AdministradorActivity extends AppCompatActivity {
         btnUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AdministradorActivity.this, "Lista Usuarios", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AdministradorActivity.this, ListaUsuariosActivity.class);
                 startActivity(intent);
             }
@@ -47,14 +46,14 @@ public class AdministradorActivity extends AppCompatActivity {
         btnComentarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AdministradorActivity.this, "Lista Comentários", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AdministradorActivity.this, ListaComentariosReportadosActivity.class);
+                startActivity(intent);
             }
         });
 
         btnModeradores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AdministradorActivity.this, "Lista Moderadores", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AdministradorActivity.this, ListaModeradoresActivity.class);
                 startActivity(intent);
             }

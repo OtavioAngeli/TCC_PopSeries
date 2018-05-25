@@ -43,7 +43,8 @@
         <activity android:name=".views.AvaliacaoActivity" />
         <activity android:name=".views.AdministradorActivity" />
         <activity android:name=".views.ListaUsuariosActivity" />
-        <activity android:name=".views.ListaModeradoresActivity"></activity>
+        <activity android:name=".views.ListaModeradoresActivity" />
+        <activity android:name=".views.ListaComentariosReportadosActivity"></activity>
     </application>
 
 </manifest>

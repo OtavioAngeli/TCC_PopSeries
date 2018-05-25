@@ -20,7 +20,6 @@ import java.util.List;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
-import uniandrade.br.edu.com.popseries.model.Avaliacao;
 import uniandrade.br.edu.com.popseries.model.Comentario;
 
 /**
@@ -112,7 +111,7 @@ public class MeusComentariosAdapter extends RecyclerView.Adapter<MeusComentarios
         //define um botão como negativo.
         builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(mContext, "Não " + arg1, Toast.LENGTH_SHORT).show();
+
             }
         });
         //cria o AlertDialog

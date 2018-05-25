@@ -12,18 +12,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.adapter.ComentariosAdapter;
@@ -39,6 +42,7 @@ public class ComentariosActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerComentarios;
     //*****   FIREBASE   *****
     private DatabaseReference databaseReference = ConfigFirebase.getFirebase();
+    private Query firebaseQuery;
     private FirebaseAuth firebaseAuth = ConfigFirebase.getFirebaseAutenticacao();
     private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -50,7 +54,6 @@ public class ComentariosActivity extends AppCompatActivity {
     private int serie_id;
     private String serie_name;
     private ComentariosAdapter comentariosAdapter;
-    private Comentario comentario;
     private List<Comentario> comentarioList;
     private String serie_poster;
 
@@ -97,11 +100,9 @@ public class ComentariosActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        comentario = new Comentario();
         comentarioList = new ArrayList<>();
 
         listarComentarios();
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,19 +119,20 @@ public class ComentariosActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        databaseReference.addValueEventListener( valueEventListenerComentarios );
+        firebaseQuery.addValueEventListener( valueEventListenerComentarios );
         Log.i("ValueEventListener", "onStart");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        databaseReference.removeEventListener( valueEventListenerComentarios );
+        firebaseQuery.removeEventListener( valueEventListenerComentarios );
         Log.i("ValueEventListener", "onStop");
     }
 
     private void listarComentarios() {
         databaseReference = ConfigFirebase.getFirebase().child("comentarios_series").child( Integer.toString( serie_id ) );
+        firebaseQuery = databaseReference.orderByChild("timestamp");
 
         valueEventListenerComentarios = new ValueEventListener() {
             @Override
@@ -176,8 +178,7 @@ public class ComentariosActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()){
                     usuario = dataSnapshot.getValue(Usuario.class);
                     Picasso.with(ComentariosActivity.this)
-                            .load(usuario.getPhoto()).noFade()
-                            .into(imgUserPhoto);
+                            .load(usuario.getPhoto()).noFade().into(imgUserPhoto);
                 }
             }
             @Override
@@ -200,13 +201,21 @@ public class ComentariosActivity extends AppCompatActivity {
                 databaseReference.child("comentarios_series")
                         .child( Integer.toString(serie_id) ).child( identificadorUsuarioLogado );
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+
+        //Map<String, String> timestamp = ServerValue.TIMESTAMP;
+
         Comentario comentario = new Comentario();
         comentario.setUser_name( preferencias.getNome() );
+        comentario.setUser_email( preferencias.getEmail() );
         comentario.setComentario( txtUserNewComent );
         comentario.setSerie_name( serie_name );
         comentario.setUser_photo( preferencias.getUrlPhoto() );
         comentario.setSerie_poster( serie_poster );
         comentario.setSerie_id( String.valueOf(serie_id) );
+        comentario.setDate_comment( currentDate );
+        //comentario.setTimestamp(timestamp);
         comentarioUsuario.setValue( comentario );
         comentarioSerie.setValue( comentario );
 
