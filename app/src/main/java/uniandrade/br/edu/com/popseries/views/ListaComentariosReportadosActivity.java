@@ -29,6 +29,7 @@ public class ListaComentariosReportadosActivity extends AppCompatActivity {
 
     private ListaSeriesCommentReportsAdapter listaSeriesCommentReportsAdapter;
     private List<CommentReport> serieList;
+    private RecyclerView recyclerView;
 
     private long numCommentReport;
 
@@ -38,6 +39,7 @@ public class ListaComentariosReportadosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_comentarios_reportados);
         Toolbar toolbar = findViewById(R.id.toolbarComentariosReportados);
         setSupportActionBar(toolbar);
+        setTitle("Comentários Reportados");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -49,11 +51,10 @@ public class ListaComentariosReportadosActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewComentariosReportados);
-        listaSeriesCommentReportsAdapter = new ListaSeriesCommentReportsAdapter(ListaComentariosReportadosActivity.this);
+        recyclerView = findViewById(R.id.recyclerViewComentariosReportados);
         LinearLayoutManager layoutManager = new LinearLayoutManager(ListaComentariosReportadosActivity.this);
 
-        recyclerView.setAdapter(listaSeriesCommentReportsAdapter);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -82,19 +83,24 @@ public class ListaComentariosReportadosActivity extends AppCompatActivity {
         valueEventListenerComentariosReportados = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                CommentReport serie = new CommentReport();
-
+                listaSeriesCommentReportsAdapter = new ListaSeriesCommentReportsAdapter(ListaComentariosReportadosActivity.this);
+                recyclerView.setAdapter(listaSeriesCommentReportsAdapter);
                 //Limpar lista
                 serieList.clear();
                 //Listar contatos
                 for (DataSnapshot dados: dataSnapshot.getChildren() ){
-                    serie = dados.getValue( CommentReport.class );
-                    numCommentReport = dados.getChildrenCount();
-                    if (serie != null) {
-                        serie.setNum_comment_reports(numCommentReport-3);
+                    CommentReport serie = dados.getValue( CommentReport.class );
+                    numCommentReport = dados.child("reportados").getChildrenCount();
+                    if (numCommentReport != 0){
+                        if (serie != null) {
+                            serie.setNum_comment_reports(numCommentReport);
+                        }
+                        serieList.add( serie );
+                        if (serieList != null){
+                            listaSeriesCommentReportsAdapter.adicionarListaComentarios(serieList);
+                        }
                     }
-                    serieList.add( serie );
-                    listaSeriesCommentReportsAdapter.adicionarListaComentarios(serieList);
+
                 }
                 listaSeriesCommentReportsAdapter.notifyDataSetChanged();
             }

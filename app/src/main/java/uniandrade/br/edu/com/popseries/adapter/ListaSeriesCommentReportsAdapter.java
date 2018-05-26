@@ -3,6 +3,7 @@ package uniandrade.br.edu.com.popseries.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.model.Comentario;
 import uniandrade.br.edu.com.popseries.model.CommentReport;
 import uniandrade.br.edu.com.popseries.model.Serie;
+import uniandrade.br.edu.com.popseries.views.DetalhesActivity;
+import uniandrade.br.edu.com.popseries.views.ListCommentReportsUsersActivity;
 
 /**
  * Created by pnda on 24/05/18.
@@ -94,6 +97,11 @@ public class ListaSeriesCommentReportsAdapter extends RecyclerView.Adapter<Lista
     }
 
     private void abrirComentarios(CommentReport comentario) {
-        Toast.makeText(mContext, comentario.getSerie_id(), Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(mContext, ListCommentReportsUsersActivity.class);
+        bundle.putString("serie_id", comentario.getSerie_id());
+        bundle.putString("original_title", comentario.getSerie_name());
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
     }
 }

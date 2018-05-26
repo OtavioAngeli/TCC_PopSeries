@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
@@ -19,30 +20,31 @@ import java.util.List;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
+import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Comentario;
 
 /**
- * Created by pnda on 28/04/18.
+ * Created by pnda on 25/05/18.
  *
  */
 
-public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.ViewHolder>{
+public class CommentsReportsAdapter extends RecyclerView.Adapter<CommentsReportsAdapter.ViewHolder> {
     private List<Comentario> mComentarioList;
     private Context mContext;
 
-    public ComentariosAdapter(Context mContext) {
+    public CommentsReportsAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
     @Override
-    public ComentariosAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comentario_serie_layout, parent, false);
+    public CommentsReportsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_reports_layout, parent, false);
 
-        return new ComentariosAdapter.ViewHolder( view );
+        return new CommentsReportsAdapter.ViewHolder( view );
     }
 
     @Override
-    public void onBindViewHolder(ComentariosAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(CommentsReportsAdapter.ViewHolder holder, int position) {
         Comentario comentario = mComentarioList.get(position);
 
         holder.txtUserName.setText(comentario.getUser_name());
@@ -104,13 +106,13 @@ public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.
         //Cria o gerador do AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         //define o titulo
-        builder.setTitle("Reportar Comentário");
+        builder.setTitle("Remover Comentário");
         builder.setIcon(R.drawable.ic_alert);
         //define a mensagem
-        builder.setMessage("Deseja realmente reportar este comentário ?");
+        builder.setMessage("Deseja realmente remover este comentário ?");
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                reportComment( comentario );
+                excluirComentario( comentario.getSerie_id(), comentario.getUser_email() );
             }
         });
         //define um botão como negativo.
@@ -125,17 +127,24 @@ public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.
         alerta.show();
     }
 
-    private void reportComment(Comentario comentario) {
-        String id = Base64Custom.encodeBase64(comentario.getUser_email());
-        DatabaseReference reportComment = ConfigFirebase.getFirebase()
-                .child("comentarios_reportados").child( comentario.getSerie_id() );
-        DatabaseReference reportComments = ConfigFirebase.getFirebase()
-                .child("comentarios_reportados").child( comentario.getSerie_id() ).child("reportados").child( id );
+    private void excluirComentario(String serieId, String userEmail) {
+        String userID = Base64Custom.encodeBase64(userEmail);
+        DatabaseReference comentarioUsuario = ConfigFirebase.getFirebase().child("comentarios_usuarios")
+                .child( userID ).child( serieId );
+        DatabaseReference comentarioSerie = ConfigFirebase.getFirebase().child("comentarios_series")
+                .child( serieId ).child( userID );
+        DatabaseReference commentReport = ConfigFirebase.getFirebase().child("comentarios_reportados")
+                .child( serieId ).child("reportados").child( userID );
 
-        reportComment.child("serie_name").setValue(comentario.getSerie_name());
-        reportComment.child("serie_poster").setValue(comentario.getSerie_poster());
-        reportComment.child("serie_id").setValue(comentario.getSerie_id());
-        reportComments.setValue( comentario );
+        try {
+            comentarioUsuario.removeValue();
+            comentarioSerie.removeValue();
+            commentReport.removeValue();
+            Toast.makeText(mContext, "Comentário Excluido com Sucesso! ", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 public class Comentario {
 
     private String serie_id, user_id, user_photo, serie_poster, user_name, serie_name, comentario, user_email, date_comment;
-    private Map<String, String> timestamp;
+    //private Map<String, String> timestamp;
 
     public Comentario() {
     }
@@ -87,6 +87,7 @@ public class Comentario {
         this.date_comment = date_comment;
     }
 
+    /*
     public void setTimestamp(Map<String, String> timestamp) {
         this.timestamp = timestamp;
     }
@@ -94,4 +95,5 @@ public class Comentario {
     public Map<String, String> getTimestamp() {
         return timestamp;
     }
+    */
 }

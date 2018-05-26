@@ -29,6 +29,7 @@ public class ListaModeradoresActivity extends AppCompatActivity {
     private List<Usuario> usuarioList;
 
     private ListModAdapter listModAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +50,10 @@ public class ListaModeradoresActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewListaModeradores);
-        listModAdapter = new ListModAdapter(ListaModeradoresActivity.this);
+        recyclerView = findViewById(R.id.recyclerViewListaModeradores);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
-        recyclerView.setAdapter(listModAdapter);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -83,13 +83,17 @@ public class ListaModeradoresActivity extends AppCompatActivity {
         valueEventListenerModeradores = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                listModAdapter = new ListModAdapter(ListaModeradoresActivity.this);
+                recyclerView.setAdapter(listModAdapter);
                 //Limpar lista
                 usuarioList.clear();
                 //Listar contatos
                 for (DataSnapshot dados: dataSnapshot.getChildren() ){
                     Usuario amigo = dados.getValue( Usuario.class );
                     usuarioList.add( amigo );
-                    listModAdapter.adicionarListaModeradores(usuarioList);
+                    if (usuarioList != null) {
+                        listModAdapter.adicionarListaModeradores(usuarioList);
+                    }
                 }
                 listModAdapter.notifyDataSetChanged();
             }
