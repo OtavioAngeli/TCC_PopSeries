@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fundoApp2"
-    tools:context="uniandrade.br.edu.com.popseries.views.ProfileActivity"
+    tools:context="uniandrade.br.edu.com.popseries.views.MyProfileActivity"
     tools:layout_editor_absoluteY="25dp">
 
     <ImageView

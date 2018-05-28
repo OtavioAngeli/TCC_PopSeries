@@ -1,7 +1,6 @@
 package uniandrade.br.edu.com.popseries.views;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -315,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         } else if (id == R.id.nav_perfil) {
             if (verificarUsuarioLogado()){
-                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                Intent profile = new Intent(MainActivity.this, MyProfileActivity.class);
                 startActivity(profile);
             }else {
                 Toast.makeText(MainActivity.this, "Área destinada apenas para membros, por favor faça o login", Toast.LENGTH_LONG).show();

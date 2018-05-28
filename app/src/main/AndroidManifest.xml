@@ -34,7 +34,7 @@
         <activity android:name=".views.PesquisarActivity" />
         <activity android:name=".views.AjudaActivity" />
         <activity android:name=".views.SobreActivity" />
-        <activity android:name=".views.ProfileActivity" />
+        <activity android:name=".views.MyProfileActivity" />
         <activity
             android:name=".views.SearchableActivity"
             android:launchMode="singleTop" />
