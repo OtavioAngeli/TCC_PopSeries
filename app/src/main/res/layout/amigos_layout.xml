@@ -28,13 +28,15 @@
             android:layout_marginStart="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/txtUserNameAmg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Otávio Angeli"
+                android:textSize="17sp"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"/>
 
@@ -42,21 +44,9 @@
                 android:id="@+id/txtUserEmailAmg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="14sp"
                 android:text="otavio.miguel.angeli@gmail.com"
                 android:textColor="#cecece"/>
-
-            <TextView
-                android:id="@+id/txtUserStatusAmg"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Aenean ut mauris consequat, fermentum purus a, mattis
-magna. In hac habitasse platea dictumst."
-                android:textColor="@android:color/darker_gray"
-                android:ellipsize="end"
-                android:scrollHorizontally="true"
-                android:lines="2"/>
         </LinearLayout>
     </LinearLayout>
 

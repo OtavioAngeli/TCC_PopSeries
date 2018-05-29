@@ -48,7 +48,7 @@
             android:id="@+id/txtEmailCustomPopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#cecece"
+            android:textColor="@color/colorWhite"
             android:textSize="14sp"
             android:layout_gravity="center_horizontal" />
 
@@ -59,7 +59,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="22dp"
             android:padding="15dp"
-            android:text="Remover"
+            android:text="Adicionar"
             android:textColor="@color/colorWhite"
             android:background="@drawable/btn_circle"/>
 

@@ -23,10 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
-import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
-import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Amigo;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
@@ -113,7 +111,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ViewHo
         Button btnAdicionarPopup;
         //DIALOG
         myDialog = new Dialog(mContext);
-        myDialog.setContentView(R.layout.custom_popup_amigos);
+        myDialog.setContentView(R.layout.custom_popup_new_amigos);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         txtClosePopup = myDialog.findViewById(R.id.txtClosePopup);

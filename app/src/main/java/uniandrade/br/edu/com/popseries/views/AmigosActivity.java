@@ -1,7 +1,5 @@
 package uniandrade.br.edu.com.popseries.views;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,14 +12,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -31,7 +25,6 @@ import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.adapter.AmigosAdapter;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
-import uniandrade.br.edu.com.popseries.model.Amigo;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class AmigosActivity extends AppCompatActivity {
@@ -40,10 +33,9 @@ public class AmigosActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerContatos;
 
     private List<Usuario> usuarioList;
+    private RecyclerView recyclerView;
 
     private AmigosAdapter amigosAdapter;
-
-    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +56,14 @@ public class AmigosActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewAmigos);
-        amigosAdapter = new AmigosAdapter(AmigosActivity.this);
+        recyclerView = findViewById(R.id.recyclerViewAmigos);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
-        recyclerView.setAdapter(amigosAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
-        usuario = new Usuario();
         usuarioList = new ArrayList<>();
 
         listarAmigos();
-
     }
 
     @Override
@@ -128,6 +115,8 @@ public class AmigosActivity extends AppCompatActivity {
         valueEventListenerContatos = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                amigosAdapter = new AmigosAdapter(AmigosActivity.this);
+                recyclerView.setAdapter(amigosAdapter);
                 //Limpar lista
                 usuarioList.clear();
                 //Listar contatos

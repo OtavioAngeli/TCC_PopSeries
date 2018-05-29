@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
-import uniandrade.br.edu.com.popseries.adapter.AmigosAdapter;
+import uniandrade.br.edu.com.popseries.adapter.NewAmigosAdapter;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 public class SearchableActivity extends AppCompatActivity {
@@ -31,7 +31,7 @@ public class SearchableActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;
     private List<Usuario> usuarioList;
 
-    private AmigosAdapter amigosAdapter;
+    private NewAmigosAdapter newAmigosAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,10 @@ public class SearchableActivity extends AppCompatActivity {
         mUserDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
 
         RecyclerView recyclerView = findViewById(R.id.recyclerSearchable);
-        amigosAdapter = new AmigosAdapter(SearchableActivity.this);
+        newAmigosAdapter = new NewAmigosAdapter(SearchableActivity.this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
-        recyclerView.setAdapter(amigosAdapter);
+        recyclerView.setAdapter(newAmigosAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -114,7 +114,7 @@ public class SearchableActivity extends AppCompatActivity {
                 Usuario usuario = new Usuario();
                 usuario = dataSnapshot.getValue(Usuario.class);
                 usuarioList.add(usuario);
-                amigosAdapter.adicionarListaUsuarios(usuarioList);
+                newAmigosAdapter.adicionarListaUsuarios(usuarioList);
             }
 
             @Override

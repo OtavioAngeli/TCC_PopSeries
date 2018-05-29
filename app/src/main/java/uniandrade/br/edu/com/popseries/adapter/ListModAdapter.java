@@ -13,10 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,7 +22,6 @@ import java.util.List;
 import uniandrade.br.edu.com.popseries.R;
 import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
-import uniandrade.br.edu.com.popseries.model.Amigo;
 import uniandrade.br.edu.com.popseries.model.Usuario;
 
 /**
@@ -110,7 +106,7 @@ public class ListModAdapter extends RecyclerView.Adapter<ListModAdapter.ViewHold
         Button btnAdicionarPopup;
         //DIALOG
         myDialog = new Dialog(mContext);
-        myDialog.setContentView(R.layout.custom_popup_amigos);
+        myDialog.setContentView(R.layout.custom_popup_new_amigos);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         txtClosePopup = myDialog.findViewById(R.id.txtClosePopup);
