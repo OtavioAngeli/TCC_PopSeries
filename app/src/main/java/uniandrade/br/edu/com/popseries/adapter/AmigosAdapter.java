@@ -2,8 +2,10 @@ package uniandrade.br.edu.com.popseries.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,9 @@ import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Base64Custom;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.model.Usuario;
+import uniandrade.br.edu.com.popseries.views.DetalhesActivity;
+import uniandrade.br.edu.com.popseries.views.MyProfileActivity;
+import uniandrade.br.edu.com.popseries.views.UserProfileActivity;
 
 /**
  * Created by pnda on 25/03/18.
@@ -34,7 +39,7 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
 
     private List<Usuario> mUserList;
     private Context mContext;
-
+    private Bundle bundle;
     private Dialog myDialog;
 
     public AmigosAdapter(Context mContext) {
@@ -85,7 +90,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
             txtUserName = itemView.findViewById(R.id.txtUserNameAmg);
             txtUserEmail = itemView.findViewById(R.id.txtUserEmailAmg);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -104,7 +108,7 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
         //DIALOG
         TextView txtClosePopup, txtNomePopup, txtEmailPopup;
         ImageView imgPopup;
-        Button btnAdicionarPopup;
+        Button btnAdicionarPopup, btnVerPerfil;
 
         //DIALOG
         myDialog = new Dialog(mContext);
@@ -116,6 +120,7 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
         txtNomePopup = myDialog.findViewById(R.id.txtNameCustomPopup);
         txtEmailPopup = myDialog.findViewById(R.id.txtEmailCustomPopup);
         btnAdicionarPopup = myDialog.findViewById(R.id.btnAdicionarAmigo);
+        btnVerPerfil = myDialog.findViewById(R.id.btnVerPerfil);
 
         txtNomePopup.setText(usuario.getNome());
         txtEmailPopup.setText(usuario.getEmail());
@@ -130,6 +135,13 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
             }
         });
 
+        btnVerPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verPerfil(usuario.getEmail());
+            }
+        });
+
         btnAdicionarPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +150,15 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
         });
 
         myDialog.show();
+    }
+
+    private void verPerfil(String userEmail) {
+        bundle = new Bundle();
+        Intent intent = new Intent(mContext, UserProfileActivity.class);
+        bundle.putString("user_email", userEmail);
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
+        myDialog.dismiss();
     }
 
     private void removerAmigo(String email) {
@@ -152,10 +173,9 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.ViewHolder
         try {
             databaseReference.removeValue();
             Toast.makeText(mContext, "Amigo removido com Sucesso! ", Toast.LENGTH_SHORT).show();
+            myDialog.dismiss();
         }catch (Exception e){
             Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
-        }finally {
-            myDialog.dismiss();
         }
 
     }

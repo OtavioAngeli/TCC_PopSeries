@@ -52,17 +52,35 @@
             android:textSize="14sp"
             android:layout_gravity="center_horizontal" />
 
-        <Button
-            android:id="@+id/btnAdicionarAmigo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="22dp"
-            android:padding="15dp"
-            android:text="Remover"
-            android:textColor="@color/colorWhite"
-            android:background="@drawable/btn_circle"/>
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/btnAdicionarAmigo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:padding="15dp"
+                android:text="Remover"
+                android:textColor="#FFF75858"
+                android:background="@drawable/btn_red"/>
+
+            <Button
+                android:id="@+id/btnVerPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                android:padding="15dp"
+                android:text="Ver Perfil"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/btn_ltblue"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

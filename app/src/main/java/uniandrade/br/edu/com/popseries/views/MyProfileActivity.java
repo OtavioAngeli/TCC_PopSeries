@@ -177,5 +177,4 @@ public class MyProfileActivity extends AppCompatActivity {
         });
         return usuario;
     }
-
 }
