@@ -1,10 +1,9 @@
 package uniandrade.br.edu.com.popseries.views;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,9 +31,8 @@ public class MyProfileActivity extends AppCompatActivity {
     private TextView profileUserName, profileUserEmail;
     private ImageView profileUserPhoto, profileUserCapa;
     private EditText inputNewName;
-    private String newName;
+    private String newName, uID;
     private Dialog myDialog;
-    private String uID;
 
     //*****   FIREBASE   *****
     private DatabaseReference databaseReference = ConfigFirebase.getFirebase();
@@ -48,15 +46,15 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        uID = Base64Custom.encodeBase64( firebaseUser.getEmail() );
 
         profileUserCapa = findViewById(R.id.imgCapaPerfil);
         profileUserPhoto = findViewById(R.id.imgUserPhotoPerfil);
         profileUserName = findViewById(R.id.txtNomePerfil);
         profileUserEmail = findViewById(R.id.txtEmailPerfil);
 
-        uID = Base64Custom.encodeBase64( firebaseUser.getEmail() );
-
         Button btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
+        ImageView imgIcEditar = findViewById(R.id.imgIcEditar);
 
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +63,45 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         });
 
+        imgIcEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editarImgCapa();
+            }
+        });
+
         setUserData();
+    }
+
+    private void editarImgCapa() {
+        TextView closePopup;
+        Button salvar;
+        //DIALOG
+        myDialog = new Dialog(MyProfileActivity.this);
+        myDialog.setContentView(R.layout.dialog_edit_background_profile);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        closePopup = myDialog.findViewById(R.id.txtClosePopup);
+        salvar = myDialog.findViewById(R.id.btnSalvarNewName);
+
+        closePopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });
+        salvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                salvarCapa();
+            }
+        });
+
+        myDialog.show();
+    }
+
+    private void salvarCapa() {
+        myDialog.dismiss();
     }
 
     private void editarPerfil() {
@@ -104,6 +140,12 @@ public class MyProfileActivity extends AppCompatActivity {
             try{
                 DatabaseReference userReference = databaseReference.child("usuarios").child( uID );
                 userReference.child("nome").setValue(newName);
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.myProfileActivity), "Nome atualizado com sucesso!", Snackbar.LENGTH_SHORT);
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.WHITE);
+                TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(Color.BLACK);
+                snackbar.show();
             }catch (Exception e){
                 Toast.makeText(MyProfileActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
             }finally {

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/fundoApp2"
     tools:context="uniandrade.br.edu.com.popseries.views.MyProfileActivity"
-    tools:layout_editor_absoluteY="25dp">
+    tools:layout_editor_absoluteY="25dp"
+    android:id="@+id/myProfileActivity">
 
     <ImageView
         android:id="@+id/imgCapaPerfil"

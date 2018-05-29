@@ -1,6 +1,7 @@
 package uniandrade.br.edu.com.popseries.views;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -220,7 +222,12 @@ public class ComentariosActivity extends AppCompatActivity {
         comentarioSerie.setValue( comentario );
 
         txtComentario.setText("");
-        Snackbar.make(findViewById(R.id.activity_comentarios), "Comentário publicado", Snackbar.LENGTH_SHORT).show();
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_comentarios), "Comentário publicado", Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.WHITE);
+        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.BLACK);
+        snackbar.show();
     }
 
 }
