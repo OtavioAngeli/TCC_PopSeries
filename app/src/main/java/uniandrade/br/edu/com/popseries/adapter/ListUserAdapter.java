@@ -169,6 +169,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ViewHo
 
                     firebase.setValue( amigo );
                     myDialog.dismiss();
+                    Toast.makeText(mContext, "Moderador adicionado com sucesso!",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(mContext, "Usuário não possui cadastro.", Toast.LENGTH_LONG).show();
                 }

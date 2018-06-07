@@ -89,9 +89,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View view) {
                 usuario = new Usuario();
-                usuario.setEmail( txtLoginEmailUsuario.getText().toString() );
-                usuario.setSenha( txtLoginSenhaUsuario.getText().toString() );
-                validarLogin();
+                String email = txtLoginEmailUsuario .getText().toString();
+                String senha = txtLoginSenhaUsuario.getText().toString();
+                if ( email.equals("") || email.trim().length() == 0 ){
+                    txtLoginEmailUsuario. setError("Campo Obrigatório");
+                }else if ( senha.equals("") || senha.trim().length() == 0 ) {
+                    txtLoginSenhaUsuario. setError("Campo Obrigatório");
+                }else {
+                    usuario.setEmail( email );
+                    usuario.setSenha( senha );
+                    validarLogin();
+                }
             }
         });
 

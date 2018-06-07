@@ -43,6 +43,7 @@ import uniandrade.br.edu.com.popseries.config.ConfigFirebase;
 import uniandrade.br.edu.com.popseries.helper.Preferencias;
 import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
 import uniandrade.br.edu.com.popseries.model.Avaliacao;
+import uniandrade.br.edu.com.popseries.model.Date;
 import uniandrade.br.edu.com.popseries.model.Serie;
 
 public class DetalhesActivity extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class DetalhesActivity extends AppCompatActivity {
     public static String API_KEY = "042df6719b1c27335641d1d7a9e2e66e";
     public static String LANGUAGE = "pt-BR";
 
-    TextView nameOfSerie, txtSinopse, userRating, releaseDate, txtApiRate, txtUserRate, txtAppRate;
+    private TextView nameOfSerie, txtDataLancamento, txtSinopse, userRating, txtApiRate, txtUserRate, txtAppRate;
     ImageView imgThumbnail;
     Button btnAvaliar, btnAdicionar;
 
@@ -115,7 +116,7 @@ public class DetalhesActivity extends AppCompatActivity {
         btnAdicionar    = findViewById(R.id.btnAdicionar);
         txtAppRate      = findViewById(R.id.appRate);
 //        userRating          = findViewById(R.id.userrating);
-//        releaseDate         = findViewById(R.id.releasedate);
+        txtDataLancamento = findViewById(R.id.txtDataLancamento);
         numTotalComentarios = findViewById(R.id.txtNumTotalComent);
 
         Intent intent = getIntent();
@@ -136,6 +137,11 @@ public class DetalhesActivity extends AppCompatActivity {
                 txtApiRate.setText(bundle.getString("apiRate"));
             }
         }
+
+        Date date = new Date();
+        date.setData(dataLancamento);
+        String data = date.getConvertedDate();
+        txtDataLancamento.setText(data);
 
         // BOTÃO AVALIAR
         btnAvaliar.setOnClickListener(new View.OnClickListener() {

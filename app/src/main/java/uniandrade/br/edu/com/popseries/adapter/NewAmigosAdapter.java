@@ -177,6 +177,7 @@ public class NewAmigosAdapter extends RecyclerView.Adapter<NewAmigosAdapter.View
 
                     firebase.setValue( amigo );
                     myDialog.dismiss();
+                    Toast.makeText(mContext, "Amigo adicionado com sucesso!", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(mContext, "Usuário não possui cadastro.", Toast.LENGTH_LONG).show();
                 }

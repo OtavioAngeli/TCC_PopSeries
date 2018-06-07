@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
@@ -136,6 +137,7 @@ public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.
         reportComment.child("serie_poster").setValue(comentario.getSerie_poster());
         reportComment.child("serie_id").setValue(comentario.getSerie_id());
         reportComments.setValue( comentario );
+        Toast.makeText(mContext, "Comentário reportado com sucesso!", Toast.LENGTH_SHORT).show();
     }
 
 }
