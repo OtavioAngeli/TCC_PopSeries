@@ -103,6 +103,7 @@ public class SimilarSerieAdapter extends RecyclerView.Adapter<SimilarSerieAdapte
                         bundle.putString("original_title", seriesResults.getName());
                         bundle.putString("overview", seriesResults.getOverview());
                         bundle.putString("apiRate", Double.toString(seriesResults.getVote_average()));
+                        bundle.putString("data_lancamento", seriesResults.getFirst_air_date());
                         intent.putExtras(bundle);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);

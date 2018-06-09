@@ -69,7 +69,7 @@ public class DetalhesActivity extends AppCompatActivity {
     private Dialog myDialog;
     private TextView txtClosePopup;
     private Button btnFavoritos, btnAssistidos, btnQueroAssistir;
-    private RatingBar userAvaliacao;
+    private RatingBar userAvaliacao, allAvaliation;
 
     private SeriesDbHelper db;
     private String userID;
@@ -118,6 +118,7 @@ public class DetalhesActivity extends AppCompatActivity {
 //        userRating          = findViewById(R.id.userrating);
         txtDataLancamento = findViewById(R.id.txtDataLancamento);
         numTotalComentarios = findViewById(R.id.txtNumTotalComent);
+        allAvaliation = findViewById(R.id.ratingBarAllAvaliation);
 
         Intent intent = getIntent();
 
@@ -472,6 +473,7 @@ public class DetalhesActivity extends AppCompatActivity {
                 if ( numTotalAvaliacoes != 0 ) {
                     avaliacaoFinal = somaAvalicao / numTotalAvaliacoes;
                     txtAppRate.setText(String.valueOf(avaliacaoFinal));
+                    allAvaliation.setRating(avaliacaoFinal);
                 }else {
                     txtAppRate.setText("0.0");
                 }

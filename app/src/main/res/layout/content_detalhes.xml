@@ -24,85 +24,83 @@
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="monospace"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtDataLancamento"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="12sp"
-            android:textColor="#b1b1b1"/>
+            android:orientation="horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp">
+            <!-- API RATE -->
+            <TextView
+                android:id="@+id/apiRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:drawableStart="@drawable/ic_avaliacao"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtDataLancamento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"
+                android:textColor="#b1b1b1"
+                android:drawableStart="@drawable/ic_date"
+                android:drawablePadding="6dp"/>
+        </LinearLayout>
 
         <!-- SINOPSE -->
         <TextView
-            android:id="@+id/txtSinopse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="inherit"
-            android:textColor="@android:color/darker_gray" />
+        android:id="@+id/txtSinopse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="inherit"
+        android:textColor="@android:color/darker_gray" />
 
         <!-- LINHA -->
         <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorWhite"
-            android:layout_marginTop="12dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="12dp"/>
 
         <!-- AVALIAÇÃO E ADICIONAR À -->
         <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
             <!-- AVALIAÇÃO -->
             <android.support.v7.widget.LinearLayoutCompat
-                android:id="@+id/liLay2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <!-- AVALIAÇÃO API -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Avaliação API"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <!-- API RATE -->
-                <TextView
-                    android:id="@+id/apiRate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:drawablePadding="6dp"
-                    android:drawableStart="@drawable/ic_avaliacao"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp" />
+        android:id="@+id/liLay2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
                 <!-- AVALIAÇÃO DO APP -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Avaliação APP"
+                    android:text="Avaliação Usuários"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -112,31 +110,18 @@
                     android:id="@+id/appRate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
+
+                <RatingBar
+                    android:id="@+id/ratingBarAllAvaliation"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:theme="@style/RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:drawablePadding="6dp"
-                    android:drawableStart="@drawable/ic_avaliacao"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp" />
-
-                <!-- USER AVALIAÇÃO -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sua avaliação"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <!-- USER RATE -->
-                <TextView
-                    android:id="@+id/txtUserRate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="6dp"
-                    android:drawableStart="@drawable/ic_avaliacao"
-                    android:text="0.0"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp" />
+                    android:isIndicator="true"
+                    android:numStars="5" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
