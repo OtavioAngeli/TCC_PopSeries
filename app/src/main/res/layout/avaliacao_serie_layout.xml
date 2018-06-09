@@ -39,9 +39,12 @@
 
             <RatingBar
                 android:id="@+id/notaAvaliacao"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:isIndicator="true"/>
+                android:isIndicator="true"
+                android:theme="@style/RatingBar"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
     </LinearLayout>

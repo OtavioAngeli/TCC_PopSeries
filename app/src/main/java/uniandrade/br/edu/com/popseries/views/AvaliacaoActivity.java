@@ -32,6 +32,7 @@ public class AvaliacaoActivity extends AppCompatActivity {
 
     private Avaliacao avaliacao;
     private List<Avaliacao> avaliacaoList;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +52,10 @@ public class AvaliacaoActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewMinhasAvaliacoes);
-        minhasAvaliacoesAdapter = new MinhasAvaliacoesAdapter(AvaliacaoActivity.this);
+         recyclerView  = findViewById(R.id.recyclerViewMinhasAvaliacoes);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(AvaliacaoActivity.this);
 
-        recyclerView.setAdapter(minhasAvaliacoesAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -88,6 +88,8 @@ public class AvaliacaoActivity extends AppCompatActivity {
         valueEventListenerMinhasAvaliacoes = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                minhasAvaliacoesAdapter = new MinhasAvaliacoesAdapter(AvaliacaoActivity.this);
+                recyclerView.setAdapter(minhasAvaliacoesAdapter);
                 //Limpar lista
                 avaliacaoList.clear();
                 //Listar contatos

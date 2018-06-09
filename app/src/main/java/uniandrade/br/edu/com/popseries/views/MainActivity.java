@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
             startActivity(intent);
         } else if (id == R.id.action_moderador) {
-            Intent intent = new Intent(MainActivity.this, AdministradorActivity.class);
+            Intent intent = new Intent(MainActivity.this, ModeradorActivity.class);
             startActivity(intent);
         }
 

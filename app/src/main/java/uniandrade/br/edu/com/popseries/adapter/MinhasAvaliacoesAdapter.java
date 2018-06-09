@@ -115,7 +115,7 @@ public class MinhasAvaliacoesAdapter extends RecyclerView.Adapter<MinhasAvaliaco
         //define um botão como negativo.
         builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(mContext, "Não " + arg1, Toast.LENGTH_SHORT).show();
+
             }
         });
         //cria o AlertDialog

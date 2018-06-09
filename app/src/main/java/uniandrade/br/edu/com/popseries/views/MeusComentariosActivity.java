@@ -30,11 +30,11 @@ public class MeusComentariosActivity extends AppCompatActivity {
     //*****   FIREBASE   *****
     private DatabaseReference databaseReference = ConfigFirebase.getFirebase();
     private FirebaseAuth firebaseAuth = ConfigFirebase.getFirebaseAutenticacao();
-    private FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
     private MeusComentariosAdapter meusComentariosAdapter;
     private Comentario comentario;
     private List<Comentario> comentarioList;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +55,9 @@ public class MeusComentariosActivity extends AppCompatActivity {
         });
 
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewMeusComentarios);
-        meusComentariosAdapter = new MeusComentariosAdapter(MeusComentariosActivity.this);
+        recyclerView = findViewById(R.id.recyclerViewMeusComentarios);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MeusComentariosActivity.this);
 
-        recyclerView.setAdapter(meusComentariosAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -92,6 +90,8 @@ public class MeusComentariosActivity extends AppCompatActivity {
         valueEventListenerMeusComentarios = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                meusComentariosAdapter = new MeusComentariosAdapter(MeusComentariosActivity.this);
+                recyclerView.setAdapter(meusComentariosAdapter);
                 //Limpar lista
                 comentarioList.clear();
                 //Listar contatos
