@@ -472,7 +472,8 @@ public class DetalhesActivity extends AppCompatActivity {
                 }
                 if ( numTotalAvaliacoes != 0 ) {
                     avaliacaoFinal = somaAvalicao / numTotalAvaliacoes;
-                    txtAppRate.setText(String.valueOf(avaliacaoFinal));
+                    String teste = String.format("%.01f",avaliacaoFinal);
+                    txtAppRate.setText(teste);
                     allAvaliation.setRating(avaliacaoFinal);
                 }else {
                     txtAppRate.setText("0.0");

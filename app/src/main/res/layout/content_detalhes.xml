@@ -24,21 +24,21 @@
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="monospace"
-        android:textAlignment="center"
-        android:textColor="@color/colorWhite"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="monospace"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp">
+            android:orientation="horizontal">
             <!-- API RATE -->
             <TextView
                 android:id="@+id/apiRate"
@@ -54,55 +54,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:textSize="12sp"
-                android:textColor="#b1b1b1"
+                android:drawablePadding="6dp"
                 android:drawableStart="@drawable/ic_date"
-                android:drawablePadding="6dp"/>
+                android:textColor="#b1b1b1"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <!-- SINOPSE -->
         <TextView
-        android:id="@+id/txtSinopse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="inherit"
-        android:textColor="@android:color/darker_gray" />
+            android:id="@+id/txtSinopse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="inherit"
+            android:textColor="@android:color/darker_gray" />
 
         <!-- LINHA -->
         <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/colorWhite"
-        android:layout_marginTop="12dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/colorWhite" />
 
         <!-- AVALIAÇÃO E ADICIONAR À -->
         <android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
             <!-- AVALIAÇÃO -->
             <android.support.v7.widget.LinearLayoutCompat
-        android:id="@+id/liLay2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+                android:id="@+id/liLay2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <!-- AVALIAÇÃO DO APP -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Avaliação Usuários"
+                    android:text="Avaliação dos Usuários"
                     android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <!-- APP RATE -->
@@ -111,56 +111,47 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="18sp" />
+                    android:textSize="20sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"/>
 
                 <RatingBar
                     android:id="@+id/ratingBarAllAvaliation"
-                    style="@style/Widget.AppCompat.RatingBar.Small"
-                    android:theme="@style/RatingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:isIndicator="true"
-                    android:numStars="5" />
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:theme="@style/RatingBar" />
 
             </android.support.v7.widget.LinearLayoutCompat>
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="0.5dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorWhite"
-                android:foregroundGravity="center_horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/liLay3"
-                app:layout_constraintStart_toEndOf="@+id/liLay2"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- AVALIAR E ADICIONAR À -->
             <android.support.v7.widget.LinearLayoutCompat
                 android:id="@+id/liLay3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/liLay2">
 
                 <!-- AVALIAR -->
                 <Button
                     android:id="@+id/btnAvaliar"
-                    android:layout_width="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/btn_circle"
                     android:drawableEnd="@drawable/ic_avaliacao_white"
                     android:drawablePadding="16dp"
@@ -172,7 +163,8 @@
                 <!-- ADICIONAR -->
                 <Button
                     android:id="@+id/btnAdicionar"
-                    android:layout_width="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_circle"
                     android:drawableEnd="@drawable/ic_add_white"
@@ -243,14 +235,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <!-- THUMBNAILS SÉRIES RELACIONADAS -->
         <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="8dp"
             android:id="@+id/similarSerieLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
 
         </android.support.v7.widget.RecyclerView>
 
