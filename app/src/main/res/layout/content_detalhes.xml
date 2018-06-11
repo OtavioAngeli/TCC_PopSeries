@@ -133,10 +133,10 @@
                 android:id="@+id/liLay3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/btn_circle"
                 android:gravity="center"
-                android:padding="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="12dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:orientation="horizontal"
@@ -152,23 +152,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/btn_circle"
-                    android:drawableEnd="@drawable/ic_avaliacao_white"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_avaliacao_white"
                     android:drawablePadding="16dp"
                     android:padding="16dp"
                     android:text="Avaliar"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/colorWhite" />
+
                 <!-- ADICIONAR -->
                 <Button
                     android:id="@+id/btnAdicionar"
-                    android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/btn_circle"
-                    android:drawableEnd="@drawable/ic_add_white"
-                    android:drawablePadding="16dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_add_white"
+                    android:drawablePadding="12dp"
                     android:padding="16dp"
                     android:text="Adicionar"
                     android:textAllCaps="false"

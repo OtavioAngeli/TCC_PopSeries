@@ -58,6 +58,21 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/icCommentOk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/ic_comment_ok"
+                    android:gravity="end"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/txtReportComment"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/txtReportComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +83,6 @@
                     android:drawablePadding="6dp"
                     android:drawableStart="@drawable/ic_remover"
                     android:gravity="end"
-                    android:textColor="#ff00"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

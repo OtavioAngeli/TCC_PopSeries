@@ -136,20 +136,23 @@ public class DetalhesActivity extends AppCompatActivity {
                 nameOfSerie.setText(bundle.getString("original_title"));
                 txtSinopse.setText(bundle.getString("overview"));
                 txtApiRate.setText(bundle.getString("apiRate"));
+                if (!dataLancamento.equals("")){
+                    Date date = new Date();
+                    date.setData(dataLancamento);
+                    String data = date.getConvertedDate();
+                    txtDataLancamento.setText(data);
+                }else {
+                    txtDataLancamento.setText(R.string.date_realesed_unknow);
+                }
             }
         }
 
-        Date date = new Date();
-        date.setData(dataLancamento);
-        String data = date.getConvertedDate();
-        txtDataLancamento.setText(data);
 
         // BOTÃO AVALIAR
         btnAvaliar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 abrirDialogAvaliar();
-                Toast.makeText(getApplicationContext(), "Avaliar", Toast.LENGTH_SHORT).show();
             }
         });
 

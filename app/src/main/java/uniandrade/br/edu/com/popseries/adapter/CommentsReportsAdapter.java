@@ -75,6 +75,7 @@ public class CommentsReportsAdapter extends RecyclerView.Adapter<CommentsReports
         private TextView txtComentario;
         private TextView txtReportComment;
         private TextView txtDateComment;
+        private TextView icCommentOk;
 
 
         private ViewHolder(final View itemView) {
@@ -85,6 +86,19 @@ public class CommentsReportsAdapter extends RecyclerView.Adapter<CommentsReports
             txtComentario = itemView.findViewById(R.id.txtUserComment);
             txtReportComment = itemView.findViewById(R.id.txtReportComment);
             txtDateComment = itemView.findViewById(R.id.txtDateComment);
+            icCommentOk = itemView.findViewById(R.id.icCommentOk);
+
+            icCommentOk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if ( pos != RecyclerView.NO_POSITION ){
+                        int position = getAdapterPosition();
+                        Comentario comentario = mComentarioList.get(position);
+                        abrirAvisoOkay( comentario );
+                    }
+                }
+            });
 
             txtReportComment.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,14 +107,41 @@ public class CommentsReportsAdapter extends RecyclerView.Adapter<CommentsReports
                     if ( pos != RecyclerView.NO_POSITION ){
                         int position = getAdapterPosition();
                         Comentario comentario = mComentarioList.get(position);
-                        abrirAviso( comentario );
+                        abrirAvisoExclusao( comentario );
                     }
                 }
             });
         }
     }
 
-    private void abrirAviso(final Comentario comentario) {
+    private void abrirAvisoOkay(final Comentario comentario){
+        //atributo da classe.
+        AlertDialog alerta;
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        //define o titulo
+        builder.setTitle("Permitir Comentário");
+        builder.setIcon(R.drawable.ic_alert);
+        //define a mensagem
+        builder.setMessage("Deseja realmente permitir este comentário ?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                permitirComentario( comentario.getSerie_id(), comentario.getUser_email() );
+            }
+        });
+        //define um botão como negativo.
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+        });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
+    }
+
+    private void abrirAvisoExclusao(final Comentario comentario) {
         //atributo da classe.
         AlertDialog alerta;
         //Cria o gerador do AlertDialog
@@ -141,6 +182,20 @@ public class CommentsReportsAdapter extends RecyclerView.Adapter<CommentsReports
             comentarioSerie.removeValue();
             commentReport.removeValue();
             Toast.makeText(mContext, "Comentário Excluido com Sucesso! ", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void permitirComentario(String serieId, String userEmail) {
+        String userID = Base64Custom.encodeBase64(userEmail);
+        DatabaseReference commentReport = ConfigFirebase.getFirebase().child("comentarios_reportados")
+                .child( serieId ).child("reportados").child( userID );
+
+        try {
+            commentReport.removeValue();
+            Toast.makeText(mContext, "Comentário Permitido com Sucesso! ", Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
         }
