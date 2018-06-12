@@ -48,7 +48,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.ViewHo
 
     @Override
     public ListUserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.amigos_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.moderador_layout, parent, false);
 
         return new ViewHolder( view );
     }

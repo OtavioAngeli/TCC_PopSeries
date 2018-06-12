@@ -43,7 +43,7 @@ public class ListModAdapter extends RecyclerView.Adapter<ListModAdapter.ViewHold
 
     @Override
     public ListModAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.amigos_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.moderador_layout, parent, false);
 
         return new ListModAdapter.ViewHolder( view );
     }
