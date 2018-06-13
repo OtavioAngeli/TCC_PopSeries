@@ -1,9 +1,12 @@
 package uniandrade.br.edu.com.popseries.views;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -54,12 +57,43 @@ public class MyProfileActivity extends AppCompatActivity {
         profileUserEmail = findViewById(R.id.txtEmailPerfil);
 
         Button btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
+        Button btnExcluirConta = findViewById(R.id.btnExcluirConta);
         ImageView imgIcEditar = findViewById(R.id.imgIcEditar);
 
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editarPerfil();
+            }
+        });
+
+        btnExcluirConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //atributo da classe.
+                AlertDialog alerta;
+                //Cria o gerador do AlertDialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(MyProfileActivity.this);
+                //define o titulo
+                builder.setTitle("Excluir Conta");
+                builder.setIcon(R.drawable.ic_alert);
+                //define a mensagem
+                builder.setMessage("Deseja realmente excluir sua conta? isto apagara todos os dados referentes a mesma ");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        excluirConta();
+                    }
+                });
+                //define um botão como negativo.
+                builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+                //cria o AlertDialog
+                alerta = builder.create();
+                //Exibe
+                alerta.show();
             }
         });
 
@@ -71,6 +105,22 @@ public class MyProfileActivity extends AppCompatActivity {
         });
 
         setUserData();
+    }
+
+    private void excluirConta() {
+        String UID = Base64Custom.encodeBase64( profileUserEmail.getText().toString() );
+        DatabaseReference usuario = ConfigFirebase.getFirebase().child("usuarios").child(UID);
+        try {
+            FirebaseAuth.getInstance().getCurrentUser().delete();
+            usuario.removeValue();
+            Toast.makeText(MyProfileActivity.this, "Conta Excluida com sucesso!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MyProfileActivity.this, LoginActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }catch (Exception e){
+            Toast.makeText(MyProfileActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void editarImgCapa() {
