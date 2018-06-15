@@ -204,7 +204,11 @@ public class DetalhesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 somaAvalicao = 0;
-                salvarAvaliacao( userAvaliacao.getRating() );
+                if (userAvaliacao.getRating() == 0){
+                    Toast.makeText(DetalhesActivity.this, "Avaliação Ínvalida", Toast.LENGTH_SHORT).show();
+                }else {
+                    salvarAvaliacao( userAvaliacao.getRating() );
+                }
             }
         });
 
@@ -352,21 +356,21 @@ public class DetalhesActivity extends AppCompatActivity {
     private void saveOnDatabase(int i) {
         switch (i){
             case 1:
-                db.addFavorito( new Serie(serie_id,bundle.getString("poster"),
+                db.addFavorito( new Serie(serie_id,bundle.getString("poster"),bundle.getString("thumbnail"),
                         nameOfSerie.getText().toString(),txtSinopse.getText().toString(),
                         txtApiRate.getText().toString(),dataLancamento) );
                 myDialog.dismiss();
                 Snackbar.make(findViewById(R.id.activity_detalhes), "Adicionado aos Favoritos", Snackbar.LENGTH_SHORT).show();
                 break;
             case 2:
-                db.addAssistida( new Serie(serie_id, bundle.getString("poster"),
+                db.addAssistida( new Serie(serie_id, bundle.getString("poster"),bundle.getString("thumbnail"),
                         nameOfSerie.getText().toString(), txtSinopse.getText().toString(),
                         txtApiRate.getText().toString(), dataLancamento) );
                 Snackbar.make(findViewById(R.id.activity_detalhes), "Já Assisti", Snackbar.LENGTH_SHORT).show();
                 myDialog.dismiss();
                 break;
             case 3:
-                db.addQueroAssistir( new Serie(serie_id, bundle.getString("poster"),
+                db.addQueroAssistir( new Serie(serie_id, bundle.getString("poster"),bundle.getString("thumbnail"),
                         nameOfSerie.getText().toString(), txtSinopse.getText().toString(),
                         txtApiRate.getText().toString(), dataLancamento) );
                 Snackbar.make(findViewById(R.id.activity_detalhes), "Quero Assistir", Snackbar.LENGTH_SHORT).show();

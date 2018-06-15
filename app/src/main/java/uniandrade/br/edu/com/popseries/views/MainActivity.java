@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Usuario usuario = new Usuario();
 
+    private String idUserLogin;
     private String moderador = "";
     private String administrador = "";
 
@@ -135,8 +136,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private Usuario setUserData() {
-        String idUser = Base64Custom.encodeBase64( firebaseUser.getEmail() );
-        DatabaseReference userReference = databaseReference.child("usuarios").child( idUser );
+        Preferencias preferencias = new Preferencias(MainActivity.this);
+        idUserLogin = preferencias.getIdentificador();
+        DatabaseReference userReference = databaseReference.child("usuarios").child( idUserLogin );
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -211,8 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private String verificarModerador() {
-        String id = Base64Custom.encodeBase64( firebaseUser.getEmail() );
-        databaseReference =  ConfigFirebase.getFirebase().child("moderadores").child( id );
+        databaseReference =  ConfigFirebase.getFirebase().child("moderadores").child( idUserLogin );
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -229,8 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private String verificarAdministrador() {
-        String id = Base64Custom.encodeBase64( firebaseUser.getEmail() );
-        DatabaseReference db = ConfigFirebase.getFirebase().child("administradores").child( id );
+        DatabaseReference db = ConfigFirebase.getFirebase().child("administradores").child( idUserLogin );
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

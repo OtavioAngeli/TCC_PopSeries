@@ -12,9 +12,10 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import uniandrade.br.edu.com.popseries.R;
-import uniandrade.br.edu.com.popseries.adapter.ListaSerieAdapter;
+import uniandrade.br.edu.com.popseries.adapter.ListSerieOfflineAdapter;
 import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.helper.SeriesDbHelper;
+import uniandrade.br.edu.com.popseries.model.Serie;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,9 +53,9 @@ public class AssistirMaisTardeFragment extends Fragment {
 
     private void retornaQueroAssistir() {
         SeriesDbHelper db = new SeriesDbHelper( getContext() );
-        ListaSerieAdapter listaSerieAdapter = new ListaSerieAdapter(getContext());
+        ListSerieOfflineAdapter listaSerieAdapter = new ListSerieOfflineAdapter(getContext());
         recyclerView.setAdapter(listaSerieAdapter);
-        List<SeriesResults.ResultsBean> list = db.retornaQueroAssistir();
+        List<Serie> list = db.retornaQueroAssistir();
         if ( list != null ){
             listaSerieAdapter.adicionarListaSeries( list );
         }

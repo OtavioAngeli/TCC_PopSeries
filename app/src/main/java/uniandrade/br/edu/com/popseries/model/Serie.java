@@ -10,6 +10,7 @@ public class Serie {
     private int ID;
     private int serie_ID;
     private String urlCapa;
+    private String urlThumbnail;
     private String original_Title;
     private String overview;
     private String apiRate;
@@ -21,10 +22,11 @@ public class Serie {
     }
 
     /*** CONSTRUCTOR UPDATE ***/
-    public Serie(int ID, int serie_ID, String urlCapa, String original_Title, String overview, String apiRate, String dataLancamento) {
+    public Serie(int ID, int serie_ID, String urlCapa, String urlThumbnail,String original_Title, String overview, String apiRate, String dataLancamento) {
         this.ID = ID;
         this.serie_ID = serie_ID;
         this.urlCapa = urlCapa;
+        this.urlThumbnail = urlThumbnail;
         this.original_Title = original_Title;
         this.overview = overview;
         this.apiRate = apiRate;
@@ -32,9 +34,10 @@ public class Serie {
     }
 
     /*** CONSTRUCTOR INSERT ***/
-    public Serie(int serie_ID, String urlCapa, String original_Title, String overview, String apiRate, String dataLancamento) {
+    public Serie(int serie_ID, String urlCapa, String urlThumbnail,String original_Title, String overview, String apiRate, String dataLancamento) {
         this.serie_ID = serie_ID;
         this.urlCapa = urlCapa;
+        this.urlThumbnail = urlThumbnail;
         this.original_Title = original_Title;
         this.overview = overview;
         this.apiRate = apiRate;
@@ -96,5 +99,13 @@ public class Serie {
 
     public void setDataLancamento(String dataLancamento) {
         this.dataLancamento = dataLancamento;
+    }
+
+    public String getUrlThumbnail() {
+        return urlThumbnail;
+    }
+
+    public void setUrlThumbnail(String urlThumbnail) {
+        this.urlThumbnail = urlThumbnail;
     }
 }

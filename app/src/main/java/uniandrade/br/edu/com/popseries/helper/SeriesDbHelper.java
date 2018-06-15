@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import uniandrade.br.edu.com.popseries.api.SeriesResults;
 import uniandrade.br.edu.com.popseries.model.Serie;
 
 /**
@@ -21,7 +20,7 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
 
     private Context mContext;
     private long userID, serieID, usuarioSerieID;
-    private List<SeriesResults.ResultsBean> listSeries;
+    private List<Serie> listSeries;
 
     private static int FAVORITA = 0;
     private static int ASSISTIDA = 0;
@@ -40,6 +39,7 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
 
     private static final String COLUMN_SERIE_ID = "serie_id";
     private static final String COLUMN_URL_CAPA = "url_capa";
+    private static final String COLUMN_URL_THUMBNAIL = "url_thumbnail";
     private static final String COLUMN_TITLE = "original_Title";
     private static final String COLUMN_OVERVIEW = "overview";
     private static final String COLUMN_API_RATE = "apiRate";
@@ -58,6 +58,7 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
                     + " ("
                         + COLUMN_ID_SERIE + " INTEGER PRIMARY KEY,"
                         + COLUMN_SERIE_ID + " TEXT,"
+                        + COLUMN_URL_THUMBNAIL + " TEXT,"
                         + COLUMN_URL_CAPA + " TEXT,"
                         + COLUMN_TITLE + " TEXT,"
                         + COLUMN_OVERVIEW + " TEXT,"
@@ -214,6 +215,7 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put( COLUMN_SERIE_ID, serie.getSerie_ID() );
+        values.put( COLUMN_URL_THUMBNAIL, serie.getUrlThumbnail() );
         values.put( COLUMN_URL_CAPA, serie.getUrlCapa() );
         values.put( COLUMN_TITLE, serie.getOriginal_Title() );
         values.put( COLUMN_OVERVIEW, serie.getOverview() );
@@ -224,7 +226,6 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         db.close();
         return newRowSerieId;
     }
-
 
     public void addFavorito(Serie serie){
         FAVORITA = 1;
@@ -373,12 +374,12 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<SeriesResults.ResultsBean> retornaFavoritos(){
+    public List<Serie> retornaFavoritos(){
         try {
             listSeries = new ArrayList<>();
             userID = verificarUsuarioBanco();
             final String QUERY =
-                    "SELECT s.serie_id, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
+                    "SELECT s.serie_id, s.url_thumbnail,s.url_capa, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
                     "FROM usuario_serie us " +
                     "INNER JOIN usuario u ON u._ID_USUARIO = us._ID_USUARIO " +
                     "INNER JOIN series s ON s._ID_SERIE = us._ID_SERIE " +
@@ -389,6 +390,8 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery( QUERY, null );
 
             int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
+            int indiceUrlThumbnail = cursor.getColumnIndex( COLUMN_URL_THUMBNAIL );
+            int indiceUrlCapa = cursor.getColumnIndex( COLUMN_URL_CAPA );
             int indiceTitleSerie = cursor.getColumnIndex(COLUMN_TITLE);
             int indiceOverview = cursor.getColumnIndex(COLUMN_OVERVIEW);
             int indiceApiRate = cursor.getColumnIndex(COLUMN_API_RATE);
@@ -396,12 +399,14 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
 
             cursor.moveToFirst();
             do {
-                SeriesResults.ResultsBean serie = new SeriesResults.ResultsBean();
-                serie.setId( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
-                serie.setName( cursor.getString( indiceTitleSerie ) );
+                Serie serie = new Serie();
+                serie.setSerie_ID( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
+                serie.setUrlThumbnail( cursor.getString( indiceUrlThumbnail ) );
+                serie.setUrlCapa( cursor.getString( indiceUrlCapa ) );
+                serie.setOriginal_Title( cursor.getString( indiceTitleSerie ) );
                 serie.setOverview( cursor.getString( indiceOverview ) );
-                serie.setVote_average( Double.parseDouble( cursor.getString( indiceApiRate ) ) );
-                serie.setFirst_air_date( cursor.getString( indiceDate ) );
+                serie.setApiRate( cursor.getString( indiceApiRate ) );
+                serie.setDataLancamento( cursor.getString( indiceDate ) );
                 listSeries.add( serie );
             } while ( cursor.moveToNext() );
             cursor.close();
@@ -412,12 +417,12 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public List<SeriesResults.ResultsBean> retornaAssistidos(){
+    public List<Serie> retornaAssistidos(){
         try {
             listSeries = new ArrayList<>();
             userID = verificarUsuarioBanco();
             final String QUERY =
-                    "SELECT s.serie_id, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
+                    "SELECT s.serie_id, s.url_thumbnail,s.url_capa, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
                     "FROM usuario_serie us " +
                     "INNER JOIN usuario u ON u._ID_USUARIO = us._ID_USUARIO " +
                     "INNER JOIN series s ON s._ID_SERIE = us._ID_SERIE " +
@@ -428,6 +433,8 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery( QUERY, null );
 
             int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
+            int indiceUrlThumbnail = cursor.getColumnIndex( COLUMN_URL_THUMBNAIL );
+            int indiceUrlCapa = cursor.getColumnIndex( COLUMN_URL_CAPA );
             int indiceTitleSerie = cursor.getColumnIndex(COLUMN_TITLE);
             int indiceOverview = cursor.getColumnIndex(COLUMN_OVERVIEW);
             int indiceApiRate = cursor.getColumnIndex(COLUMN_API_RATE);
@@ -435,12 +442,14 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
             do {
-                SeriesResults.ResultsBean serie = new SeriesResults.ResultsBean();
-                serie.setId( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
-                serie.setName( cursor.getString( indiceTitleSerie ) );
+                Serie serie = new Serie();
+                serie.setSerie_ID( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
+                serie.setUrlThumbnail( cursor.getString( indiceUrlThumbnail ) );
+                serie.setUrlCapa( cursor.getString( indiceUrlCapa ) );
+                serie.setOriginal_Title( cursor.getString( indiceTitleSerie ) );
                 serie.setOverview( cursor.getString( indiceOverview ) );
-                serie.setVote_average( Double.parseDouble( cursor.getString( indiceApiRate ) ) );
-                serie.setFirst_air_date( cursor.getString( indiceDate ) );
+                serie.setApiRate( cursor.getString( indiceApiRate ) );
+                serie.setDataLancamento( cursor.getString( indiceDate ) );
                 listSeries.add( serie );
             } while ( cursor.moveToNext() );
             cursor.close();
@@ -451,12 +460,12 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public List<SeriesResults.ResultsBean> retornaQueroAssistir(){
+    public List<Serie> retornaQueroAssistir(){
         try {
             listSeries = new ArrayList<>();
             userID = verificarUsuarioBanco();
             final String QUERY =
-                    "SELECT s.serie_id, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
+                    "SELECT s.serie_id, s.url_thumbnail,s.url_capa, s.original_Title, s.overview, s.apiRate, s.data_lancamento " +
                     "FROM usuario_serie us " +
                     "INNER JOIN usuario u ON u._ID_USUARIO = us._ID_USUARIO " +
                     "INNER JOIN series s ON s._ID_SERIE = us._ID_SERIE " +
@@ -467,6 +476,8 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery( QUERY, null );
 
             int indiceIdSerie = cursor.getColumnIndex(COLUMN_SERIE_ID);
+            int indiceUrlThumbnail = cursor.getColumnIndex( COLUMN_URL_THUMBNAIL );
+            int indiceUrlCapa = cursor.getColumnIndex( COLUMN_URL_CAPA );
             int indiceTitleSerie = cursor.getColumnIndex(COLUMN_TITLE);
             int indiceOverview = cursor.getColumnIndex(COLUMN_OVERVIEW);
             int indiceApiRate = cursor.getColumnIndex(COLUMN_API_RATE);
@@ -474,12 +485,14 @@ public class SeriesDbHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
             do {
-                SeriesResults.ResultsBean serie = new SeriesResults.ResultsBean();
-                serie.setId( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
-                serie.setName( cursor.getString( indiceTitleSerie ) );
+                Serie serie = new Serie();
+                serie.setSerie_ID( Integer.parseInt( cursor.getString( indiceIdSerie ) ) );
+                serie.setUrlThumbnail( cursor.getString( indiceUrlThumbnail ) );
+                serie.setUrlCapa( cursor.getString( indiceUrlCapa ) );
+                serie.setOriginal_Title( cursor.getString( indiceTitleSerie ) );
                 serie.setOverview( cursor.getString( indiceOverview ) );
-                serie.setVote_average( Double.parseDouble( cursor.getString( indiceApiRate ) ) );
-                serie.setFirst_air_date( cursor.getString( indiceDate ) );
+                serie.setApiRate( cursor.getString( indiceApiRate ) );
+                serie.setDataLancamento( cursor.getString( indiceDate ) );
                 listSeries.add( serie );
             } while ( cursor.moveToNext() );
             cursor.close();
